@@ -25,7 +25,7 @@ function App() {
       {isLoading && <Loading />}
       {/* {!isLoading && <Home />} */}
       <Routes>
-        <Route path='/' element={!isLoading && <Home />}></Route>
+        <Route path='/frontend' element={!isLoading && <Home />}></Route>
         <Route path='note' element={!isLoading && <Note />}></Route>
         <Route path='plan-day' element={!isLoading && <PlanForDay />}></Route>
       </Routes>
