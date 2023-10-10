@@ -3,7 +3,7 @@ import React from 'react';
 import './Category.css';
 
 const category = [
-    {name: "Написать заметку", id: 0},
+    {name: "Создать заметку", id: 0},
     {name: "Создать план на день", id: 1},
 ];
 
