@@ -2,6 +2,8 @@ import React from 'react'
 
 export const Home = () => {
   return (
-    <div>Home123213</div>
+    <div className='p-4'>
+        
+    </div>
   )
 }
