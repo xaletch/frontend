@@ -3,10 +3,10 @@
     color: var(--tg-theme-text-color);
     border-radius: 4px;
     border: 1px dashed var(--tg-theme-button-color);
-    transition: background-color .5s;
+    transition: background-color, color .5s;
 }
 
 .category:hover {
     background-color: var(--tg-theme-button-color);
-    opacity: 0.8;
+    color: var(--tg-theme-button-text-color);
 }
