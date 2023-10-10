@@ -7,7 +7,7 @@ import { Home } from './page/Home/Home';
 function App() {
   return (
     <div className="App w-96">
-      {/* <Loading /> */}
+      <Loading />
       {/* <Button className='p-2 pl-6 pr-6'>Создать</Button> */}
       <Home />
     </div>
