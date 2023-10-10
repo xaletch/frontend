@@ -6,7 +6,7 @@ import { Home } from './page/Home/Home';
 
 function App() {
   return (
-    <div className="App w-96">
+    <div className="App w-80">
       <Loading />
       {/* <Button className='p-2 pl-6 pr-6'>Создать</Button> */}
       <Home />
