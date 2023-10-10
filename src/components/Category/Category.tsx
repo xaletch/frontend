@@ -3,16 +3,16 @@ import React from 'react';
 import './Category.css';
 
 const category = [
-    {name: "Заметки", id: 0},
+    {name: "Создать заметку", id: 0},
     {name: "Создать план на день", id: 1},
 ];
 
 export const Category = () => {
   return (
-    <div className='w-screen'>
-        <ul className='flex justify-center gap-4'>
+    <div className='w-screen p-4 flex items-center justify-center'>
+        <ul>
             {category.map((item, index) => (
-                <li className='category p-1 pl-3 pr-3 text-sm rounded-md cursor-pointer' key={index}>{item.name}</li>
+                <li className='category p-4 pl-6 pr-6 text-base mb-4 text-center rounded-md cursor-pointer' key={index}>{item.name}</li>
             ))}
         </ul>
     </div>
