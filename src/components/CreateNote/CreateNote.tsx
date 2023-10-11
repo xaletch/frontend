@@ -3,15 +3,6 @@ import { Header } from '../Header/Header'
 
 import './CreateNote.css';
 
-const note = [
-    {name: "почитать книгу", id: 0},
-    {name: "почитать книгу 2", id: 1},
-    {name: "почитать книгу 3", id: 2},
-    {name: "почитать книгу 4", id: 3},
-    {name: "почитать книгу 5", id: 4},
-    {name: "почитать книгу 6", id: 5},
-]
-
 interface NoteInterface {
   name: string,
   done: boolean,
@@ -28,7 +19,7 @@ export const CreateNote: React.FC = () => {
   };
 
   const handleClickCreateNote = () => {
-    inputRef.current.focus()
+    inputRef.current.focus();
   };
 
   const handleNoteAdd = () => {
