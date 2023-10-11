@@ -23,7 +23,6 @@ function App() {
   return (
     <div className="App">
       {isLoading && <Loading />}
-      {/* {!isLoading && <Home />} */}
       <Routes>
         <Route path='/frontend' element={!isLoading && <Home />}></Route>
         <Route path='frontend/note' element={!isLoading && <Note />}></Route>

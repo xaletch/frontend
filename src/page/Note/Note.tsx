@@ -1,7 +1,10 @@
 import React from 'react'
+import { CreateNote } from '../../components/CreateNote/CreateNote'
 
 export const Note = () => {
   return (
-    <div className='pt-20 text-center flex items-center justify-center'>Note:</div>
+    <div className='text-center flex items-center justify-center'>
+      <CreateNote />
+    </div>
   )
 }
