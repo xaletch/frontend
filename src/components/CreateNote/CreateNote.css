@@ -3,7 +3,6 @@
     color: var(--tg-theme-button-text-color);
     border-radius: 4px;
     border: 1px solid var(--tg-theme-button-color);
-    background: rgb(132, 108, 241);
 }
 
 .note {
