@@ -69,7 +69,7 @@ export const CreateNote: React.FC = () => {
                         </div>
                     ))}
                 </ul>
-                {notes.length <= 0 && <p className='text-sm'>У вас пока нет заметок. <span className='cursor-pointer font-medium' onClick={handleClickCreateNote}>Создать</span></p>}
+                {notes.length <= 0 && <p className='text-sm pt-20'>У вас пока нет заметок. <span className='cursor-pointer font-medium' onClick={handleClickCreateNote}>Создать</span></p>}
         </div>
     </div>
   )
