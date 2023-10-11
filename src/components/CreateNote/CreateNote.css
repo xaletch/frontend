@@ -15,6 +15,10 @@
     border: 1px solid #FDFDFD;
 }
 
+.note span:hover svg {
+    display: block;
+}
+
 .node-btn:hover {
     background: var(--tg-theme-bg-color);
 }
