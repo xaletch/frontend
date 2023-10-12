@@ -10,7 +10,7 @@ export const CompletedNotes: React.FC<NoteInterface> = ({ name, done, id }) => {
 
     return (
         <ul className='completed mt-3'>
-            <div className='note p-3 pl-9 mb-1 text-start text-sm relative flex items-center justify-between'>
+            <div className='note p-3 pl-9 mb-1 text-start text-sm relative flex items-center justify-between select-none'>
                 <span className='w-4 h-4 rounded-full absolute left-3 cursor-pointer flex items-center justify-center'>
                     <svg className={done ? 'active' : 'hidden'} xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M20 6L9 17l-5-5"></path>
