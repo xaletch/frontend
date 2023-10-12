@@ -119,7 +119,7 @@ export const CreateNote: React.FC = () => {
           <ul onClick={handleManageNoteClose}>
             {notes.map((item, index) => (
               <div key={index} className='note p-3 pl-9 mb-1 text-start text-sm flex items-center justify-between relative select-none' onDoubleClick={(event) => handleDoubleManageNote(index, event)} onContextMenu={(event) => handleManageNote(index, event)}>
-                {manageNote === index && <ManageNoteMenu noteMenuCords={noteMenuCords} />}
+                {manageNote === index && <ManageNoteMenu noteMenuCords={noteMenuCords} notes={notes} />}
                 <span className='w-4 h-4 rounded-full absolute left-3 cursor-pointer flex items-center justify-center' onClick={() => handleNoteDone(index)}>
                   <svg className={item.done ? 'active' : 'hidden'} xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M20 6L9 17l-5-5"></path>
@@ -139,8 +139,8 @@ export const CreateNote: React.FC = () => {
         </div>
         <div className='mt-14 flex flex-col'>
           {doneNotes.length !== 0 && <Button className='w-30 p-2 mr-auto pl-6 pr-6 text-sm flex items-center gap-2' onClick={handleCompletedNode}>
-            <span className='mt-1'>
-              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="11" height="11" viewBox="0 0 284.929 284.929">
+            <span>
+              <svg className={completedNode ? 'rotate' : ''} version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="11" height="11" viewBox="0 0 284.929 284.929">
                 <g>
 	                <path d="M282.082,76.511l-14.274-14.273c-1.902-1.906-4.093-2.856-6.57-2.856c-2.471,0-4.661,0.95-6.563,2.856L142.466,174.441 L30.262,62.241c-1.903-1.906-4.093-2.856-6.567-2.856c-2.475,0-4.665,0.95-6.567,2.856L2.856,76.515C0.95,78.417,0,80.607,0,83.082 c0,2.473,0.953,4.663,2.856,6.565l133.043,133.046c1.902,1.903,4.093,2.854,6.567,2.854s4.661-0.951,6.562-2.854L282.082,89.647 c1.902-1.903,2.847-4.093,2.847-6.565C284.929,80.607,283.984,78.417,282.082,76.511z" fill='#FFF'/>
                 </g>
