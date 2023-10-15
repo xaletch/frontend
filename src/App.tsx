@@ -21,7 +21,7 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div className="App p-6">
       {isLoading && <Loading />}
       <Routes>
         <Route path='/frontend' element={!isLoading && <Home />}></Route>

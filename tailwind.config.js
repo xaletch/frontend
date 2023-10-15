@@ -29,6 +29,7 @@ export default {
         'bubble-gum': '#ff77e9',
         'bermuda': '#78dcca',
         'red': '#f33232',
+        'secondary': '#F1F1F1',
       },
     extend: {},
   },

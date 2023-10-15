@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react'
 import { Header } from '../Header/Header'
 
+import axios from 'axios';
+
 import './CreateNote.css';
 import { CompletedNotes } from '../CompletedNotes/CompletedNotes';
 import { Button } from '../Button/Button';
@@ -24,6 +26,11 @@ export const CreateNote: React.FC = () => {
   const [noteMenuCords, setNoteMenuCords] = useState({x: 0, y: 0});
 
   const handleChangeInput = (event: any) => {
+    const newData = Array.from(notes);
+    newData[event.target.id] = event.target.value;
+
+    setNotes(newData);
+
     setInputValue(event.target.value);
   };
 
@@ -31,7 +38,16 @@ export const CreateNote: React.FC = () => {
     inputRef.current.focus();
   };
 
-  const handleNoteAdd = () => {
+  const handleNoteAdd = (e: any) => { 
+    e.preventDefault();
+
+    // axios.post('http://127.0.0.1:8000/notes', {
+    //   notes: notes,
+    // })
+    // .then(res => {
+    //   console.log(res.data);
+    // })
+
     if (inputValue) {
       const newNotes = {
         name: inputValue,
@@ -48,19 +64,21 @@ export const CreateNote: React.FC = () => {
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      const newNotes = {
-        name: inputValue,
-        done: noteDone,
-        id: notes.length + 1,
-      }; 
-
-      setNotes([...notes, newNotes]);
-      setInputValue('');
+      if (inputValue) {
+        const newNotes = {
+          name: inputValue,
+          done: noteDone,
+          id: notes.length + 1,
+        }; 
+  
+        setNotes([...notes, newNotes]);
+        setInputValue('');
+      }
     };
-  };
+  }; 
 
   const handleManageNote = (index: any, event: React.MouseEvent<HTMLElement>) => {
-    event.preventDefault();
+    event.preventDefault(); 
     if (event.button === 2) {
       setManageNote(index);
     };
@@ -96,9 +114,10 @@ export const CreateNote: React.FC = () => {
 
   return (
     <div className='p-4 w-screen h-screen'>
-        <Header />
-        <div className='mt-8 flex relative items-center'>
-          <input className='input w-screen p-4 pl-6 pr-14 text-sm outline-none' type='text' ref={inputRef} value={inputValue} onChange={handleChangeInput} onKeyDown={handleKeyDown} style={{ color: 'white' }} placeholder='обновить бота'/>
+        <div className='flex relative items-center'>
+          
+          <input className='input w-screen p-4 pl-6 pr-14 text-sm outline-none' type='text' id='name' ref={inputRef} value={inputValue} onChange={handleChangeInput} onKeyDown={handleKeyDown} style={{ color: 'white' }} placeholder='обновить бота'/>
+          
           {inputValue && 
             <div className='absolute right-2 flex'>
               <div className='node-btn w-8 h-10 flex justify-center items-center transition ease-in-ou rounded cursor-pointer' onClick={handleNoteAdd}>
@@ -106,7 +125,7 @@ export const CreateNote: React.FC = () => {
                   <path d="M20 6L9 17l-5-5"></path>
                 </svg>
               </div>
-              <div onClick={handleNoteAdd} className='node-btn w-8 h-10 flex justify-center items-center transition ease-in-ou rounded cursor-pointe'>
+              <div className='node-btn w-8 h-10 flex justify-center items-center transition ease-in-ou rounded cursor-pointe'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 25 25" fill="none">
                   <path d="M12.2473 4.94844C7.36828 4.94844 3.24728 9.06944 3.24728 13.9484C3.24728 18.8274 7.36828 22.9484 12.2473 22.9484C17.1263 22.9484 21.2473 18.8274 21.2473 13.9484C21.2473 9.06944 17.1263 4.94844 12.2473 4.94844ZM12.2473 20.9484C8.45328 20.9484 5.24728 17.7424 5.24728 13.9484C5.24728 10.1544 8.45328 6.94844 12.2473 6.94844C16.0413 6.94844 19.2473 10.1544 19.2473 13.9484C19.2473 17.7424 16.0413 20.9484 12.2473 20.9484Z" fill="#FFf"/>
                   <path d="M13.2473 12.9484V8.94844H11.2473V14.9484H17.2473V12.9484H13.2473ZM17.5313 4.65544L18.9433 3.23944L21.9533 6.23944L20.5403 7.65644L17.5313 4.65544ZM6.94528 4.65544L3.95528 7.65444L2.53728 6.24244L5.52728 3.24244L6.94528 4.65544Z" fill="#FFf"/>
@@ -119,7 +138,7 @@ export const CreateNote: React.FC = () => {
           <ul onClick={handleManageNoteClose}>
             {notes.map((item, index) => (
               <div key={index} className='note p-3 pl-9 mb-1 text-start text-sm flex items-center justify-between relative select-none' onDoubleClick={(event) => handleDoubleManageNote(index, event)} onContextMenu={(event) => handleManageNote(index, event)}>
-                {manageNote === index && <ManageNoteMenu noteMenuCords={noteMenuCords} notes={notes} />}
+                {/* {manageNote === index && <ManageNoteMenu noteMenuCords={noteMenuCords} notes={notes} setNotes={setNotes} />} */}
                 <span className='w-4 h-4 rounded-full absolute left-3 cursor-pointer flex items-center justify-center' onClick={() => handleNoteDone(index)}>
                   <svg className={item.done ? 'active' : 'hidden'} xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#FFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M20 6L9 17l-5-5"></path>
@@ -134,8 +153,8 @@ export const CreateNote: React.FC = () => {
               </div>
             ))}
           </ul>
-          {notes.length <= 0 && doneNotes.length <= 0 && <p className='text-sm pt-20'>У вас пока нет заметок. <span className='cursor-pointer font-medium' onClick={handleClickCreateNote}>Создать</span></p>}
-          {notes.length <= 0 && doneNotes.length > 0 && <p className='text-sm pt-20'>Поздравляю вы выполнили все задачи! <span className='cursor-pointer font-medium' onClick={handleClickCreateNote}>Создать ещё</span></p>}
+          {notes.length <= 0 && doneNotes.length <= 0 && <p className='text-sm pt-20'>У вас пока нет заметок. <span className='cursor-pointer underline' onClick={handleClickCreateNote}>Создать</span></p>}
+          {notes.length <= 0 && doneNotes.length > 0 && <p className='text-sm pt-20'>Поздравляю вы выполнили все задачи! <span className='cursor-pointer underline' onClick={handleClickCreateNote}>Создать ещё</span></p>}
         </div>
         <div className='mt-14 flex flex-col'>
           {doneNotes.length !== 0 && <Button className='w-30 p-2 mr-auto pl-6 pr-6 text-sm flex items-center gap-2' onClick={handleCompletedNode}>

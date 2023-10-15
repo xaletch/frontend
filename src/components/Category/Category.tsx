@@ -11,8 +11,8 @@ const category = [
 
 export const Category = () => {
   return (
-    <div className='w-screen flex items-center justify-center flex-col'>
-        <p className='mb-20 text-sm text-center'>Здесь вы можете управлять своими заметками. <br/>  Но для начала вам предстоит создать забетку/план.</p>
+    <div className='max-w-3xl flex items-center justify-center flex-col '>
+        <p className='mb-20 text-3xl text-center font-bold'>Ваши идеи, документы и планы. Единый. Добро пожаловать в </p>
         <ul>
             {category.map((item, index) => (
                 <Link to={item.link} key={index}>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, SetStateAction, Dispatch } from 'react'
 
 import './ManageNoteMenu.css';
 
@@ -11,6 +11,7 @@ interface NoteInterface {
 interface NoteMenuInterface {
   noteMenuCords: {x: number, y: number};
   notes: NoteInterface[];
+  setNotes: Dispatch<SetStateAction<NoteInterface[]>>;
 }
 
 const manageNotItem = [
@@ -22,23 +23,19 @@ const manageNotItem = [
   {name: "Удалить задачу", cn: "del", svg: `<svg width="18" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.2217 2.15655H10.4198C10.28 0.94457 9.24888 0 8 0C6.75116 0 5.72014 0.944533 5.58037 2.15655H2.77837C1.64448 2.15655 0.722115 3.07918 0.722115 4.21303V4.31855C0.722115 5.18502 1.26163 5.92666 2.02166 6.22884V15.9435C2.02166 17.0774 2.94415 18 4.07796 18H11.9221C13.056 18 13.9784 17.0773 13.9784 15.9435V6.22888C14.7384 5.92666 15.2779 5.18502 15.2779 4.31858V4.21307C15.2779 3.07918 14.3555 2.15655 13.2217 2.15655ZM8 0.975277C8.71029 0.975277 9.30317 1.48439 9.43435 2.15655H6.56591C6.69705 1.48435 7.28997 0.975277 8 0.975277ZM13.0031 15.9435C13.0031 16.5397 12.518 17.0248 11.9221 17.0248H4.07792C3.48195 17.0248 2.9969 16.5396 2.9969 15.9435V6.37503H13.0031V15.9435ZM14.3026 4.31855C14.3026 4.91471 13.8176 5.39979 13.2216 5.39979H2.77837C2.1824 5.39979 1.69735 4.91471 1.69735 4.31855V4.21303C1.69735 3.61687 2.1824 3.13179 2.77837 3.13179H13.2217C13.8176 3.13179 14.3027 3.61687 14.3027 4.21303L14.3026 4.31855Z" fill="#f33232"/><path d="M5.3856 15.7775C5.65491 15.7775 5.87322 15.5591 5.87322 15.2899V9.79946C5.87322 9.53022 5.65487 9.3118 5.3856 9.3118C5.11632 9.3118 4.89798 9.53022 4.89798 9.79946V15.2899C4.89794 15.5592 5.11629 15.7775 5.3856 15.7775Z" fill="#f33232"/><path d="M7.99999 15.7775C8.26931 15.7775 8.48765 15.5591 8.48765 15.2899V9.79946C8.48765 9.53022 8.26923 9.3118 7.99999 9.3118C7.73072 9.3118 7.51237 9.53022 7.51237 9.79946V15.2899C7.51237 15.5592 7.73068 15.7775 7.99999 15.7775Z" fill="#f33232"/><path d="M10.6144 15.7775C10.8837 15.7775 11.102 15.5591 11.102 15.2899V9.79946C11.102 9.53022 10.8836 9.3118 10.6144 9.3118C10.345 9.3118 10.1267 9.53022 10.1267 9.79946V15.2899C10.1267 15.5592 10.3451 15.7775 10.6144 15.7775Z" fill="#f33232"/></svg>`, id: 1},
 ];
 
-export const ManageNoteMenu: React.FC<NoteMenuInterface> = ({ noteMenuCords, notes }) => {
-  const [selectManageNote, setSelectManageNote] = useState<string>('');
+export const ManageNoteMenu: React.FC<NoteMenuInterface> = ({ noteMenuCords, notes, setNotes}) => {
   
-  const handleDeleteNote = (cn: string) => {
-    setSelectManageNote(cn);
-    console.log("cn: ", cn);
+  const handleDeleteNote = (id: number) => {
+    const newNote = notes.filter(item => item.id !== id);
+    console.log(newNote);
+    setNotes(newNote)
   };
-
-  useEffect(() => {
-    console.log("note: ", selectManageNote);
-  }, [selectManageNote]);
 
   return (
     <div className='pt-1 pb-1 br-3 absolute top-0 left-0 z-10 rounded' style={{background: '#FFF', top: '28px', left: noteMenuCords.x}}>
       <ul>
         {manageNotItem.map((item, index) => (
-          <div className='manage-completed p-3 flex items-center gap-2 cursor-pointer hover:bg-silver' key={index} onClick={() => handleDeleteNote(item.name)}>
+          <div className='manage-completed p-3 flex items-center gap-2 cursor-pointer hover:bg-silver' key={index} onClick={() => handleDeleteNote(item.id)}>
             {item.svg ? 
             <div dangerouslySetInnerHTML={{ __html: item.svg }}></div>
             :
