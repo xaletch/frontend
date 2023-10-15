@@ -8,7 +8,7 @@ export const Menu = () => {
   const { user } = useTelegram();
 
   return (
-    <div className='bg-secondary w-screen h-full overflow-y-auto absolute top-0 left-0 ring-0' style={{width: "260px"}}>
+    <div className='bg-secondary w-screen h-full overflow-y-auto absolute top-0 left-0 ring-0'>
       <div className='h-full bg-secondary overflow-y-auto flex flex-col'>
         <div>
           <div className='p-3 flex justify-between text-center'>
@@ -17,7 +17,7 @@ export const Menu = () => {
                 {/* <img className='rounded-full h-8 w-8' src={user?.photo_url} alt="" /> */}
                 <img className='rounded-full h-8 w-8' src={link_img.emptyAvatar} alt="" />
               </span>
-              <span className='text-base font-medium capitalize'>{user?.first_name}Шрекович</span>
+              <span className='text-base font-medium capitalize'>{user?.first_name}</span>
             </div>
             <div className='cursor-pointer flex items-center'>
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" viewBox="0 0 16 12" fill="none">
