@@ -13,7 +13,8 @@ export const Menu = () => {
         <div className='p-3 flex justify-between text-center'>
           <div className='gap-2 flex items-center'>
             <span>
-              <img className='rounded-full h-8 w-8' src={user?.photo_url} alt="avatar" />
+              {/* <img className='rounded-full h-8 w-8' src={user?.photo_url} alt="" /> */}
+              <img className='rounded-full h-8 w-8' src={link_img.emptyAvatar} alt="" />
             </span>
             <span className='text-base font-medium capitalize'>{user?.first_name}Шрекович</span>
           </div>

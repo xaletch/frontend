@@ -12,7 +12,7 @@ const category = [
 export const Category = () => {
   return (
     <div className='max-w-3xl flex items-center justify-center flex-col '>
-        <p className='mb-20 text-3xl text-center font-bold'>Ваши идеи, документы и планы. Единый. Добро пожаловать в </p>
+        <p className='mb-20 text-3xl text-center font-bold'>Ваши идеи, документы и планы едины. Добро пожаловать в (Название отсутствует)</p>
         <ul>
             {category.map((item, index) => (
                 <Link to={item.link} key={index}>
