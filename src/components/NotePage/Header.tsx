@@ -1,10 +1,19 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 
-export const Header = () => {
+interface MenuInterface {
+  menuOpen: boolean;
+  setMenuOpen: Dispatch<SetStateAction<boolean>>;
+}
+
+export const Header: React.FC<MenuInterface> = ({ menuOpen, setMenuOpen }) => {
+  const handleMenu = () => {
+    setMenuOpen(!menuOpen);
+  }
+
   return (
     <div className='absolute top-0 left-0 right-0'>
       <nav className='p-2 px-3 flex items-center gap-4'>
-        <svg className='cursor-pointer' xmlns="http://www.w3.org/2000/svg" width="21" height="24" viewBox="0 0 16 12" fill="none">
+        <svg className='cursor-pointer' onClick={handleMenu} xmlns="http://www.w3.org/2000/svg" width="21" height="24" viewBox="0 0 16 12" fill="none">
           <path d="M0 0H16V2H0V0ZM0 5H16V7H0V5ZM0 10H16V12H0V10Z" fill="#CCCCCC"/>
         </svg>
         <div className='w-full flex justify-between'>

@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 
 import link_img from '../../../img/link_img';
 
 import { useTelegram } from '../../../hooks/useTelegram';
 
-export const Menu = () => {
+interface MenuInterface {
+  setMenuOpen: Dispatch<SetStateAction<boolean>>;
+}
+
+export const Menu: React.FC<MenuInterface> = ({ setMenuOpen }) => {
   const { user } = useTelegram();
 
+  const handleCloseMenu = () => {
+    setMenuOpen(false);
+  }
+
   return (
-    <div className='bg-secondary w-screen h-full overflow-y-auto absolute top-0 left-0 ring-0'>
+    <div className='bg-secondary h-full w-full overflow-y-auto absolute top-0 left-0'>
       <div className='h-full bg-secondary overflow-y-auto flex flex-col'>
         <div>
           <div className='p-3 flex justify-between text-center'>
@@ -19,7 +27,7 @@ export const Menu = () => {
               </span>
               <span className='text-base font-medium capitalize'>{user?.first_name}</span>
             </div>
-            <div className='cursor-pointer flex items-center'>
+            <div className='cursor-pointer flex items-center' onClick={handleCloseMenu}>
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" viewBox="0 0 16 12" fill="none">
                 <path d="M0 0H16V2H0V0ZM4 5H16V7H4V5ZM9 10H16V12H9V10Z" fill="#8f8f8f" fillOpacity="0.8"/>
               </svg>
