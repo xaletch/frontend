@@ -1,0 +1,7 @@
+.setting {
+    display: none;
+}
+
+.page:hover .setting {
+    display: flex;
+}
