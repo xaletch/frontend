@@ -120,7 +120,7 @@ export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, setTasks, tasks, se
                     {selectTask !== index || changeTaskName !== true ? 
                       <span style={{color: '#676767'}}>{item.name}</span>
                     :
-                      <input ref={inputRef} className='outline-none' type="text" value={tasks[index].name} onKeyDown={handleKeyDown} onChange={(e: any) => handleTaskNameChange(index, { name: e.target.value })} style={{color: '#676767', background: ''}}/>
+                      <input ref={inputRef} className='outline-none rounded bg-light' type="text" value={tasks[index].name} onKeyDown={handleKeyDown} onChange={(e: any) => handleTaskNameChange(index, { name: e.target.value })} style={{color: '#676767'}}/>
                     }
                 </div>
                 <div className='setting flex items-center gap-2'>

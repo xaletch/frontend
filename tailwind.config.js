@@ -33,6 +33,7 @@ export default {
         'light-grey': '#E0E0E0',
         'grey': '#C6C6C6',
         'dark': '#1f1f1f',
+        'light': '#E4E4E4',
       },
     extend: {},
   },
