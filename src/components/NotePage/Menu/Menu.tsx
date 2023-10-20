@@ -6,27 +6,32 @@ import './Menu.css';
 
 import { useTelegram } from '../../../hooks/useTelegram';
 
-interface MenuInterface {
-  setMenuOpen: Dispatch<SetStateAction<boolean>>;
-}
-
+// import { MenuInterface, TaskInterface } from '../../../interfaces/interfaces';
 
 interface TaskInterface { 
   name: string;
 }
 
-export const Menu: React.FC<MenuInterface> = ({ setMenuOpen }) => {
-  const [tasks, setTasks] = useState<Array<TaskInterface>>([]);
-  const [newTask, setNewTask] = useState<string>("без названия");
+interface MenuInterface {
+  setMenuOpen: Dispatch<SetStateAction<boolean>>;
+  setTasks: Dispatch<SetStateAction<TaskInterface[]>>;
+  tasks: TaskInterface[];
+  setNewTask: Dispatch<SetStateAction<string>>;
+  newTask: string;
+};
+
+export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, setTasks, tasks, setNewTask, newTask }) => {
+  // const [tasks, setTasks] = useState<Array<TaskInterface>>([]);
+  // const [newTask, setNewTask] = useState<string>("без названия");
   const [selectTask, setSelectTask] = useState<number>(-1);
   const [changeTaskName, setChangeTaskName] = useState<boolean>(false);
   const [changeTaskValue, setChangeTaskValue] = useState("без названия");
-  const inputRef: any = React.useRef<HTMLInputElement>(null);
+  const inputRef = React.useRef<HTMLInputElement>(null);
   const { user } = useTelegram();
 
   const handleCloseMenu = () => {
     setMenuOpen(false);
-  }
+  };
 
   const handleAddTask = () => {
     const newTasks = {
@@ -40,27 +45,30 @@ export const Menu: React.FC<MenuInterface> = ({ setMenuOpen }) => {
   const handleChangeName = (index: number) => {
     setSelectTask(index);
     if(index === selectTask) {
-      setChangeTaskName(true);
+      setChangeTaskName(!changeTaskName);
     };
   };
+  
+  useEffect(() => {
+    if (changeTaskName) {
+      inputRef.current?.focus();
+    };
+  }, [changeTaskName]);
 
-  // useEffect(() => {
-  //   if (!changeTaskName) {
-  //     inputRef.current.focus();
-  //   };
-  // }, [changeTaskName]);
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      setChangeTaskName(false);
+    };
+  }
 
   const handleTaskNameChange = (index: number, newName: TaskInterface) => {
     const updatedTasks = [...tasks];
-    updatedTasks[index] = newName;
+    updatedTasks[index] = { ...updatedTasks[index], name: newName.name };
     setTasks(updatedTasks);
-    setChangeTaskValue(newName.name);
-
-    console.log(changeTaskValue);
-    console.log("tasks: ", tasks);
+  
+    console.log("tasks", tasks);
+    console.log(":", {...updatedTasks[index], name: newName.name});
   };
-
-  console.log("TASKS: ", tasks);
 
   return (
     <div className='bg-secondary h-full w-full overflow-y-auto absolute top-0 left-0'>
@@ -92,7 +100,7 @@ export const Menu: React.FC<MenuInterface> = ({ setMenuOpen }) => {
                 <path d="M9.8 5H8.2V8.2H5V9.8H8.2V13H9.8V9.8H13V8.2H9.8V5Z" fill="#676767"/>
                 <path d="M9 0C4.0374 0 0 4.0374 0 9C0 13.9626 4.0374 18 9 18C13.9626 18 18 13.9626 18 9C18 4.0374 13.9626 0 9 0ZM9 16.2C5.0301 16.2 1.8 12.9699 1.8 9C1.8 5.0301 5.0301 1.8 9 1.8C12.9699 1.8 16.2 5.0301 16.2 9C16.2 12.9699 12.9699 16.2 9 16.2Z" fill="#676767"/>
               </svg>
-              <span style={{color: '#676767'}}>Новая страница</span>
+              <span style={{color: '#676767'}} onClick={handleAddTask}>Новая страница</span>
             </div>
           </div>
         </div>
@@ -112,7 +120,7 @@ export const Menu: React.FC<MenuInterface> = ({ setMenuOpen }) => {
                     {selectTask !== index || changeTaskName !== true ? 
                       <span style={{color: '#676767'}}>{item.name}</span>
                     :
-                      <input ref={inputRef} className='outline-none' type="text" value={changeTaskValue} onChange={(e: any) => handleTaskNameChange(index, e.target.value)} style={{color: '#676767', background: ''}}/>
+                      <input ref={inputRef} className='outline-none' type="text" value={tasks[index].name} onKeyDown={handleKeyDown} onChange={(e: any) => handleTaskNameChange(index, { name: e.target.value })} style={{color: '#676767', background: ''}}/>
                     }
                 </div>
                 <div className='setting flex items-center gap-2'>
