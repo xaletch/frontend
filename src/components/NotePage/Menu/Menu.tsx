@@ -78,7 +78,7 @@ export const Menu: React.FC<MenuInterface> = ({ selectOpenTask, setSelectOpenTas
   };
 
   return (
-    <div className='bg-secondary h-full w-full overflow-y-auto absolute top-0 left-0'>
+    <div className='bg-secondary h-full w-60 overflow-y-auto absolute top-0 left-0'>
       <div className='h-full bg-secondary overflow-y-auto flex flex-col'>
         <div>
           <div className='p-3 flex justify-between text-center'>
