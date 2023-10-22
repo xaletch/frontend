@@ -34,6 +34,7 @@ export default {
         'grey': '#C6C6C6',
         'dark': '#1f1f1f',
         'light': '#E4E4E4',
+        'secondary': '#F6F6F6',
       },
     extend: {},
   },

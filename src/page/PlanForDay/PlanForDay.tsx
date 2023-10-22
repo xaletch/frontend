@@ -14,7 +14,7 @@ export const PlanForDay = () => {
   const [newTask, setNewTask] = useState<string>("без названия");
   const [selectOpenTask, setSelectOpenTask] = useState<string>("");
 
-  console.log(tasks.length)
+  // console.log(tasks.length);
 
   return (
     <div className='h-full'>

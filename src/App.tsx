@@ -9,6 +9,7 @@ import { Home } from './page/Home/Home';
 import { Note } from './page/Note/Note';
 import { PlanForDay } from './page/PlanForDay/PlanForDay';
 
+
 function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 

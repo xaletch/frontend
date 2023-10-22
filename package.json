@@ -4,6 +4,8 @@
   "private": true,
   "homepage": "https://xaletch.github.io/frontend",
   "dependencies": {
+    "@emoji-mart/data": "^1.1.2",
+    "@emoji-mart/react": "^1.1.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -11,6 +13,7 @@
     "@types/node": "^16.18.58",
     "@types/react": "^18.2.27",
     "@types/react-dom": "^18.2.12",
+    "emoji-mart": "^5.5.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.16.0",
