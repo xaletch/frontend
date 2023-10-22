@@ -13,6 +13,8 @@ interface TaskInterface {
 }
 
 interface MenuInterface {
+  selectOpenTask: string,
+  setSelectOpenTask: Dispatch<SetStateAction<string>>,
   setMenuOpen: Dispatch<SetStateAction<boolean>>;
   setTasks: Dispatch<SetStateAction<TaskInterface[]>>;
   tasks: TaskInterface[];
@@ -20,10 +22,8 @@ interface MenuInterface {
   newTask: string;
 };
 
-export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, setTasks, tasks, setNewTask, newTask }) => {
-  // const [tasks, setTasks] = useState<Array<TaskInterface>>([]);
-  // const [newTask, setNewTask] = useState<string>("без названия");
-  const [selectTask, setSelectTask] = useState<number>(-1);
+export const Menu: React.FC<MenuInterface> = ({ selectOpenTask, setSelectOpenTask, setMenuOpen, setTasks, tasks, setNewTask, newTask }) => {
+  const [selectTask, setSelectTask] = useState<number>(0);
   const [changeTaskName, setChangeTaskName] = useState<boolean>(false);
   const [changeTaskValue, setChangeTaskValue] = useState("без названия");
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -39,14 +39,21 @@ export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, setTasks, tasks, se
     };
     
     setTasks([...tasks, newTasks]);
-    console.log("TASKS: ", newTask);
+    // console.log("TASKS: ", newTask);
   };
+  // console.log("INDEX: ", selectTask);
 
   const handleChangeName = (index: number) => {
     setSelectTask(index);
     if(index === selectTask) {
       setChangeTaskName(!changeTaskName);
     };
+  };
+
+  const handleOpenTask = (index: string) => {
+    setSelectOpenTask(index);
+    // console.log("TASK NAME: ", selectOpenTask);
+    // setMenuOpen(false);
   };
   
   useEffect(() => {
@@ -107,7 +114,7 @@ export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, setTasks, tasks, se
         <div className='mt-4'>
           {tasks.map((item, index) => (
             <div key={index}>
-              <div className='page p-1 px-3 h-8 flex items-center justify-between font-medium cursor-pointer hover:bg-light-grey' onClick={() => handleChangeName(index)}>
+              <div className='page p-1 px-3 h-8 flex items-center justify-between font-medium cursor-pointer hover:bg-light-grey' onDoubleClick={() => handleChangeName(index)} onClick={() => handleOpenTask(item.name)}>
                 <div className='flex items-center'>
                   <div className='w-4 h-4 mr-1 rounded hover:bg-grey'>
                     <svg className='h-4 w-4' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ stroke: "#676767" }}>
