@@ -9,7 +9,7 @@ interface MenuInterface {
 export const Header: React.FC<MenuInterface> = ({ menuOpen, setMenuOpen, selectOpenTask }) => {
   const handleMenu = () => {
     setMenuOpen(!menuOpen);
-  }
+  };
 
   return (
     <div className='absolute top-0 z-10' style={{width: `${menuOpen === false ? `calc(100%)` : `calc(100% - 240px)`}`, left: `${menuOpen === false ? `0` : `240px`}`}}>
