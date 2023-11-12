@@ -1,18 +1,19 @@
 import axios from 'axios';
 import React, { useRef, useState } from 'react'
 
+import test from "../../../../upload/1699256910919-img_eLPbscxMaAfL0EmYnS0m.png"
+
 export const UploadingImg = () => {
     const [file, setFile] = useState(null);
     const [uploaded, setUploaded] = useState("");
     const fileRef = useRef(null);
 
     const handleChange = (event) => {
-        // if (event.target.files && event.target.files.length > 0) {
-            setFile(event.target.files[0]);
-        // }
+        setFile(event.target.files[0]);
+        setUploaded(file);
     };
 
-    console.log(file);
+    // console.log(file);
 
     const handleUpload = async () => {
         const formData = new FormData();
@@ -27,7 +28,7 @@ export const UploadingImg = () => {
           }
     };
 
-    console.log('uploaded: ', uploaded)
+    // console.log('uploaded: ', uploaded)
 
     const handleOpenFile = () => {
         if (fileRef.current) {
@@ -35,20 +36,20 @@ export const UploadingImg = () => {
         };
     };
 
-    console.log('uploaded.filePath: ', uploaded.filePath);
+    // console.log('uploaded.filePath: ', uploaded.filePath);
 
     return (
         <>
-            <input type='file' ref={fileRef} onChange={handleChange} accept='image/*, .png, .jpg, .gif, .web' />
+            <input type='file' ref={fileRef} onChange={handleChange} hidden accept='image/*, .png, .jpg, .gif, .web' />
             <button className='p-2 border rounded border-light-grey' onClick={handleOpenFile}>открыть</button>
             <button className='p-2 border rounded border-black' onClick={handleUpload}>Загрузить</button>
         
-            {/* {uploaded && ( */}
+            {/* {uploaded && (
                 <div>
-                    {/* <h1>{uploaded.fileName}</h1> */}
-                    <img src={`${uploaded.filePath}`} alt={uploaded.filePath} />
+                    <h1>{uploaded.fileName}</h1>
+                    <img src={`../../../../upload/${uploaded.fileName}`} alt={uploaded.filePath} />
                 </div>
-            {/* )} */}
+            )} */}
         </>
     )
 }

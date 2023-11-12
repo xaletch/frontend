@@ -13,6 +13,8 @@ interface TaskInterface {
 }
 
 interface MenuInterface {
+  selectTask: number | null;
+  setSelectTask: Dispatch<SetStateAction<number | null>>;
   selectOpenTask: string,
   setSelectOpenTask: Dispatch<SetStateAction<string>>,
   setMenuOpen: Dispatch<SetStateAction<boolean>>;
@@ -22,8 +24,8 @@ interface MenuInterface {
   newTask: string;
 };
 
-export const Menu: React.FC<MenuInterface> = ({ selectOpenTask, setSelectOpenTask, setMenuOpen, setTasks, tasks, setNewTask, newTask }) => {
-  const [selectTask, setSelectTask] = useState<number>(0);
+export const Menu: React.FC<MenuInterface> = ({ selectTask, setSelectTask, selectOpenTask, setSelectOpenTask, setMenuOpen, setTasks, tasks, setNewTask, newTask }) => {
+  // const [selectTask, setSelectTask] = useState<number | null>(null);
   const [changeTaskName, setChangeTaskName] = useState<boolean>(false);
   const [changeTaskValue, setChangeTaskValue] = useState("без названия");
   const inputRef = React.useRef<HTMLInputElement>(null);
@@ -52,8 +54,8 @@ export const Menu: React.FC<MenuInterface> = ({ selectOpenTask, setSelectOpenTas
 
   const handleOpenTask = (index: string) => {
     setSelectOpenTask(index);
-    // console.log("TASK NAME: ", selectOpenTask);
     // setMenuOpen(false);
+    console.log(selectTask);
   };
   
   useEffect(() => {
@@ -73,6 +75,7 @@ export const Menu: React.FC<MenuInterface> = ({ selectOpenTask, setSelectOpenTas
     updatedTasks[index] = { ...updatedTasks[index], name: newName.name };
     setTasks(updatedTasks);
   
+    console.log(selectTask)
     console.log("tasks", tasks);
     console.log(":", {...updatedTasks[index], name: newName.name});
   };
