@@ -76,7 +76,7 @@ export const ManageNote: React.FC<ManageNoteInterface> = ({ menuOpen, selectOpen
                                 добавить значок
                             </button>
                             <button className='flex cursor-pointer text-sm gap-2 border border-light-grey hover:bg-secondary rounded p-1 px-2' onClick={handleOpenFile}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 20" fill="none">
+                                <svg xmlns="http ://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 20" fill="none">
                                     <path d="M17 0H3C1.794 0 0 0.799 0 3V17C0 19.201 1.794 20 3 20H18V18H3.012C2.55 17.988 2 17.806 2 17C2 16.194 2.55 16.012 3.012 16H18V1C18 0.734784 17.8946 0.48043 17.7071 0.292893C17.5196 0.105357 17.2652 0 17 0ZM6.503 3C6.90162 3 7.28391 3.15835 7.56578 3.44022C7.84765 3.72209 8.006 4.10438 8.006 4.503C8.006 4.90162 7.84765 5.28391 7.56578 5.56578C7.28391 5.84765 6.90162 6.006 6.503 6.006C6.10438 6.006 5.72209 5.84765 5.44022 5.56578C5.15835 5.28391 5 4.90162 5 4.503C5 4.10438 5.15835 3.72209 5.44022 3.44022C5.72209 3.15835 6.10438 3 6.503 3ZM9 11H4L7 8L8.5 9.399L11.5 6L15 11H9Z" fill="#444"/>
                                 </svg>
                                 добавить обложку

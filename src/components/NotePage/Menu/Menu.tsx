@@ -1,10 +1,12 @@
-import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import React, { Dispatch, MouseEventHandler, SetStateAction, useEffect, useRef, useState } from 'react';
 
 import link_img from '../../../img/link_img';
 
 import './Menu.css';
 
 import { useTelegram } from '../../../hooks/useTelegram';
+import { Note } from '../Note';
+import { addNote, deleteNote, getAllNotes, updateNote } from '../../../utils/HandleApi';
 
 // import { MenuInterface, TaskInterface } from '../../../interfaces/interfaces';
 
@@ -24,12 +26,33 @@ interface MenuInterface {
   newTask: string;
 };
 
+type NoteType = {
+  _id: string;
+  name: string;
+}
+
 export const Menu: React.FC<MenuInterface> = ({ selectTask, setSelectTask, selectOpenTask, setSelectOpenTask, setMenuOpen, setTasks, tasks, setNewTask, newTask }) => {
   // const [selectTask, setSelectTask] = useState<number | null>(null);
   const [changeTaskName, setChangeTaskName] = useState<boolean>(false);
   const [changeTaskValue, setChangeTaskValue] = useState("без названия");
   const inputRef = React.useRef<HTMLInputElement>(null);
   const { user } = useTelegram();
+
+  const [note, setNote] = useState<NoteType[]>([]);
+  const [noteName, setNoteName] = useState("без названия");
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [noteId, setNoteId] = useState("");
+
+  const updateMode = (_id: string, name: string) => {
+    setIsUpdate(true);
+    setNoteName(name);
+    setNoteId(_id);
+    console.log(name);
+  };
+  
+  useEffect(() => {
+    getAllNotes(setNote);
+  }, []);
 
   const handleCloseMenu = () => {
     setMenuOpen(false);
@@ -110,12 +133,19 @@ export const Menu: React.FC<MenuInterface> = ({ selectTask, setSelectTask, selec
                 <path d="M9.8 5H8.2V8.2H5V9.8H8.2V13H9.8V9.8H13V8.2H9.8V5Z" fill="#676767"/>
                 <path d="M9 0C4.0374 0 0 4.0374 0 9C0 13.9626 4.0374 18 9 18C13.9626 18 18 13.9626 18 9C18 4.0374 13.9626 0 9 0ZM9 16.2C5.0301 16.2 1.8 12.9699 1.8 9C1.8 5.0301 5.0301 1.8 9 1.8C12.9699 1.8 16.2 5.0301 16.2 9C16.2 12.9699 12.9699 16.2 9 16.2Z" fill="#676767"/>
               </svg>
-              <span style={{color: '#676767'}} onClick={handleAddTask}>Новая страница</span>
+              <span style={{color: '#676767'}} onClick={() => addNote(noteName, setNoteName, setNote)}>Новая страница</span>
             </div>
           </div>
         </div>
         <div className='mt-4'>
-          {tasks.map((item, index) => (
+          {/* <Note name={'без названия'} updateNote={undefined} deleteNote={undefined}/> */}
+          {note.map((item: NoteType) => <Note 
+            key={item._id} name={item.name} id={item._id}
+            noteName={noteName} setNote={setNote} setNoteName={setNoteName} setIsUpdate={setIsUpdate} isUpdate={isUpdate} noteId={noteId}
+            updateMode={() => updateMode(item._id, item.name)}
+            deleteNote={() => deleteNote(item._id, setNote)}
+           />)}
+          {/* {tasks.map((item, index) => (
             <div key={index}>
               <div className='page p-1 px-3 h-8 flex items-center justify-between font-medium cursor-pointer hover:bg-light-grey' onDoubleClick={() => handleChangeName(index)} onClick={() => handleOpenTask(item.name)}>
                 <div className='flex items-center'>
@@ -148,7 +178,7 @@ export const Menu: React.FC<MenuInterface> = ({ selectTask, setSelectTask, selec
               </div>
               <p className='text-sm font-medium' style={{color: '#676767', paddingLeft: '37px'}}>Нет страниц внутри</p>
             </div>
-          ))}
+          ))} */}
 
           {/* CREATE PAGE */}
           <div className='p-1 px-3 flex items-center font-medium cursor-pointer hover:bg-light-grey' onClick={handleAddTask}>
