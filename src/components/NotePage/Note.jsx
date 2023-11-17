@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { updateNote } from '../../utils/HandleApi.ts';
 // interface NoteInterface {
 //     name: string;
@@ -7,13 +7,25 @@ import { updateNote } from '../../utils/HandleApi.ts';
 export const Note = ({ name, id, noteName, setNote, setNoteName, setIsUpdate, isUpdate, noteId, updateMode, deleteNote }) => {
   const inputRef = React.useRef(null);
 
-  console.log('123: ', noteName)
+  // console.log('123: ', noteName)
+
+  useEffect(() => {
+    if (isUpdate) {
+      inputRef.current?.focus();
+    };
+  }, [isUpdate]);
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter' && noteName.trim() !== '') {
+      updateNote(noteId, noteName, setNoteName, setNote, setIsUpdate)
+    };
+  };
 
   return (
     <div>
     <div className='page p-1 px-3 h-8 flex items-center justify-between font-medium cursor-pointer hover:bg-light-grey' onDoubleClick={updateMode}>
       <div className='flex items-center'>
-        <div onClick={() => updateNote(noteId, noteName, setNoteName, setNote, setIsUpdate)} className='w-4 h-4 mr-1 rounded hover:bg-grey'>
+        <div className='w-4 h-4 mr-1 rounded hover:bg-grey'>
           <svg className='h-4 w-4' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ stroke: "#676767" }}>
             <path d="m9 18 6-6-6-6"></path>
           </svg>
@@ -24,7 +36,7 @@ export const Note = ({ name, id, noteName, setNote, setNoteName, setIsUpdate, is
           {!isUpdate || noteId !== id ? 
             <span style={{color: '#676767'}}>{name}</span>
           :
-            <input ref={inputRef} className='outline-none rounded bg-light' type="text" value={noteName} onChange={(e) => setNoteName(e.target.value)} style={{color: '#676767'}}/>
+            <input ref={inputRef} className='w-full outline-none rounded bg-secondary' type="text" value={noteName} onChange={(e) => setNoteName(e.target.value)} onKeyDown={handleKeyDown} style={{color: '#676767'}}/>
           }
       </div>
       <div className='setting flex items-center gap-2'>
