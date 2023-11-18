@@ -18,6 +18,10 @@ export const LoginBlock = () => {
       if (loginData.statusText === 'OK') {
         setRedirect(true);
       }
+
+      if ('token' in loginData.data) {
+        window.localStorage.setItem('logged_in', loginData.data.token);
+      };
     }
     catch (err) {
       console.log('При входе в аккаунт произошла ошибка: \n', err)

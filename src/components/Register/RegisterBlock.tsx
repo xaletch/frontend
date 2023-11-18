@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import Axios from '../../axios';
 
 export const RegisterBlock = () => {
@@ -14,11 +14,23 @@ export const RegisterBlock = () => {
       const data = { username, email, password };
       const loginData = await Axios.post('/user/register', data);
       console.log(loginData);
+
+      if (loginData.statusText === 'OK') {
+        setRedirect(true);
+      };
+
+      if ('token' in loginData.data) {
+        window.localStorage.setItem('logged_in', loginData.data.token);
+      };
     }
     catch (err) {
       console.log('Данное имя или логин уже используется другим пользователем: \n', err)
     }
   };
+
+  if (redirect) {
+    return <Navigate to='/frontend'/>
+  }
 
   return (
     <div className='w-[400px]'>
