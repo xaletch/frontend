@@ -24,9 +24,11 @@ export const NoteCreate: React.FC<MenuInterface> = ({ setMenuOpen, setTasks, tas
     setMenuOpen(true);
   };
 
+  const date = new Date();
+
   return (
     <div className='flex justify-center items-center flex-col h-screen w-screen absolute top-0 left-0 -z-10'>
-      <h2 className='text-2xl font-medium'>{user?.first_name}добро пожаловать</h2>
+      <h2 className='text-2xl font-medium'>{user?.first_name}{date.getHours() <= 11 && 'Доброе утро' || date.getHours() >= 11 && 'Добрый день' || date.getHours() >= 18 && 'Добрый вечер' }</h2>
       <button className='mt-4 inline-flex items-center justify-center rounded-sm text-sm font-medium bg-dark h-10 px-4 py-2 hover:opacity-90' style={{color: '#f1f1f1'}} onClick={handleAddTask}>
         <svg className='mr-2' width="16" height="16" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M9.8 5H8.2V8.2H5V9.8H8.2V13H9.8V9.8H13V8.2H9.8V5Z" fill="#F1F1F1"/>

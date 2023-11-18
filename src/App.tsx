@@ -8,6 +8,8 @@ import { Loading } from './components/Loading/Loading';
 import { Home } from './page/Home/Home';
 import { Note } from './page/Note/Note';
 import { PlanForDay } from './page/PlanForDay/PlanForDay';
+import { Register } from './page/Register/Register';
+import { Login } from './page/Login/Login';
 
 
 function App() {
@@ -23,8 +25,10 @@ function App() {
 
   return (
     <div className="App">
-      {isLoading && <Loading />}
+      {/* {isLoading && <Loading />} */}
       <Routes>
+        <Route path='/register' element={<Register />}/>
+        <Route path='/login' element={<Login />}></Route>
         <Route path='/frontend' element={!isLoading && <Home />}></Route>
         <Route path='frontend/note' element={!isLoading && <Note />}></Route>
         <Route path='frontend/plan-day' element={!isLoading && <PlanForDay />}></Route>

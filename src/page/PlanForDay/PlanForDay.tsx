@@ -21,7 +21,7 @@ export const PlanForDay = () => {
     <div className='h-full'>
       {menuOpen && <Menu selectTask={selectTask} setSelectTask={setSelectTask} selectOpenTask={selectOpenTask} setSelectOpenTask={setSelectOpenTask} setMenuOpen={setMenuOpen} setTasks={setTasks} tasks={tasks} setNewTask={setNewTask} newTask={newTask} />}
       <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} selectOpenTask={selectOpenTask} />
-      {!selectTask === null ? <ManageNote menuOpen={menuOpen} selectOpenTask={selectOpenTask} /> : <div className='w-full h-full flex items-center justify-center'>Перейдите в заметку</div>}
+      {/* {!selectTask === null ? <ManageNote menuOpen={menuOpen} selectOpenTask={selectOpenTask} /> : <div className='w-full h-full flex items-center justify-center'>Перейдите в заметку</div>} */}
       {tasks.length <= 0 && <NoteCreate setMenuOpen={setMenuOpen} setTasks={setTasks} tasks={tasks} newTask={newTask} />}
     </div>
   )

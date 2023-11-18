@@ -26,6 +26,7 @@ export default {
         'metal': '#565584',
         'tahiti': '#3ab7bf',
         'silver': '#ecebff',
+        'silver2': '#D1D1D9',
         'bubble-gum': '#ff77e9',
         'bermuda': '#78dcca',
         'red': '#f33232',
