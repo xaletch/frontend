@@ -42,7 +42,7 @@ function App() {
     userAuth();
   }, [])
 
-  console.log(userData);
+  // console.log(userData);
 
   return (
     <div className="App">

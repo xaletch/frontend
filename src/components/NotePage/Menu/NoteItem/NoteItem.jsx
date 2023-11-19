@@ -1,13 +1,24 @@
-import React, { useEffect } from 'react';
-import { updateNote } from '../../utils/HandleApi.ts';
+import Axios from '../../../../axios';
+import React, { useEffect, useState } from 'react';
+import { Action } from './Action';
 // interface NoteInterface {
 //     name: string;
 // }
 
-export const Note = ({ name, id, noteName, setNote, setNoteName, setIsUpdate, isUpdate, noteId, updateMode, deleteNote }) => {
+export const NoteItem = ({ name, id, noteName, setNote, setNoteName, setIsUpdate, isUpdate, noteId, handleUpdate, handleSelectNote }) => {
   const inputRef = React.useRef(null);
+  const [action, setAction] = useState(false);
 
   // console.log('123: ', noteName)
+
+  const handleDeleteNote = async (id) => {
+    try {
+      await Axios.delete(`/notes/delete/${id}`);
+      setNote(note => note.filter(item => item._id !== id));
+    } catch (err) {
+      console.log('Не удалось удалить заметку: \n', err);
+    }
+  };
 
   useEffect(() => {
     if (isUpdate) {
@@ -17,13 +28,31 @@ export const Note = ({ name, id, noteName, setNote, setNoteName, setIsUpdate, is
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter' && noteName.trim() !== '') {
-      updateNote(noteId, noteName, setNoteName, setNote, setIsUpdate)
+      setIsUpdate(false);
     };
+  };
+
+  useEffect(() => {
+    try {
+      const update = async () => {
+        if (isUpdate) {
+          await Axios.patch('/notes/update/' + noteId, { name: noteName });
+        };
+      };
+      update();
+    }
+    catch (err) {
+      console.log('При обновлении заметки произошла ошибка: \n', err);
+    }
+  }, [isUpdate, noteId, noteName]);
+
+  const actionNote = () => {
+    setAction(true);
   };
 
   return (
     <div>
-    <div className='page p-1 px-3 h-8 flex items-center justify-between font-medium cursor-pointer hover:bg-light-grey' onDoubleClick={updateMode}>
+    <div className='page p-1 px-3 h-8 flex items-center justify-between font-medium cursor-pointer hover:bg-light-grey' onDoubleClick={handleUpdate} onClick={() => handleSelectNote(id)}>
       <div className='flex items-center'>
         <div className='w-4 h-4 mr-1 rounded hover:bg-grey'>
           <svg className='h-4 w-4' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ stroke: "#676767" }}>
@@ -40,11 +69,12 @@ export const Note = ({ name, id, noteName, setNote, setNoteName, setIsUpdate, is
           }
       </div>
       <div className='setting flex items-center gap-2'>
-        <button className='w-5 h-5 flex justify-center items-center rounded hover:bg-grey' onClick={deleteNote}>
+        <button className='w-5 h-5 flex justify-center items-center rounded hover:bg-grey' onClick={actionNote}>
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="4" viewBox="0 0 16 4" fill="none">
             <path d="M8 0C6.9 0 6 0.9 6 2C6 3.1 6.9 4 8 4C9.1 4 10 3.1 10 2C10 0.9 9.1 0 8 0ZM14 0C12.9 0 12 0.9 12 2C12 3.1 12.9 4 14 4C15.1 4 16 3.1 16 2C16 0.9 15.1 0 14 0ZM2 0C0.9 0 0 0.9 0 2C0 3.1 0.9 4 2 4C3.1 4 4 3.1 4 2C4 0.9 3.1 0 2 0Z" fill="#676767"/>
           </svg>
         </button>
+        {action && <Action action={action} setAction={setAction} handleDeleteNote={() => handleDeleteNote(id)} handleUpdate={handleUpdate} />}
         <button className='w-5 h-5 flex justify-center items-center rounded hover:bg-grey'>
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 14 14" fill="none">
             <path d="M14 6H8V0H6V6H0V8H6V14H8V8H14V6Z" fill="#676767"/>

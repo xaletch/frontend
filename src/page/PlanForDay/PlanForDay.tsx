@@ -1,28 +1,49 @@
-import React, { useState } from 'react'
-import { Header } from '../../components/NotePage/Header'
-import { Menu } from '../../components/NotePage/Menu/Menu'
+import React, { useEffect, useState } from 'react'
+
+import { Header } from '../../components/NotePage/Header';
+import { Menu } from '../../components/NotePage/Menu/Menu';
 import { NoteCreate } from '../../components/NotePage/NoteCreate/NoteCreate';
 import { ManageNote } from '../../components/NotePage/ManageNote/ManageNote';
+import Axios from '../../axios';
 
-interface TaskInterface { 
+type NoteType = {
+  _id: string;
   name: string;
 }
 
 export const PlanForDay = () => {
+  const [note, setNote] = useState<NoteType[]>([]);
   const [menuOpen, setMenuOpen] = useState<boolean>(true);
-  const [tasks, setTasks] = useState<Array<TaskInterface>>([]);
-  const [newTask, setNewTask] = useState<string>("без названия");
-  const [selectOpenTask, setSelectOpenTask] = useState<string>("");
+  const [isUpdate, setIsUpdate] = useState(false);
+  const [addNote, setAddNote] = useState(false);
+  const [selectedNote, setSelectedNote] = useState("");
 
-  const [selectTask, setSelectTask] = useState<number | null>(null);
-  // console.log(tasks.length);
+  useEffect(() => {
+    const noteData = async () => {
+      try {
+        const data = await Axios.get('/notes');
+        setNote(data.data);
+        setAddNote(false);
+      }
+      catch (err) {
+        console.log('При получении заметок произошла ошибка: \n', err);
+      }
+    }
+    noteData();
+  }, [isUpdate, addNote]);
+
+  const handleSelectNote = async (i: any) => {
+    const selectNote = await Axios.get(`/notes/oneNote/${i}`);
+    setSelectedNote(selectNote.data.name);
+  }
 
   return (
     <div className='h-full'>
-      {menuOpen && <Menu selectTask={selectTask} setSelectTask={setSelectTask} selectOpenTask={selectOpenTask} setSelectOpenTask={setSelectOpenTask} setMenuOpen={setMenuOpen} setTasks={setTasks} tasks={tasks} setNewTask={setNewTask} newTask={newTask} />}
-      <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} selectOpenTask={selectOpenTask} />
+      {menuOpen && <Menu handleSelectNote={handleSelectNote} setMenuOpen={setMenuOpen} setAddNote={setAddNote} setIsUpdate={setIsUpdate} isUpdate={isUpdate} note={note} setNote={setNote} />}
+      <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} selectedNote={selectedNote} />
+      {/* <ManageNote menuOpen={menuOpen} /> */}
       {/* {!selectTask === null ? <ManageNote menuOpen={menuOpen} selectOpenTask={selectOpenTask} /> : <div className='w-full h-full flex items-center justify-center'>Перейдите в заметку</div>} */}
-      {tasks.length <= 0 && <NoteCreate setMenuOpen={setMenuOpen} setTasks={setTasks} tasks={tasks} newTask={newTask} />}
+      {note === null && <NoteCreate setMenuOpen={setMenuOpen} />}
     </div>
   )
 }

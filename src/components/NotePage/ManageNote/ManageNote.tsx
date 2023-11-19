@@ -7,13 +7,12 @@ import { UploadingImg } from './UploadingImg/UploadingImg';
 
 interface ManageNoteInterface {
     menuOpen: boolean;
-    selectOpenTask: string;
 };
 
 interface File {
 }
 
-export const ManageNote: React.FC<ManageNoteInterface> = ({ menuOpen, selectOpenTask }) => {
+export const ManageNote: React.FC<ManageNoteInterface> = ({ menuOpen }) => {
     const [showEmoji, setShowEmoji] = useState<boolean>(false);
     const [selectEmoji, setSelectEmoji] = useState<string>("");
     const [file, setFile] = useState<File | null>(null);
@@ -84,8 +83,8 @@ export const ManageNote: React.FC<ManageNoteInterface> = ({ menuOpen, selectOpen
                             {showEmoji && <Smile selectEmoji={selectEmoji} setSelectEmoji={setSelectEmoji} />}
                             <input className='hidden' type='file' ref={fileRef} onChange={handleChange} accept='image/*, .png, .jpg, .gif, .web' />
                         </div>
-                        <h1>{selectOpenTask}</h1>
-                        <UploadingImg/>
+                        <h1>TEST</h1>
+                        {/* <UploadingImg/> */}
                     </div>
                 </div>
             </div>
