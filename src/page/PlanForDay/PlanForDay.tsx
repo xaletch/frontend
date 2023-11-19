@@ -17,7 +17,7 @@ export const PlanForDay = () => {
   const [isUpdate, setIsUpdate] = useState(false);
   const [addNote, setAddNote] = useState(false);
   const [selectedNote, setSelectedNote] = useState("");
-
+ 
   useEffect(() => {
     const noteData = async () => {
       try {
@@ -43,7 +43,7 @@ export const PlanForDay = () => {
       <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} selectedNote={selectedNote} />
       {/* <ManageNote menuOpen={menuOpen} /> */}
       {/* {!selectTask === null ? <ManageNote menuOpen={menuOpen} selectOpenTask={selectOpenTask} /> : <div className='w-full h-full flex items-center justify-center'>Перейдите в заметку</div>} */}
-      {note === null && <NoteCreate setMenuOpen={setMenuOpen} />}
+      {note === null || selectedNote === '' && <NoteCreate setMenuOpen={setMenuOpen} />}
     </div>
   )
 }

@@ -11,6 +11,7 @@ import { PlanForDay } from './page/PlanForDay/PlanForDay';
 import { Register } from './page/Register/Register';
 import { Login } from './page/Login/Login';
 import Axios from './axios';
+import { Header } from './components/Header/Header';
 
 
 function App() {
@@ -36,7 +37,7 @@ function App() {
       }
       catch (err) {
         console.log('Вы ещё не вошли в аккаунт: \n', err);
-        return navigate('login');
+        // return navigate('login');
       }
     }
     userAuth();

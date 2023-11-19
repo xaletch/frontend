@@ -6,3 +6,8 @@ body {
     background: #FFF;
     color: #1f1f1f;
 }
+
+.container {
+    max-width: 1300px;
+    margin: 0 auto;
+}
