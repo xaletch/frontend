@@ -1,18 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
-
 import './ManageNote.css';
 
 import { Smile } from './Smile/Smile';
-import { UploadingImg } from './UploadingImg/UploadingImg';
+import { Editor } from './Editor';
 
 interface ManageNoteInterface {
     menuOpen: boolean;
+    name?: string | undefined;
+    smile?: string | undefined;
+    title?: string | undefined;
+    text?: string | undefined;
 };
 
-interface File {
-}
-
-export const ManageNote: React.FC<ManageNoteInterface> = ({ menuOpen }) => {
+export const ManageNote: React.FC<ManageNoteInterface> = ({ menuOpen, name, title, text }) => {
     const [showEmoji, setShowEmoji] = useState<boolean>(false);
     const [selectEmoji, setSelectEmoji] = useState<string>("");
     const [file, setFile] = useState<File | null>(null);
@@ -34,23 +34,6 @@ export const ManageNote: React.FC<ManageNoteInterface> = ({ menuOpen }) => {
             fileRef.current.click();
         };
     };
-
-    const handleUpload = async () => {
-        const formData = new FormData();
-        // formData.append('file', file);
-
-        try {
-            const res = await fetch('http://localhost:8000/upload', {
-                method: 'POST',
-                body: formData,
-            });
-            const data = await res.json();
-            setUploaded(data);
-        } catch (error) {
-            console.error('Ошибка при выполнении запроса:', error);
-        }
-    };
-
     return (
         <div className='flex-1 h-screen relative' style={{width: `${menuOpen === false ? `calc(100%)` : `calc(100% - 240px)`}`, left: `${menuOpen === false ? `0` : `240px`}`}}>
             <div className='pt-14'>
@@ -83,8 +66,13 @@ export const ManageNote: React.FC<ManageNoteInterface> = ({ menuOpen }) => {
                             {showEmoji && <Smile selectEmoji={selectEmoji} setSelectEmoji={setSelectEmoji} />}
                             <input className='hidden' type='file' ref={fileRef} onChange={handleChange} accept='image/*, .png, .jpg, .gif, .web' />
                         </div>
-                        <h1>TEST</h1>
-                        {/* <UploadingImg/> */}
+                        <div>
+                            <h1 className='text-5xl font-bold text-dark'>{name  }</h1>
+                            <div className='mt-2'>
+                                <p className='text-md text-dark'>{text}</p>
+                            </div>
+                            <Editor />
+                        </div>
                     </div>
                 </div>
             </div>

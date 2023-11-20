@@ -1,9 +1,17 @@
 import React, { Dispatch, SetStateAction } from 'react'
 
+type SelectNote = {
+  name: string;
+  imageUrl: string;
+  smile: string;
+  title: string;
+  text: string;
+}
+
 interface MenuInterface {
   menuOpen: boolean;
   setMenuOpen: Dispatch<SetStateAction<boolean>>;
-  selectedNote: string;
+  selectedNote: SelectNote[];
 }
 
 export const Header: React.FC<MenuInterface> = ({ menuOpen, setMenuOpen, selectedNote }) => {
@@ -18,7 +26,7 @@ export const Header: React.FC<MenuInterface> = ({ menuOpen, setMenuOpen, selecte
           <path d="M0 0H16V2H0V0ZM0 5H16V7H0V5ZM0 10H16V12H0V10Z" fill="#CCCCCC"/>
         </svg>
         <div className='w-full flex justify-between'>
-          <div className='text-sm h-auto p-1'>{selectedNote}</div>
+          <div className='text-sm h-auto p-1'>{}</div>
           <div className={'flex items-center'}>
             <button className='px-3 text-sm h-auto cursor-pointer'>
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
