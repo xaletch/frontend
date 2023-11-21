@@ -37,6 +37,8 @@ export default {
         'light': '#E4E4E4',
         'secondary2': '#F6F6F6',
         'black05': 'rgba(0, 0, 0, 0.100)',
+        'noteName': '#333332',
+        'note': '#b3b3b1',
       },
     extend: {},
   },
