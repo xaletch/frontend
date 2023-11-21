@@ -55,7 +55,7 @@ export const PlanForDay = () => {
       {/* <ManageNote menuOpen={menuOpen} /> */}
       {selectedNote && Array.isArray(selectedNote) ? selectedNote.map((obj, index) => <ManageNote key={index} {...obj} menuOpen={menuOpen} />) : <ManageNote {...selectedNote} menuOpen={menuOpen} />}
       {/* {selectedNote ? <ManageNote menuOpen={menuOpen} /> : <div className='w-full h-full flex items-center justify-center'>Перейдите в заметку</div>} */}
-      {/* {note === null || selectedNote === null && <NoteCreate setMenuOpen={setMenuOpen} />} */}
+      {note === null && <NoteCreate setMenuOpen={setMenuOpen} />}
     </div>
   )
 }
