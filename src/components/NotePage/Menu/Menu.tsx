@@ -20,6 +20,7 @@ interface MenuInterface {
 type NoteType = {
   _id: string;
   name: string;
+  smile: string;
 }
 
 export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, setAddNote, setIsUpdate, note, setNote, isUpdate, handleSelectNote }) => {
@@ -82,7 +83,7 @@ export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, setAddNote, setIsUp
         </div>
         <div className='mt-4'>
           {note.map((item: NoteType) => <NoteItem 
-            key={item._id} name={item.name} id={item._id}
+            key={item._id} name={item.name} id={item._id} smile={item.smile}
             noteName={noteName} setNote={setNote} setNoteName={setNoteName} setIsUpdate={setIsUpdate} isUpdate={isUpdate} noteId={noteId}
             handleUpdate={() => handleUpdate(item._id, item.name)}
             handleSelectNote={handleSelectNote}

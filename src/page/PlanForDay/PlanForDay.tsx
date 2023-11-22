@@ -5,10 +5,12 @@ import { Menu } from '../../components/NotePage/Menu/Menu';
 import { NoteCreate } from '../../components/NotePage/NoteCreate/NoteCreate';
 import { ManageNote } from '../../components/NotePage/ManageNote/ManageNote';
 import Axios from '../../axios';
+import { SelectNote } from './SelectNote/SelectNote';
 
 type NoteType = {
   _id: string;
   name: string;
+  smile: string;
 }
 
 type SelectNote = {
@@ -39,21 +41,22 @@ export const PlanForDay = () => {
     noteData();
   }, [isUpdate, addNote]);
 
-  console.log("NOTE: ", note);
+  // console.log("NOTE: ", note);
 
   const handleSelectNote = async (id: any) => {
     const selectNote = await Axios.get(`/notes/oneNote/${id}`);
     setSelectedNote(selectNote.data);
   }
 
-  console.log("SELECTNOTE: ", selectedNote); 
+  // console.log("SELECTNOTE: ", selectedNote); 
 
   return (
     <div className='h-full'>
       {menuOpen && <Menu handleSelectNote={handleSelectNote} setMenuOpen={setMenuOpen} setAddNote={setAddNote} setIsUpdate={setIsUpdate} isUpdate={isUpdate} note={note} setNote={setNote} />}
+      {/* <SelectNote /> */}
       {/* <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} selectedNote={selectedNote} /> */}
       {/* <ManageNote menuOpen={menuOpen} /> */}
-      {selectedNote && Array.isArray(selectedNote) ? selectedNote.map((obj, index) => <ManageNote key={index} {...obj} menuOpen={menuOpen} />) : <ManageNote {...selectedNote} menuOpen={menuOpen} />}
+      {/* {selectedNote && Array.isArray(selectedNote) ? selectedNote.map((obj, index) => <ManageNote key={index} {...obj} menuOpen={menuOpen} setAddNote={setAddNote} />) : <ManageNote {...selectedNote} menuOpen={menuOpen} setAddNote={setAddNote} />} */}
       {/* {selectedNote ? <ManageNote menuOpen={menuOpen} /> : <div className='w-full h-full flex items-center justify-center'>Перейдите в заметку</div>} */}
       {note === null && <NoteCreate setMenuOpen={setMenuOpen} />}
     </div>

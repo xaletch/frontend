@@ -12,6 +12,7 @@ import { Register } from './page/Register/Register';
 import { Login } from './page/Login/Login';
 import Axios from './axios';
 import { Header } from './components/Header/Header';
+import { SelectNote } from './page/PlanForDay/SelectNote/SelectNote';
 
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
         <Route path='/frontend' element={!isLoading && <Home />}></Route>
         <Route path='frontend/note' element={!isLoading && <Note />}></Route>
         <Route path='frontend/plan-day' element={!isLoading && <PlanForDay />}></Route>
+        <Route path='frontend/plan-day/:_id' element={<SelectNote />}></Route>
       </Routes>
     </div>
   );
