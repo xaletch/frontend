@@ -6,13 +6,13 @@ import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 
 import { Loading } from './components/Loading/Loading';
 import { Home } from './page/Home/Home';
-import { Note } from './page/Note/Note';
+import { Note } from './page/Notes/Note';
 import { PlanForDay } from './page/PlanForDay/PlanForDay';
 import { Register } from './page/Register/Register';
 import { Login } from './page/Login/Login';
 import Axios from './axios';
 import { Header } from './components/Header/Header';
-import { SelectNote } from './page/PlanForDay/SelectNote/SelectNote';
+import { SelectNote } from './page/Notes/SelectNote';
 
 
 function App() {
@@ -54,8 +54,10 @@ function App() {
         <Route path='/login' element={<Login />}></Route>
         <Route path='/frontend' element={!isLoading && <Home />}></Route>
         <Route path='frontend/note' element={!isLoading && <Note />}></Route>
-        <Route path='frontend/plan-day' element={!isLoading && <PlanForDay />}></Route>
-        <Route path='frontend/plan-day/:_id' element={<SelectNote />}></Route>
+        {/* <Route path='frontend/plan-day' element={!isLoading && <PlanForDay />}></Route> */}
+        {/* <Route path='frontend/plan-day/:_id' element={<SelectNote />}></Route> */}
+        <Route path='/note' element={<Note />}></Route>
+        <Route path='/:_id' element={<SelectNote />}></Route>
       </Routes>
     </div>
   );
