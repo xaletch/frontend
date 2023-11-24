@@ -25,6 +25,20 @@ export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, menuOpen, isUpdate,
   const [noteId, setNoteId] = useState<string>("");
   const [note, setNote] = useState<NoteType[]>([]);
   const [addNote, setAddNote] = useState(false);
+  const [username, setUsername] = useState<string>("");
+
+  useEffect(() => {
+    const myAccount = async () => {
+      try {
+        const { data } = await Axios.get('/user/account');
+        setUsername(data.username);
+      }
+      catch (err) {
+        console.log('При получении имени пользователя произошла ошибка: \n', err);
+      }
+    };
+    myAccount();
+  }, []);
  
   useEffect(() => {
     const noteData = async () => {
@@ -70,11 +84,10 @@ export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, menuOpen, isUpdate,
         <div>
           <div className='p-3 flex justify-between text-center'>
             <div className='gap-2 flex items-center'>
-              <span>
-                {/* <img className='rounded-full h-8 w-8' src={user?.photo_url} alt="" /> */}
-                <img className='rounded-full h-8 w-8' src={link_img.emptyAvatar} alt="" />
-              </span>
-              <span className='text-base font-medium capitalize'>{}</span>
+              <div className='w-[24px] h-[24px] bg-light-grey rounded-md flex justify-center items-center'>
+                <span className='text-base uppercase font-medium text-username'>{username[0]}</span>
+              </div>
+              <span className='text-base font-medium capitalize text-noteName'>{username}</span>
             </div>
             <div className='p-1 cursor-pointer flex items-center rounded hover:bg-grey' onClick={handleCloseMenu}>
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" viewBox="0 0 16 12" fill="none">

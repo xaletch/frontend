@@ -39,6 +39,8 @@ export default {
         'black05': 'rgba(0, 0, 0, 0.100)',
         'noteName': '#333332',
         'note': '#b3b3b1',
+        'username': 'rgba(55, 53, 47, 0.65)',
+        'select': '#0000000a',
       },
     extend: {},
   },

@@ -47,8 +47,8 @@ export const NoteItem = ({ name, id, noteName, smile, setNote, setNoteName, setI
   };
 
   return (
-    <div>
-    <div className='page p-1 px-3 h-8 flex items-center justify-between font-medium cursor-pointer hover:bg-light-grey' onDoubleClick={handleUpdate} onClick={() => handleSelectNote(id)}>
+    <div className='px-1'>
+    <div className={`${noteId ? 'page p-1 px-3 h-8 flex items-center justify-between font-medium cursor-pointer bg-select' : 'page p-1 px-3 h-8 flex items-center justify-between font-medium cursor-pointer hover:bg-light-grey'}`} onDoubleClick={handleUpdate} onClick={() => handleSelectNote(id)}>
       <div className='flex items-center'>
         <div className='w-4 h-4 mr-1 rounded hover:bg-grey'>
           <svg className='h-4 w-4' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ stroke: "#676767" }}>
