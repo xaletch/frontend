@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
-import { Editor } from '../NotePage/ManageNote/Editor';
+import { Editor } from './Editor/Editor';
 import { Smile } from '../NotePage/ManageNote/Smile/Smile';
 import Axios from '../../axios';
 
@@ -12,9 +12,10 @@ interface NoteContentInterface {
   id: string | undefined;
   noteUpdate: boolean;
   setNoteUpdate: Dispatch<SetStateAction<boolean>>;
+  blocks: [] | undefined;
 }
 
-export const NoteContent: React.FC<NoteContentInterface> = ({ menuOpen, imageUrl, name, smile, text, id, setNoteUpdate, noteUpdate }) => {
+export const NoteContent: React.FC<NoteContentInterface> = ({ menuOpen, imageUrl, name, smile, text, id, setNoteUpdate, noteUpdate, blocks }) => {
   const [showEmoji, setShowEmoji] = useState<boolean>(false);
   const [selectEmoji, setSelectEmoji] = useState<string>("");
   const [image, setImage] = useState("");
@@ -67,6 +68,16 @@ export const NoteContent: React.FC<NoteContentInterface> = ({ menuOpen, imageUrl
     }
   }, [image, selectEmoji]);
 
+  const onChange = async (content: string) => {
+    try {
+      // const data = JSON.stringify(content);
+      // await Axios.patch('/notes/update/' + id, { blocks: data });
+    }
+    catch (err) {
+      console.log('При добавлении контента в заметке произошла ошибка: \n', err)
+    }
+  };
+
   return (
     <div className='flex-1 h-screen relative' style={{width: `${menuOpen === true ? `calc(100%)` : `calc(100% - 240px)`}`, left: `${menuOpen === true ? `0` : `240px`}`}}>
       <div className='pt-11'>
@@ -80,7 +91,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({ menuOpen, imageUrl
           </div>
         )}
         {name && (
-          <div className='md:max-w-3xl lg:max-w-4xl mx-auto'>
+          <div className='md:max-w-3xl lg:max-w-4xl mx-auto pb-12'>
             <div className='pl-14 manage-note'>
               <div className={`text-7xl flex items-center gap-3 ${smile === "" ? 'hidden' : ''}`}>
                 <button>{smile}</button>
@@ -113,7 +124,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({ menuOpen, imageUrl
                     <div className='mt-2'>
                       <p className='text-md text-dark'>{text}</p>
                     </div>
-                    <Editor />
+                    <Editor onChange={onChange} initialContent={blocks} />
                 </div>
                </div>
             </div>

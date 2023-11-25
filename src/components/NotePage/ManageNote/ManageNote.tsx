@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 're
 import './ManageNote.css';
 
 import { Smile } from './Smile/Smile';
-import { Editor } from './Editor';
+// import { Editor } from '../../Notes/Editor/Editor';
 import Axios from '../../../axios';
 
 interface ManageNoteInterface {
@@ -119,7 +119,7 @@ export const ManageNote: React.FC<ManageNoteInterface> = ({ menuOpen, setAddNote
                                 <div className='mt-2'>
                                     <p className='text-md text-dark'>{text}</p>
                                 </div>
-                                <Editor />
+                                {/* <Editor /> */}
                             </div>
                         </div>
                     </div>

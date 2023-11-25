@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import './SelectNote.css';
 
 import { Smile } from '../../../components/NotePage/ManageNote/Smile/Smile';
-import { Editor } from '../../../components/NotePage/ManageNote/Editor';
+// import { Editor } from '../../../components/Notes/Editor/Editor';
 import Axios from '../../../axios';
 import { useParams } from 'react-router-dom';
 
@@ -141,7 +141,7 @@ export const SelectNote: React.FC = () => {
                                 <div className='mt-2'>
                                     <p className='text-md text-dark'>{selectNote?.text}</p>
                                 </div>
-                                <Editor />
+                                {/* <Editor /> */}
                             </div>
                         </div>
                     </div>

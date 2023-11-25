@@ -11,6 +11,7 @@ type NoteData = {
     title: string;
     smile: string;
     text: string;
+    blocks: [];
 }
 
 export const SelectNote = () => {
@@ -27,9 +28,11 @@ export const SelectNote = () => {
             try {
                 if (_id) {
                     const { data } = await Axios.get('/notes/oneNote/' + _id);
+                    // data.blocks = JSON.parse(data.blocks);
                     setSelectNote(data);
                     setIsUpdate(false);
                     setNoteUpdate(false);
+                    // console.log(JSON.parse(data.blocks));
                 }
             }
             catch (err) {
@@ -39,10 +42,12 @@ export const SelectNote = () => {
         fetchNote();
     }, [_id, isUpdate, noteUpdate]);
 
+    console.log('selectNote?.blocks: ', selectNote?.blocks);
+
     return (
         <div>
             <Menu setMenuOpen={setMenuOpen} menuOpen={menuOpen} isUpdate={isUpdate} setIsUpdate={setIsUpdate} />
-            <NoteContent menuOpen={menuOpen} imageUrl={selectNote?.imageUrl} name={selectNote?.name} smile={selectNote?.smile} text={selectNote?.text} id={selectNote?._id} noteUpdate={noteUpdate} setNoteUpdate={setNoteUpdate} />
+            <NoteContent menuOpen={menuOpen} imageUrl={selectNote?.imageUrl} name={selectNote?.name} smile={selectNote?.smile} text={selectNote?.text} id={selectNote?._id} noteUpdate={noteUpdate} setNoteUpdate={setNoteUpdate} blocks={selectNote?.blocks} />
         </div>
     )
 }

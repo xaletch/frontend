@@ -4,6 +4,8 @@
   "private": true,
   "homepage": "https://xaletch.github.io/frontend",
   "dependencies": {
+    "@blocknote/core": "^0.9.6",
+    "@blocknote/react": "^0.9.6",
     "@emoji-mart/data": "^1.1.2",
     "@emoji-mart/react": "^1.1.1",
     "@testing-library/jest-dom": "^5.17.0",

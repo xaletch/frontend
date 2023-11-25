@@ -79,7 +79,7 @@ export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, menuOpen, isUpdate,
   }
 
   return (
-    <div className='bg-secondary h-full w-60 absolute top-0 left-0 overflow-hidden'>
+    <div className='bg-secondary h-full w-60 fixed top-0 left-0 overflow-hidden'>
       <div className='h-full bg-secondary flex flex-col'>
         <div>
           <div className='p-3 flex justify-between text-center'>
