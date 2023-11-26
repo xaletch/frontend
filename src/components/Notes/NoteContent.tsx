@@ -2,6 +2,23 @@ import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 're
 import { Editor } from './Editor/Editor';
 import { Smile } from '../NotePage/ManageNote/Smile/Smile';
 import Axios from '../../axios';
+import { PartialBlock } from '@blocknote/core';
+
+interface Blocks {
+  id: string;
+  type: string;
+  props: {
+      textColor: string;
+      backgroundColor: string;
+      textAlignment: string;
+  };
+  content: Array<{
+      type: string;
+      text?: string;
+      styles?: {};
+  }>;
+  children: Blocks[];
+};
 
 interface NoteContentInterface {
   menuOpen: boolean;
@@ -12,7 +29,7 @@ interface NoteContentInterface {
   id: string | undefined;
   noteUpdate: boolean;
   setNoteUpdate: Dispatch<SetStateAction<boolean>>;
-  blocks: [] | undefined;
+  blocks: Blocks[] | undefined;
 }
 
 export const NoteContent: React.FC<NoteContentInterface> = ({ menuOpen, imageUrl, name, smile, text, id, setNoteUpdate, noteUpdate, blocks }) => {
@@ -70,8 +87,8 @@ export const NoteContent: React.FC<NoteContentInterface> = ({ menuOpen, imageUrl
 
   const onChange = async (content: string) => {
     try {
-      // const data = JSON.stringify(content);
-      // await Axios.patch('/notes/update/' + id, { blocks: data });
+      const data = JSON.stringify(content);
+      await Axios.patch('/notes/update/' + id, { blocks: data });
     }
     catch (err) {
       console.log('При добавлении контента в заметке произошла ошибка: \n', err)

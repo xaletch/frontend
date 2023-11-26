@@ -4,6 +4,22 @@ import { NoteContent } from '../../components/Notes/NoteContent';
 import { useParams } from 'react-router-dom';
 import Axios from '../../axios';
 
+interface Blocks {
+    id: string;
+    type: string;
+    props: {
+        textColor: string;
+        backgroundColor: string;
+        textAlignment: string;
+    };
+    content: Array<{
+        type: string;
+        text?: string;
+        styles?: {};
+    }>;
+    children: Blocks[];
+}
+
 type NoteData = {
     _id: string;
     imageUrl: string;
@@ -11,7 +27,7 @@ type NoteData = {
     title: string;
     smile: string;
     text: string;
-    blocks: [];
+    blocks: Blocks[];
 }
 
 export const SelectNote = () => {
@@ -28,10 +44,10 @@ export const SelectNote = () => {
             try {
                 if (_id) {
                     const { data } = await Axios.get('/notes/oneNote/' + _id);
-                    // data.blocks = JSON.parse(data.blocks);
                     setSelectNote(data);
                     setIsUpdate(false);
                     setNoteUpdate(false);
+                    data.blocks = JSON.parse(data.blocks);
                     // console.log(JSON.parse(data.blocks));
                 }
             }
