@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BlockNoteEditor } from "@blocknote/core";
 import { BlockNoteView, useBlockNote } from "@blocknote/react";
 import "@blocknote/core/style.css";
@@ -25,10 +25,20 @@ interface PartialBlock {
 
 interface EditorProps {
   onChange: (value: string) => void;
-  initialContent?: PartialBlock[] | string;
+  initialContent?: PartialBlock[] | [];
 }
 
 export const Editor: React.FC<EditorProps> = ({ onChange, initialContent }) => {
+  // const [transformedInitialContent, setTransformedInitialContent] = useState([]);
+
+  console.log('initialContent: ', initialContent);
+
+  // useEffect(() => {
+  //   if (initialContent && typeof initialContent === 'string') {
+  //     setTransformedInitialContent(JSON.parse(initialContent))
+  //   }
+  // }, [initialContent]);
+
   let transformedInitialContent;
   if (initialContent && typeof initialContent === 'string') {
     transformedInitialContent = JSON.parse(initialContent);

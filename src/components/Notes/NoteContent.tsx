@@ -2,9 +2,10 @@ import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 're
 import { Editor } from './Editor/Editor';
 import { Smile } from '../NotePage/ManageNote/Smile/Smile';
 import Axios from '../../axios';
-import { PartialBlock } from '@blocknote/core';
 
-interface Blocks {
+import './NoteContent.css';
+
+interface PartialBlock {
   id: string;
   type: string;
   props: {
@@ -17,7 +18,7 @@ interface Blocks {
       text?: string;
       styles?: {};
   }>;
-  children: Blocks[];
+  children: PartialBlock[];
 };
 
 interface NoteContentInterface {
@@ -29,7 +30,7 @@ interface NoteContentInterface {
   id: string | undefined;
   noteUpdate: boolean;
   setNoteUpdate: Dispatch<SetStateAction<boolean>>;
-  blocks: Blocks[] | undefined;
+  blocks: PartialBlock[] | undefined;
 }
 
 export const NoteContent: React.FC<NoteContentInterface> = ({ menuOpen, imageUrl, name, smile, text, id, setNoteUpdate, noteUpdate, blocks }) => {
@@ -95,13 +96,15 @@ export const NoteContent: React.FC<NoteContentInterface> = ({ menuOpen, imageUrl
     }
   };
 
+  // console.log(blocks);
+
   return (
     <div className='flex-1 h-screen relative' style={{width: `${menuOpen === true ? `calc(100%)` : `calc(100% - 240px)`}`, left: `${menuOpen === true ? `0` : `240px`}`}}>
       <div className='pt-11'>
         {imageUrl && (
-          <div className='relative w-full h-[28vh] group top-0'>
+          <div className='img relative w-full h-[28vh] group top-0'>
             <img className='absolute h-full w-full inset-0 object-cover' src={`http://localhost:8000/${imageUrl}`} alt={''} />
-            <div className='absolute z-10 bottom-3 right-6 flex gap-2'>
+            <div className='button-img absolute z-10 bottom-3 right-6 flex gap-2'>
               <button className='p-1 px-2 rounded-md bg-noteName text-sm text-white' onClick={() => {handleOpenFile()}}>Update</button>
               <button className='p-1 px-2 rounded-md bg-noteName text-sm text-white'>Delete</button>
             </div>
@@ -139,9 +142,8 @@ export const NoteContent: React.FC<NoteContentInterface> = ({ menuOpen, imageUrl
                 <div>
                   <h1 className='text-5xl font-bold text-noteName'>{name}</h1>
                     <div className='mt-2'>
-                      <p className='text-md text-dark'>{text}</p>
+                      <Editor onChange={onChange} initialContent={blocks} />
                     </div>
-                    <Editor onChange={onChange} initialContent={blocks} />
                 </div>
                </div>
             </div>

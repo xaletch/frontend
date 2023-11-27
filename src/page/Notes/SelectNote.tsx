@@ -48,7 +48,6 @@ export const SelectNote = () => {
                     setIsUpdate(false);
                     setNoteUpdate(false);
                     data.blocks = JSON.parse(data.blocks);
-                    // console.log(JSON.parse(data.blocks));
                 }
             }
             catch (err) {
@@ -58,7 +57,7 @@ export const SelectNote = () => {
         fetchNote();
     }, [_id, isUpdate, noteUpdate]);
 
-    console.log('selectNote?.blocks: ', selectNote?.blocks);
+    // console.log('selectNote?.blocks: ', selectNote?.blocks);
 
     return (
         <div>
