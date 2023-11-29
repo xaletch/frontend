@@ -6,7 +6,7 @@ export default {
   ],
   theme: {
       fontSize: {
-        vsm: '0.5',
+        vsm: '0.5rem',
         sm: '0.8rem',
         base: '0.875',
         x1: '1rem',
@@ -16,6 +16,7 @@ export default {
         '5xl': '1.953rem',
         '6xl': '2.441rem',
         '7xl': '3.052rem',
+        '8xl': '3.75rem',
       },
       colors: {
         transparent: 'transparent',
@@ -45,6 +46,8 @@ export default {
         'grey2': '#676767',
         'light-gray2': '#ABABAB',
         'white-2': '#F0F0F0',
+        'text-home': '#050505',
+        'button': '#121212',
       },
     extend: {},
   },
