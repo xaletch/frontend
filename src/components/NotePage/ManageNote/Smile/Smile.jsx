@@ -15,7 +15,7 @@ export const Smile = ({ selectEmoji, setSelectEmoji }) => {
   };
 
   return (
-    <div className='absolute top-14 left-0'>
+    <div className='absolute top-14 left-0 z-50'>
       <Picker data={data} onEmojiSelect={handleAddEmoji} />
     </div>
   )

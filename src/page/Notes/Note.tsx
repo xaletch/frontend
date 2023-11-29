@@ -7,7 +7,7 @@ export const Note = () => {
 
     return (
         <div>
-            <Menu setMenuOpen={setMenuOpen} menuOpen={menuOpen} isUpdate={isUpdate} setIsUpdate={setIsUpdate} />
+            {/* <Menu setMenuOpen={setMenuOpen} menuOpen={menuOpen} isUpdate={isUpdate} setIsUpdate={setIsUpdate} /> */}
         </div>
     )
 }

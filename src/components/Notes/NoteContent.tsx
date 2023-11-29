@@ -99,10 +99,10 @@ export const NoteContent: React.FC<NoteContentInterface> = ({ menuOpen, imageUrl
   // console.log(blocks);
 
   return (
-    <div className='flex-1 h-screen relative' style={{width: `${menuOpen === true ? `calc(100%)` : `calc(100% - 240px)`}`, left: `${menuOpen === true ? `0` : `240px`}`}}>
+    <div className='flex-1 h-screen relative z-0' style={{width: `${menuOpen === true ? `calc(100%)` : `calc(100% - 240px)`}`, left: `${menuOpen === true ? `0` : `240px`}`}}>
       <div className='pt-11'>
         {imageUrl && (
-          <div className='img relative w-full h-[28vh] group top-0'>
+          <div className='img relative w-full h-[28vh] group top-0 z-0'>
             <img className='absolute h-full w-full inset-0 object-cover' src={`http://localhost:8000/${imageUrl}`} alt={''} />
             <div className='button-img absolute z-10 bottom-3 right-6 flex gap-2'>
               <button className='p-1 px-2 rounded-md bg-noteName text-sm text-white' onClick={() => {handleOpenFile()}}>Update</button>

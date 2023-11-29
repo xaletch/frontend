@@ -4,6 +4,12 @@ import { NoteContent } from '../../components/Notes/NoteContent';
 import { useParams } from 'react-router-dom';
 import Axios from '../../axios';
 
+import { Control } from '../../components/Notes/Control/Control';
+
+interface User {
+    username: string;
+}
+
 interface Blocks {
     id: string;
     type: string;
@@ -27,17 +33,31 @@ type NoteData = {
     title: string;
     smile: string;
     text: string;
+    user: User;
     blocks: Blocks[];
+}
+
+type NoteType = {
+    _id: string;
+    name: string;
+    smile: string;
+}
+
+type idType = {
+    _id: string;
 }
 
 export const SelectNote = () => {
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const [isUpdate, setIsUpdate] = useState(false);
     const [noteUpdate, setNoteUpdate] = useState(false);
-    
+    const [isControl, setIsControl] = useState(false);
+    const [username, setUsername] = useState<string>("");
+    const [controlCords, setControlCords] = useState({x: 0, y: 0});
 
     const { _id } = useParams();
     const [selectNote, setSelectNote] = useState<NoteData>();
+    const [note, setNote] = useState<NoteType[]>([]);
 
     useEffect(() => {
         const fetchNote = async () => {
@@ -57,11 +77,23 @@ export const SelectNote = () => {
         fetchNote();
     }, [_id, isUpdate, noteUpdate]);
 
-    // console.log('selectNote?.blocks: ', selectNote?.blocks);
+    useEffect(() => {
+      const myAccount = async () => {
+        try {
+          const { data } = await Axios.get('/user/account');
+          setUsername(data.username);
+        }
+        catch (err) {
+          console.log('При получении имени пользователя произошла ошибка: \n', err);
+        }
+      };
+      myAccount();
+    }, []);
 
     return (
-        <div>
-            <Menu setMenuOpen={setMenuOpen} menuOpen={menuOpen} isUpdate={isUpdate} setIsUpdate={setIsUpdate} />
+        <div className='relative'>
+            <Menu setMenuOpen={setMenuOpen} menuOpen={menuOpen} isUpdate={isUpdate} setIsUpdate={setIsUpdate} username={username} controlCords={controlCords} setControlCords={setControlCords} setIsControl={setIsControl} note={note} setNote={setNote} />
+            {isControl && <Control name={selectNote?.name} username={username} controlCords={controlCords} setNote={setNote} />}
             <NoteContent menuOpen={menuOpen} imageUrl={selectNote?.imageUrl} name={selectNote?.name} smile={selectNote?.smile} text={selectNote?.text} id={selectNote?._id} noteUpdate={noteUpdate} setNoteUpdate={setNoteUpdate} blocks={selectNote?.blocks} />
         </div>
     )

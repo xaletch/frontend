@@ -6,6 +6,7 @@ export default {
   ],
   theme: {
       fontSize: {
+        vsm: '0.5',
         sm: '0.8rem',
         base: '0.875',
         x1: '1rem',
@@ -41,6 +42,9 @@ export default {
         'note': '#b3b3b1',
         'username': 'rgba(55, 53, 47, 0.65)',
         'select': '#0000000a',
+        'grey2': '#676767',
+        'light-gray2': '#ABABAB',
+        'white-2': '#F0F0F0',
       },
     extend: {},
   },

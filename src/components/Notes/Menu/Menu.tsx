@@ -7,39 +7,30 @@ import './Menu.css';
 import Axios from '../../../axios';
 import { NoteItem } from '../../NotePage/Menu/NoteItem/NoteItem';
 
-interface MenuInterface {
-  setMenuOpen: Dispatch<SetStateAction<boolean>>;
-  menuOpen: boolean;
-  isUpdate: boolean;
-  setIsUpdate: Dispatch<SetStateAction<boolean>>;
-};
-
 type NoteType = {
   _id: string;
   name: string;
   smile: string;
 }
 
-export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, menuOpen, isUpdate, setIsUpdate }) => {
+interface MenuInterface {
+  setMenuOpen: Dispatch<SetStateAction<boolean>>;
+  menuOpen: boolean;
+  isUpdate: boolean;
+  setIsUpdate: Dispatch<SetStateAction<boolean>>;
+  username: string;
+  setControlCords: Dispatch<SetStateAction<{x: number, y: number}>>;
+  setIsControl: Dispatch<SetStateAction<boolean>>;
+  note: NoteType[];
+  setNote: Dispatch<SetStateAction<NoteType[]>>;
+  controlCords: { x: number, y: number };
+};
+
+export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, menuOpen, isUpdate, setIsUpdate, username, controlCords, setControlCords, setIsControl, note, setNote }) => {
   const [noteName, setNoteName] = useState<string>("без названия");
   const [noteId, setNoteId] = useState<string>("");
-  const [note, setNote] = useState<NoteType[]>([]);
   const [addNote, setAddNote] = useState(false);
-  const [username, setUsername] = useState<string>("");
 
-  useEffect(() => {
-    const myAccount = async () => {
-      try {
-        const { data } = await Axios.get('/user/account');
-        setUsername(data.username);
-      }
-      catch (err) {
-        console.log('При получении имени пользователя произошла ошибка: \n', err);
-      }
-    };
-    myAccount();
-  }, []);
- 
   useEffect(() => {
     const noteData = async () => {
       try {
@@ -56,7 +47,7 @@ export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, menuOpen, isUpdate,
 
   const handleSelectNote = async (id: any) => {
     await Axios.get(`/notes/oneNote/${id}`);
-  }
+  };
   
   const handleCloseMenu = () => {
     setMenuOpen(false);
@@ -76,10 +67,15 @@ export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, menuOpen, isUpdate,
     setIsUpdate(true);
     setNoteId(_id);
     setNoteName(name);
-  }
+  };
+
+  const handleCords = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault(); 
+    setControlCords({ x: event.clientX, y: event.clientY});
+  };
 
   return (
-    <div className='bg-secondary h-full w-60 fixed top-0 left-0 overflow-hidden'>
+    <div className='bg-secondary h-full w-60 fixed top-0 left-0 overflow-hidden' onClick={(e) => handleCords(e)}>
       <div className='h-full bg-secondary flex flex-col'>
         <div>
           <div className='p-3 flex justify-between text-center'>
@@ -114,9 +110,11 @@ export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, menuOpen, isUpdate,
         <div className='mt-4 overflow-auto'>
           {note.reverse().map((item: NoteType) => <NoteItem 
             key={item._id} name={item.name} id={item._id} smile={item.smile}
-            noteName={noteName} setNote={setNote} setNoteName={setNoteName} setIsUpdate={setIsUpdate} isUpdate={isUpdate} noteId={noteId}
+            controlCords={controlCords}
+            setIsControl={setIsControl} noteName={noteName} setNote={setNote} setNoteName={setNoteName} setIsUpdate={setIsUpdate} isUpdate={isUpdate} noteId={noteId}
             handleUpdate={() => handleUpdate(item._id, item.name)}
             handleSelectNote={handleSelectNote}
+            // handleManageNote={() => handleManageNote(item._id)}
            />)}
 
           {/* CREATE PAGE */}

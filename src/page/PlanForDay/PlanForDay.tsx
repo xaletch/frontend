@@ -52,11 +52,11 @@ export const PlanForDay = () => {
 
   return (
     <div className='h-full'>
-      {menuOpen && <Menu handleSelectNote={handleSelectNote} setMenuOpen={setMenuOpen} setAddNote={setAddNote} setIsUpdate={setIsUpdate} isUpdate={isUpdate} note={note} setNote={setNote} />}
+      {/* {menuOpen && <Menu handleSelectNote={handleSelectNote} setMenuOpen={setMenuOpen} setAddNote={setAddNote} setIsUpdate={setIsUpdate} isUpdate={isUpdate} note={note} setNote={setNote} />} */}
       {/* <SelectNote /> */}
       {/* <Header menuOpen={menuOpen} setMenuOpen={setMenuOpen} selectedNote={selectedNote} /> */}
       {/* <ManageNote menuOpen={menuOpen} /> */}
-      {selectedNote && Array.isArray(selectedNote) ? selectedNote.map((obj, index) => <ManageNote key={index} {...obj} menuOpen={menuOpen} setAddNote={setAddNote} />) : <ManageNote {...selectedNote} menuOpen={menuOpen} setAddNote={setAddNote} />}
+      {/* {selectedNote && Array.isArray(selectedNote) ? selectedNote.map((obj, index) => <ManageNote key={index} {...obj} menuOpen={menuOpen} setAddNote={setAddNote} />) : <ManageNote {...selectedNote} menuOpen={menuOpen} setAddNote={setAddNote} />} */}
       {/* {selectedNote ? <ManageNote menuOpen={menuOpen} /> : <div className='w-full h-full flex items-center justify-center'>Перейдите в заметку</div>} */}
       {/* {note === null && <NoteCreate setMenuOpen={setMenuOpen} />} */}
     </div>

@@ -82,12 +82,12 @@ export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, setAddNote, setIsUp
           </div>
         </div>
         <div className='mt-4'>
-          {note.map((item: NoteType) => <NoteItem 
+          {/* {note.map((item: NoteType) => <NoteItem 
             key={item._id} name={item.name} id={item._id} smile={item.smile}
             noteName={noteName} setNote={setNote} setNoteName={setNoteName} setIsUpdate={setIsUpdate} isUpdate={isUpdate} noteId={noteId}
             handleUpdate={() => handleUpdate(item._id, item.name)}
             handleSelectNote={handleSelectNote}
-           />)}
+           />)} */}
 
           {/* CREATE PAGE */}
           <div className='p-1 px-3 flex items-center font-medium cursor-pointer hover:bg-light-grey'>

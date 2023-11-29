@@ -31,7 +31,7 @@ interface EditorProps {
 export const Editor: React.FC<EditorProps> = ({ onChange, initialContent }) => {
   // const [transformedInitialContent, setTransformedInitialContent] = useState([]);
 
-  console.log('initialContent: ', initialContent);
+  // console.log('initialContent: ', initialContent);
 
   // useEffect(() => {
   //   if (initialContent && typeof initialContent === 'string') {
