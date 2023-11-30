@@ -12,7 +12,7 @@ export const Home = () => {
           <div className='flex flex-col gap-3'>
             <h1 className='text-8xl font-bold leading-[68px] text-text-home'>Write, plan, share. <br/> With AI at your side.</h1>
             <p className='text-4xl font-medium text-text-home'>Name is the connected workspace where better, faster work happens.</p>
-            <Link to='/note'>
+            <Link to='/:id'>
               <button className='px-8 p-1 h-[36px] text-white font-medium bg-button rounded hover:opacity-90'>Get name free</button>
             </Link>
           </div>

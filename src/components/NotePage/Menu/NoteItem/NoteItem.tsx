@@ -29,6 +29,7 @@ export interface NoteItemProps {
 export const NoteItem: React.FC<NoteItemProps> = ({ name, id, noteName, smile, setNote, setNoteName, setIsUpdate, isUpdate, noteId, handleUpdate, handleSelectNote, setIsControl, controlCords }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [action, setAction] = useState(false);
+  const [isId, setIsId] = useState({})
 
   const handleDeleteNote = async (id: string) => {
     try {
@@ -68,7 +69,10 @@ export const NoteItem: React.FC<NoteItemProps> = ({ name, id, noteName, smile, s
   const actionNote = () => {
     // setAction(true);
     setIsControl(true);
+    setIsId(id);
   };
+
+  console.log(isId);
 
   return (
     <div className='px-1'>

@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import Axios from '../../axios';
 
 import { Control } from '../../components/Notes/Control/Control';
+import { MenuNote } from './MenuNote';
 
 interface User {
     username: string;
@@ -89,6 +90,10 @@ export const SelectNote = () => {
       };
       myAccount();
     }, []);
+
+    if (!_id) {
+        return <MenuNote setMenuOpen={setMenuOpen} menuOpen={menuOpen} isUpdate={isUpdate} setIsUpdate={setIsUpdate} username={username} controlCords={controlCords} setControlCords={setControlCords} setIsControl={setIsControl} />
+    }
 
     return (
         <div className='relative'>
