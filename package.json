@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://xaletch.github.io/frontend",
+  "homepage": "https://xaletch.github.io/home",
   "dependencies": {
     "@blocknote/core": "^0.9.6",
     "@blocknote/react": "^0.9.6",
