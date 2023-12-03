@@ -1,36 +1,74 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from "../store";
-import axios from 'axios';
+import Axios from '../../axios';
 
-export const fetchNotes = createAsyncThunk('/notes', async () => {
-    const { data } = await axios.get('http://localhost:8000/notes');
+interface Blocks {
+    id: string;
+    type: string;
+    props: {
+        textColor: string;
+        backgroundColor: string;
+        textAlignment: string;
+    };
+    content: Array<{
+        type: string;
+        text?: string;
+        styles?: {};
+    }>;
+    children: Blocks[];
+}
+
+type NoteData = {
+    _id: string;
+    name: string;
+    user: {
+      _id: string;
+      username: string;
+      email: string;
+      passwordHash: string;
+      __v: number;
+    };
+    __v: number;
+    imageUrl: string;
+    smile: string;
+    blocks: Blocks[];
+}
+export const fetchNotes = createAsyncThunk<NoteData[], void>('notes/fetchNotes', async () => {
+    const { data } = await Axios.get('/notes');
     return data;
-});
+}) as any;
 
-const initialState = {
+interface NoteState {
+    itemsNote: NoteData[]
+    status: string;
+}
+
+const initialState: NoteState= {
     itemsNote: [],
     status: 'loading',
 };
 
 export const noteSlice = createSlice({
-  name: 'notes',
-  initialState,
-  reducers: {
-    [fetchNotes.pending.type]: (state) => {
-        state.itemsNote = [];
-        state.status = 'loading';
+    name: 'note',
+    initialState,
+    reducers: {
     },
-    [fetchNotes.fulfilled.type]: (state, action) => {
-        state.itemsNote = action.payload;
-        state.status = 'loaded';
-    },
-    [fetchNotes.rejected.type]: (state) => {
-        state.itemsNote = [];
-        state.status = 'error';
-    },
-  },
-})
+    extraReducers: {
+        [fetchNotes.pending.type]: (state) => {
+            state.itemsNote = [];
+            state.status = 'loading';
+        },
+        [fetchNotes.fulfilled.type]: (state, action) => {
+            state.itemsNote = action.payload;
+            state.status = 'loaded';
+        },
+        [fetchNotes.rejected.type]: (state) => {
+            state.itemsNote = [];
+            state.status = 'error';
+        },
+    }
+});
 
 export const { } = noteSlice.actions;
 

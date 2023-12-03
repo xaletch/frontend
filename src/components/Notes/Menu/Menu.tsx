@@ -4,6 +4,8 @@ import './Menu.css';
 
 import Axios from '../../../axios';
 import { Item } from '../Item/index';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store';
 
 type NoteType = {
   _id: string;
@@ -29,19 +31,7 @@ export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, menuOpen, isUpdate,
   const [noteId, setNoteId] = useState<string>("");
   const [addNote, setAddNote] = useState(false);
 
-  useEffect(() => {
-    const noteData = async () => {
-      try {
-        const data = await Axios.get('/notes');
-        setNote(data.data);
-        setAddNote(false);
-      }
-      catch (err) {
-        console.log('При получении заметок произошла ошибка: \n', err);
-      }
-    }
-    noteData();
-  }, [isUpdate, addNote]);
+  const documents = useSelector((state: RootState) => state.note.itemsNote);
 
   const handleSelectNote = async (id: any) => {
     await Axios.get(`/notes/oneNote/${id}`);
@@ -107,7 +97,7 @@ export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, menuOpen, isUpdate,
         </div>
         <div className='mt-4 overflow-hidden'>
           <div className='h-[500px] overflow-auto'>
-            {note.reverse().map((item: NoteType) =>  <Item 
+            {documents.map((item: NoteType) =>  <Item 
               key={item._id} name={item.name} id={item._id} smile={item.smile}
               controlCords={controlCords}
               setIsControl={setIsControl} noteName={noteName} setNote={setNote} setNoteName={setNoteName} setIsUpdate={setIsUpdate} isUpdate={isUpdate} noteId={noteId}

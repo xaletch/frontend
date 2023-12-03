@@ -10,6 +10,9 @@ import { Login } from './page/Login/Login';
 import Axios from './axios';
 import { SelectNote } from './page/Notes/SelectNote';
 import { Documents } from './page/Documents/Documents';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from './redux/store';
+import { fetchNotes } from './redux/slice/noteSlice';
 
 
 interface DocumentsInterface {
@@ -19,6 +22,8 @@ interface DocumentsInterface {
 };
 
 function App() {
+  const dispatch = useDispatch();
+
   const [isLoading, setIsLoading] = useState<boolean>(true);
   // NOT USED
   const [userData, setUserData] = useState({});
@@ -45,22 +50,10 @@ function App() {
     userAuth();
   }, [])
 
-
-  const [documents, setDocuments] = useState<Array<DocumentsInterface>>([]);
-
   useEffect(() => {
-    const document = async () => {
-      try {
-        const data = await Axios.get('/notes');
-        setDocuments(data.data);
-      }
-      catch (err) {
-
-      }
-    };
-    document();
-  }, []);
-
+    dispatch(fetchNotes());
+  }, [dispatch]);
+  
   return (
     <div className="App">
       <Routes>
@@ -69,7 +62,7 @@ function App() {
         <Route path='/home' element={!isLoading && <Home />}></Route>
         <Route path='/documents/:_id' element={<SelectNote />}></Route>
 
-        <Route path='/documents' element={<Documents documents={documents} />}></Route>
+        <Route path='/documents' element={<Documents />}></Route>
       </Routes>
     </div>
   );

@@ -11,11 +11,11 @@ type DocumentsType = {
     documents:DocType[];
 }
 
-export const Documents: React.FC<DocumentsType> = ({ documents }) => {
+export const Documents: React.FC = () => {
     
     return (
         <div className='relative'>
-            <Menu documents={documents} />
+            <Menu />
         </div>
     )
 }

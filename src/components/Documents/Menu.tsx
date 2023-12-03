@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Item } from './Item';
 import Axios from '../../axios';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 type DocType = {
     _id: string;
@@ -12,10 +14,12 @@ type DocumentsType = {
     documents: DocType[];
 }
 
-export const Menu: React.FC<DocumentsType> = ({ documents }) => {
+export const Menu: React.FC = () => {
     const [noteName, setNoteName] = useState<string>("без названия");
     const [addNote, setAddNote] = useState(false);
     const [username, setUsername] = useState<string>("");
+
+    const documents = useSelector((state: RootState) => state.note.itemsNote);
 
     const handleCloseMenu = () => {};
 
