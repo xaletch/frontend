@@ -5,8 +5,6 @@ import "@blocknote/core/style.css";
 
 import './Edirot.css';
 
-import Axios from '../../../axios';
-
 interface PartialBlock {
   id?: string;
   type?: string;
@@ -29,16 +27,6 @@ interface EditorProps {
 }
 
 export const Editor: React.FC<EditorProps> = ({ onChange, initialContent }) => {
-  // const [transformedInitialContent, setTransformedInitialContent] = useState([]);
-
-  // console.log('initialContent: ', initialContent);
-
-  // useEffect(() => {
-  //   if (initialContent && typeof initialContent === 'string') {
-  //     setTransformedInitialContent(JSON.parse(initialContent))
-  //   }
-  // }, [initialContent]);
-
   let transformedInitialContent;
   if (initialContent && typeof initialContent === 'string') {
     transformedInitialContent = JSON.parse(initialContent);

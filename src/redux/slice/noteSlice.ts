@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from "../store";
-import Axios from '../../axios';
+import axios from 'axios';
 
 export const fetchNotes = createAsyncThunk('/notes', async () => {
-    const { data } = await Axios.get('/notes');
+    const { data } = await axios.get('http://localhost:8000/notes');
     return data;
 });
 

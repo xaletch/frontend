@@ -1,11 +1,9 @@
-import React, { Dispatch, MouseEventHandler, SetStateAction, useEffect, useRef, useState } from 'react';
-
-import link_img from '../../../img/link_img';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import './Menu.css';
 
 import Axios from '../../../axios';
-import { NoteItem } from '../../NotePage/Menu/NoteItem/NoteItem';
+import { Item } from '../Item/index';
 
 type NoteType = {
   _id: string;
@@ -108,7 +106,7 @@ export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, menuOpen, isUpdate,
           </div>
         </div>
         <div className='mt-4 overflow-auto'>
-          {note.reverse().map((item: NoteType) => <NoteItem 
+          {note.reverse().map((item: NoteType) =>  <Item 
             key={item._id} name={item.name} id={item._id} smile={item.smile}
             controlCords={controlCords}
             setIsControl={setIsControl} noteName={noteName} setNote={setNote} setNoteName={setNoteName} setIsUpdate={setIsUpdate} isUpdate={isUpdate} noteId={noteId}

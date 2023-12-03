@@ -1,9 +1,0 @@
-.button {
-    background: var(--tg-theme-button-color);
-    color: var(--tg-theme-button-text-color);
-    border-radius: 4px;
-    cursor: pointer;
-
-    background: rgb(10, 145, 255);
-    color: #FFF;
-}

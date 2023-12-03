@@ -2,24 +2,26 @@ import React, { useEffect, useState } from 'react';
 
 import './style/index.css';
 
-import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
-import { Loading } from './components/Loading/Loading';
 import { Home } from './page/Home/Home';
-import { Note } from './page/Notes/Note';
-import { PlanForDay } from './page/PlanForDay/PlanForDay';
 import { Register } from './page/Register/Register';
 import { Login } from './page/Login/Login';
 import Axios from './axios';
-import { Header } from './components/Header/Header';
 import { SelectNote } from './page/Notes/SelectNote';
+import { Documents } from './page/Documents/Documents';
 
+
+interface DocumentsInterface {
+  _id: string;
+  name: string;
+  smile: string;
+};
 
 function App() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  // NOT USED
   const [userData, setUserData] = useState({});
-
-  const navigate = useNavigate();
 
   useEffect(() => {
       const timeout = setTimeout(() => {
@@ -38,26 +40,36 @@ function App() {
       }
       catch (err) {
         console.log('Вы ещё не вошли в аккаунт: \n', err);
-        // return navigate('login');
       }
     }
     userAuth();
   }, [])
 
-  // console.log(userData);
+
+  const [documents, setDocuments] = useState<Array<DocumentsInterface>>([]);
+
+  useEffect(() => {
+    const document = async () => {
+      try {
+        const data = await Axios.get('/notes');
+        setDocuments(data.data);
+      }
+      catch (err) {
+
+      }
+    };
+    document();
+  }, []);
 
   return (
     <div className="App">
-      {/* {isLoading && <Loading />} */}
       <Routes>
         <Route path='/register' element={<Register />}/>
         <Route path='/login' element={<Login />}></Route>
-        <Route path='/frontend' element={!isLoading && <Home />}></Route>
-        <Route path='frontend/note' element={!isLoading && <Note />}></Route>
-        {/* <Route path='frontend/plan-day' element={!isLoading && <PlanForDay />}></Route> */}
-        {/* <Route path='frontend/plan-day/:_id' element={<SelectNote />}></Route> */}
-        <Route path='/note' element={<Note />}></Route>
-        <Route path='/:_id' element={<SelectNote />}></Route>
+        <Route path='/home' element={!isLoading && <Home />}></Route>
+        <Route path='/documents/:_id' element={<SelectNote />}></Route>
+
+        <Route path='/documents' element={<Documents documents={documents} />}></Route>
       </Routes>
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react'
 import { Editor } from './Editor/Editor';
-import { Smile } from '../NotePage/ManageNote/Smile/Smile';
+import { Smile } from '../../components/Notes/Smile/Smile';
 import Axios from '../../axios';
 
 import './NoteContent.css';
@@ -95,8 +95,6 @@ export const NoteContent: React.FC<NoteContentInterface> = ({ menuOpen, imageUrl
       console.log('При добавлении контента в заметке произошла ошибка: \n', err)
     }
   };
-
-  // console.log(blocks);
 
   return (
     <div className='flex-1 h-screen relative z-0' style={{width: `${menuOpen === true ? `calc(100%)` : `calc(100% - 240px)`}`, left: `${menuOpen === true ? `0` : `240px`}`}}>

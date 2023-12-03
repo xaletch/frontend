@@ -5,7 +5,6 @@ import { useParams } from 'react-router-dom';
 import Axios from '../../axios';
 
 import { Control } from '../../components/Notes/Control/Control';
-import { MenuNote } from './MenuNote';
 
 interface User {
     username: string;
@@ -44,11 +43,7 @@ type NoteType = {
     smile: string;
 }
 
-type idType = {
-    _id: string;
-}
-
-export const SelectNote = () => {
+export const SelectNote: React.FC = () => {
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const [isUpdate, setIsUpdate] = useState(false);
     const [noteUpdate, setNoteUpdate] = useState(false);
@@ -79,21 +74,17 @@ export const SelectNote = () => {
     }, [_id, isUpdate, noteUpdate]);
 
     useEffect(() => {
-      const myAccount = async () => {
-        try {
-          const { data } = await Axios.get('/user/account');
-          setUsername(data.username);
-        }
-        catch (err) {
-          console.log('При получении имени пользователя произошла ошибка: \n', err);
-        }
-      };
-      myAccount();
+        const myAccount = async () => {
+            try {
+                const { data } = await Axios.get('/user/account');
+                setUsername(data.username);
+            }
+            catch (err) {
+                console.log('При получении имени пользователя произошла ошибка: \n', err);
+            }
+        };
+        myAccount();
     }, []);
-
-    if (!_id) {
-        return <MenuNote setMenuOpen={setMenuOpen} menuOpen={menuOpen} isUpdate={isUpdate} setIsUpdate={setIsUpdate} username={username} controlCords={controlCords} setControlCords={setControlCords} setIsControl={setIsControl} />
-    }
 
     return (
         <div className='relative'>

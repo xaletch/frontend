@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import Axios from '../../axios';
-import axios from 'axios';
 
 export const LoginBlock = () => {
   const [email, setEmail] = useState<string>("");
@@ -12,7 +11,7 @@ export const LoginBlock = () => {
     try {
       e.preventDefault();
       const data = {email, password};
-      const loginData = await axios.post('http://localhost:8000/user/login', data);
+      const loginData = await Axios.post('/user/login', data);
       console.log(loginData);
   
       if (loginData.statusText === 'OK') {
