@@ -89,7 +89,7 @@ export const SelectNote: React.FC = () => {
     return (
         <div className='relative'>
             <Menu setMenuOpen={setMenuOpen} menuOpen={menuOpen} isUpdate={isUpdate} setIsUpdate={setIsUpdate} username={username} controlCords={controlCords} setControlCords={setControlCords} setIsControl={setIsControl} note={note} setNote={setNote} />
-            {isControl && <Control name={selectNote?.name} username={username} controlCords={controlCords} setNote={setNote} />}
+            {isControl && <Control name={selectNote?.name} id={selectNote?._id} username={username} controlCords={controlCords} setNote={setNote} setIsControl={setIsControl} />}
             <NoteContent menuOpen={menuOpen} imageUrl={selectNote?.imageUrl} name={selectNote?.name} smile={selectNote?.smile} text={selectNote?.text} id={selectNote?._id} noteUpdate={noteUpdate} setNoteUpdate={setNoteUpdate} blocks={selectNote?.blocks} />
         </div>
     )

@@ -1,22 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import Axios from '../../axios';
 
 type DocType = {
     _id: string;
     name: string;
     smile: string;
-    handleSelectNote: (id: any) => void;
 };
 
-export const Item: React.FC<DocType> = ({ _id, name, smile, handleSelectNote }) => {
+export const Item: React.FC<DocType> = ({ _id, name, smile }) => {
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+
+    const handleOpenUnderNote = (i: string) => {
+        if (i === _id) {
+            setIsOpen(!isOpen);
+        };
+    };
+
+    const handleCreateNote = async () => {
+        try {
+          await Axios.post('/notes/save');
+        }
+        catch (err) {
+          console.log('Не удалось создать заметку: \n', err);
+        }
+    };
+
     return (
         <div className='px-1'>
-            {/* onDoubleClick={handleUpdate} onClick={() => handleSelectNote(id)} */}
-            <div className={`page p-1 px-3 h-8 flex items-center justify-between font-medium cursor-pointer hover:bg-light-grey relative`} onClick={() => handleSelectNote(_id)}>
-                <Link to={`/documents/${_id}`}>
+            <Link to={`/documents/${_id}`}>
+                <div className={`page p-1 px-3 h-8 flex items-center justify-between font-medium cursor-pointer hover:bg-light-grey relative`}>
                     <div className='flex items-center'>
-                        <div className='w-4 h-4 mr-1 rounded hover:bg-grey'>
-                            <svg className='h-4 w-4' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ stroke: "#676767" }}>
+                        <div className='w-4 h-4 mr-1 rounded hover:bg-grey' onClick={(e) => {e.preventDefault(); handleOpenUnderNote(_id)}}>
+                            <svg className={`h-4 w-4 ${isOpen }`} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ stroke: "#676767" }}>
                                 <path d="m9 18 6-6-6-6"></path>
                             </svg>
                         </div>
@@ -31,22 +47,22 @@ export const Item: React.FC<DocType> = ({ _id, name, smile, handleSelectNote }) 
                                 <span className='whitespace-nowrap text-base' style={{color: '#676767'}}>{name.length >= 16 ? `${name.slice(0, 9)}...` : name}</span>
                             </div>
                     </div>
-                </Link>
-                <div className='setting flex items-center gap-2'>
-                    {/* onClick={actionNote} */}
-                    <button className='w-4 h-4 flex justify-center items-center rounded hover:bg-grey'>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="4" viewBox="0 0 16 4" fill="none">
-                            <path d="M8 0C6.9 0 6 0.9 6 2C6 3.1 6.9 4 8 4C9.1 4 10 3.1 10 2C10 0.9 9.1 0 8 0ZM14 0C12.9 0 12 0.9 12 2C12 3.1 12.9 4 14 4C15.1 4 16 3.1 16 2C16 0.9 15.1 0 14 0ZM2 0C0.9 0 0 0.9 0 2C0 3.1 0.9 4 2 4C3.1 4 4 3.1 4 2C4 0.9 3.1 0 2 0Z" fill="#676767"/>
-                        </svg>
-                    </button>
-                    <button className='w-4 h-4 flex justify-center items-center rounded hover:bg-grey'>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 14 14" fill="none">
-                            <path d="M14 6H8V0H6V6H0V8H6V14H8V8H14V6Z" fill="#676767"/>
-                        </svg>
-                    </button>
+                    <div className='setting flex items-center gap-2'>
+                        {/* onClick={actionNote} */}
+                        <button className='w-4 h-4 flex justify-center items-center rounded hover:bg-grey' onClick={(e) => e.preventDefault()}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="4" viewBox="0 0 16 4" fill="none">
+                                <path d="M8 0C6.9 0 6 0.9 6 2C6 3.1 6.9 4 8 4C9.1 4 10 3.1 10 2C10 0.9 9.1 0 8 0ZM14 0C12.9 0 12 0.9 12 2C12 3.1 12.9 4 14 4C15.1 4 16 3.1 16 2C16 0.9 15.1 0 14 0ZM2 0C0.9 0 0 0.9 0 2C0 3.1 0.9 4 2 4C3.1 4 4 3.1 4 2C4 0.9 3.1 0 2 0Z" fill="#676767"/>
+                            </svg>
+                        </button>
+                        <button className='w-4 h-4 flex justify-center items-center rounded hover:bg-grey' onClick={(e) => {e.preventDefault(); handleCreateNote()}}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 14 14" fill="none">
+                                <path d="M14 6H8V0H6V6H0V8H6V14H8V8H14V6Z" fill="#676767"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <p className='text-sm font-medium' style={{color: '#676767', paddingLeft: '37px'}}>Нет страниц внутри</p>
+            </Link>
+            {isOpen && <p className='text-sm font-medium' style={{color: '#676767', paddingLeft: '37px'}}>Нет страниц внутри</p>}
         </div>
     )
 }

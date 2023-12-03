@@ -105,30 +105,33 @@ export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, menuOpen, isUpdate,
             </div>
           </div>
         </div>
-        <div className='mt-4 overflow-auto'>
-          {note.reverse().map((item: NoteType) =>  <Item 
-            key={item._id} name={item.name} id={item._id} smile={item.smile}
-            controlCords={controlCords}
-            setIsControl={setIsControl} noteName={noteName} setNote={setNote} setNoteName={setNoteName} setIsUpdate={setIsUpdate} isUpdate={isUpdate} noteId={noteId}
-            handleUpdate={() => handleUpdate(item._id, item.name)}
-            handleSelectNote={handleSelectNote}
-            // handleManageNote={() => handleManageNote(item._id)}
-           />)}
-
-          {/* CREATE PAGE */}
-          <div className='p-1 px-3 flex items-center font-medium cursor-pointer hover:bg-light-grey'>
-            <svg className='mr-3' xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 14 14" fill="none">
-              <path d="M14 6H8V0H6V6H0V8H6V14H8V8H14V6Z" fill="#676767"/>
-            </svg>
-            <span className='' style={{color: '#676767'}} onClick={handleCreateNote}>Добавить страницу</span>
+        <div className='mt-4 overflow-hidden'>
+          <div className='h-[500px] overflow-auto'>
+            {note.reverse().map((item: NoteType) =>  <Item 
+              key={item._id} name={item.name} id={item._id} smile={item.smile}
+              controlCords={controlCords}
+              setIsControl={setIsControl} noteName={noteName} setNote={setNote} setNoteName={setNoteName} setIsUpdate={setIsUpdate} isUpdate={isUpdate} noteId={noteId}
+              handleUpdate={() => handleUpdate(item._id, item.name)}
+              handleSelectNote={handleSelectNote}
+              // handleManageNote={() => handleManageNote(item._id)}
+            />)}
           </div>
+          <div className='mt-4'>
+            {/* CREATE PAGE */}
+            <div className='p-1 px-3 flex items-center font-medium cursor-pointer hover:bg-light-grey'>
+              <svg className='mr-3' xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 14 14" fill="none">
+                <path d="M14 6H8V0H6V6H0V8H6V14H8V8H14V6Z" fill="#676767"/>
+              </svg>
+              <span className='' style={{color: '#676767'}} onClick={handleCreateNote}>Добавить страницу</span>
+            </div>
 
-          {/* BASKET */}
-          <div className='mt-4 p-1 px-3 flex items-center font-medium cursor-pointer hover:bg-light-grey'>
-            <svg className='mr-2' xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 20" fill="none">
-              <path d="M12 0H6C4.897 0 4 0.897 4 2V4H0V6H2V18C2 19.103 2.897 20 4 20H14C15.103 20 16 19.103 16 18V6H18V4H14V2C14 0.897 13.103 0 12 0ZM6 2H12V4H6V2ZM14 18H4V6H14V18Z" fill="#676767"/>
-            </svg>
-            <span style={{color: '#676767'}}>Корзина</span>
+            {/* BASKET */}
+            <div className='mt-4 p-1 px-3 flex items-center font-medium cursor-pointer hover:bg-light-grey'>
+              <svg className='mr-2' xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 20" fill="none">
+                <path d="M12 0H6C4.897 0 4 0.897 4 2V4H0V6H2V18C2 19.103 2.897 20 4 20H14C15.103 20 16 19.103 16 18V6H18V4H14V2C14 0.897 13.103 0 12 0ZM6 2H12V4H6V2ZM14 18H4V6H14V18Z" fill="#676767"/>
+              </svg>
+              <span style={{color: '#676767'}}>Корзина</span>
+            </div>
           </div>
         </div>
       </div>
