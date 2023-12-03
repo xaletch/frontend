@@ -13,6 +13,7 @@ import { Documents } from './page/Documents/Documents';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from './redux/store';
 import { fetchNotes } from './redux/slice/noteSlice';
+import { NotFound } from './page/NotFound/NotFound';
 
 
 interface DocumentsInterface {
@@ -61,7 +62,7 @@ function App() {
         <Route path='/login' element={<Login />}></Route>
         <Route path='/home' element={!isLoading && <Home />}></Route>
         <Route path='/documents/:_id' element={<SelectNote />}></Route>
-
+        <Route path='*' element={<NotFound />}></Route>
         <Route path='/documents' element={<Documents />}></Route>
       </Routes>
     </div>

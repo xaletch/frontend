@@ -17,6 +17,7 @@ export default {
         '6xl': '2.441rem',
         '7xl': '3.052rem',
         '8xl': '3.75rem',
+        '10xl': '10rem'
       },
       colors: {
         transparent: 'transparent',
