@@ -13,7 +13,6 @@ export interface NoteItemProps {
   id: string;
   noteName: string;
   smile: string;
-  setNote: Dispatch<SetStateAction<NoteType[]>>;
   setNoteName: Dispatch<SetStateAction<string>>;
   setIsUpdate: Dispatch<SetStateAction<boolean>>;
   isUpdate: boolean;
@@ -24,7 +23,7 @@ export interface NoteItemProps {
   controlCords: { x: number, y: number };
 }
 
-export const Item: React.FC<NoteItemProps> = ({ name, id, noteName, smile, setNote, setNoteName, setIsUpdate, isUpdate, noteId, handleUpdate, handleSelectNote, setIsControl, controlCords }) => {
+export const Item: React.FC<NoteItemProps> = ({ name, id, noteName, smile, setNoteName, setIsUpdate, isUpdate, noteId, handleUpdate, handleSelectNote, setIsControl, controlCords }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -32,7 +31,7 @@ export const Item: React.FC<NoteItemProps> = ({ name, id, noteName, smile, setNo
   const handleDeleteNote = async (id: string) => {
     try {
       await Axios.delete(`/notes/delete/${id}`);
-      setNote(note => note.filter(item => item._id !== id));
+      // setNote(note => note.filter(item => item._id !== id));
     } catch (err) {
       console.log('Не удалось удалить заметку: \n', err);
     }

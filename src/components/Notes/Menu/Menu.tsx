@@ -21,12 +21,10 @@ interface MenuInterface {
   username: string;
   setControlCords: Dispatch<SetStateAction<{x: number, y: number}>>;
   setIsControl: Dispatch<SetStateAction<boolean>>;
-  note: NoteType[];
-  setNote: Dispatch<SetStateAction<NoteType[]>>;
   controlCords: { x: number, y: number };
 };
 
-export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, menuOpen, isUpdate, setIsUpdate, username, controlCords, setControlCords, setIsControl, note, setNote }) => {
+export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, menuOpen, isUpdate, setIsUpdate, username, controlCords, setControlCords, setIsControl }) => {
   const [noteName, setNoteName] = useState<string>("без названия");
   const [noteId, setNoteId] = useState<string>("");
   const [addNote, setAddNote] = useState(false);
@@ -100,7 +98,7 @@ export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, menuOpen, isUpdate,
             {documents.map((item: NoteType) =>  <Item 
               key={item._id} name={item.name} id={item._id} smile={item.smile}
               controlCords={controlCords}
-              setIsControl={setIsControl} noteName={noteName} setNote={setNote} setNoteName={setNoteName} setIsUpdate={setIsUpdate} isUpdate={isUpdate} noteId={noteId}
+              setIsControl={setIsControl} noteName={noteName} setNoteName={setNoteName} setIsUpdate={setIsUpdate} isUpdate={isUpdate} noteId={noteId}
               handleUpdate={() => handleUpdate(item._id, item.name)}
               handleSelectNote={handleSelectNote}
               // handleManageNote={() => handleManageNote(item._id)}

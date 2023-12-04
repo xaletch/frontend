@@ -34,9 +34,14 @@ type NoteData = {
     smile: string;
     blocks: Blocks[];
 }
+
 export const fetchNotes = createAsyncThunk<NoteData[], void>('notes/fetchNotes', async () => {
     const { data } = await Axios.get('/notes');
     return data;
+}) as any;
+
+export const fetchDeleteNote = createAsyncThunk('notes/fetchDeleteNote', async (id) => {
+    await Axios.delete(`/notes/delete/${id}`);
 }) as any;
 
 interface NoteState {
@@ -67,7 +72,10 @@ export const noteSlice = createSlice({
             state.itemsNote = [];
             state.status = 'error';
         },
-    }
+        [fetchDeleteNote.fulfilled]: (state, action: PayloadAction<string, string, { meta: { arg?: string } }>) => {
+            state.itemsNote = state.itemsNote.filter((item) => item._id !== action.meta.arg);
+        }
+    },
 });
 
 export const { } = noteSlice.actions;

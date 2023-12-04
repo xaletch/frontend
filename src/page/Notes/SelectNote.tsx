@@ -53,7 +53,6 @@ export const SelectNote: React.FC = () => {
 
     const { _id } = useParams();
     const [selectNote, setSelectNote] = useState<NoteData>();
-    const [note, setNote] = useState<NoteType[]>([]);
 
     useEffect(() => {
         const fetchNote = async () => {
@@ -64,7 +63,7 @@ export const SelectNote: React.FC = () => {
                     setIsUpdate(false);
                     setNoteUpdate(false);
                     data.blocks = JSON.parse(data.blocks);
-                }
+                };
             }
             catch (err) {
                 console.log('Не удалось открыть заметку');
@@ -88,8 +87,8 @@ export const SelectNote: React.FC = () => {
 
     return (
         <div className='relative'>
-            <Menu setMenuOpen={setMenuOpen} menuOpen={menuOpen} isUpdate={isUpdate} setIsUpdate={setIsUpdate} username={username} controlCords={controlCords} setControlCords={setControlCords} setIsControl={setIsControl} note={note} setNote={setNote} />
-            {isControl && <Control name={selectNote?.name} id={selectNote?._id} username={username} controlCords={controlCords} setNote={setNote} setIsControl={setIsControl} />}
+            <Menu setMenuOpen={setMenuOpen} menuOpen={menuOpen} isUpdate={isUpdate} setIsUpdate={setIsUpdate} username={username} controlCords={controlCords} setControlCords={setControlCords} setIsControl={setIsControl} />
+            {isControl && <Control name={selectNote?.name} id={selectNote?._id} username={username} controlCords={controlCords} setIsControl={setIsControl} />}
             <NoteContent menuOpen={menuOpen} imageUrl={selectNote?.imageUrl} name={selectNote?.name} smile={selectNote?.smile} text={selectNote?.text} id={selectNote?._id} noteUpdate={noteUpdate} setNoteUpdate={setNoteUpdate} blocks={selectNote?.blocks} />
         </div>
     )
