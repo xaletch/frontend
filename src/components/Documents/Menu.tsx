@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Item } from './Item';
 import Axios from '../../axios';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import { fetchNotes } from '../../redux/slice/noteSlice';
+import { useNavigate } from 'react-router-dom';
 
 type DocType = {
     _id: string;
@@ -15,21 +17,27 @@ type DocumentsType = {
 }
 
 export const Menu: React.FC = () => {
+    const dispatch = useDispatch()
+
     const [noteName, setNoteName] = useState<string>("без названия");
-    const [addNote, setAddNote] = useState(false);
     const [username, setUsername] = useState<string>("");
 
     const documents = useSelector((state: RootState) => state.note.itemsNote);
+
+    const navigate = useNavigate();
 
     const handleCloseMenu = () => {};
 
     const handleCreateNote = async () => {
         try {
-          await Axios.post('/notes/save', noteName);
-          setAddNote(true);
+            const data = await Axios.post('/notes/save', noteName);
+
+            dispatch(fetchNotes(data.data));
+
+            navigate(data.data.note._id);
         }
         catch (err) {
-          console.log('Не удалось создать заметку: \n', err);
+            console.log('Не удалось создать заметку: \n', err);
         }
     };
 

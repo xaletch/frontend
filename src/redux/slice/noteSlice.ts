@@ -72,7 +72,7 @@ export const noteSlice = createSlice({
             state.itemsNote = [];
             state.status = 'error';
         },
-        [fetchDeleteNote.fulfilled]: (state, action: PayloadAction<string, string, { meta: { arg?: string } }>) => {
+        [fetchDeleteNote.fulfilled.type]: (state, action) => {
             state.itemsNote = state.itemsNote.filter((item) => item._id !== action.meta.arg);
         }
     },

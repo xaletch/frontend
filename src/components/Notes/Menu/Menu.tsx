@@ -4,8 +4,9 @@ import './Menu.css';
 
 import Axios from '../../../axios';
 import { Item } from '../Item/index';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
+import { fetchNotes } from '../../../redux/slice/noteSlice';
 
 type NoteType = {
   _id: string;
@@ -25,9 +26,10 @@ interface MenuInterface {
 };
 
 export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, menuOpen, isUpdate, setIsUpdate, username, controlCords, setControlCords, setIsControl }) => {
+  const dispatch = useDispatch();
+
   const [noteName, setNoteName] = useState<string>("без названия");
   const [noteId, setNoteId] = useState<string>("");
-  const [addNote, setAddNote] = useState(false);
 
   const documents = useSelector((state: RootState) => state.note.itemsNote);
 
@@ -41,8 +43,11 @@ export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, menuOpen, isUpdate,
 
   const handleCreateNote = async () => {
     try {
-      await Axios.post('/notes/save', noteName);
-      setAddNote(true);
+      const data = await Axios.post('/notes/save', noteName);
+
+      dispatch(fetchNotes(data.data));
+
+      navigate(data.data.note._id);
     }
     catch (err) {
       console.log('Не удалось создать заметку: \n', err);
@@ -125,4 +130,8 @@ export const Menu: React.FC<MenuInterface> = ({ setMenuOpen, menuOpen, isUpdate,
       </div>
     </div>
   )
+}
+
+function navigate(_id: any) {
+  throw new Error('Function not implemented.');
 }

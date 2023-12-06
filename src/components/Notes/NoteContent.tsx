@@ -140,7 +140,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({ menuOpen, imageUrl
                 <div>
                   <h1 className='text-5xl font-bold text-noteName'>{name}</h1>
                     <div className='mt-2'>
-                      <Editor onChange={onChange} initialContent={blocks} />
+                      <Editor key={JSON.stringify(blocks)} onChange={onChange} initialContent={blocks} />
                     </div>
                 </div>
                </div>
