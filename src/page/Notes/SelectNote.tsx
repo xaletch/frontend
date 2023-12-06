@@ -5,10 +5,13 @@ import { useParams } from 'react-router-dom';
 import Axios from '../../axios';
 
 import { Control } from '../../components/Notes/Control/Control';
+import { Header } from '../../components/Notes/Header/Header';
+import { useDispatch } from 'react-redux';
+import { fetchSelectNote } from '../../redux/slice/noteSlice';
 
 interface User {
     username: string;
-}
+};
 
 interface Blocks {
     id: string;
@@ -24,7 +27,7 @@ interface Blocks {
         styles?: {};
     }>;
     children: Blocks[];
-}
+};
 
 type NoteData = {
     _id: string;
@@ -35,15 +38,11 @@ type NoteData = {
     text: string;
     user: User;
     blocks: Blocks[];
-}
-
-type NoteType = {
-    _id: string;
-    name: string;
-    smile: string;
-}
+};
 
 export const SelectNote: React.FC = () => {
+    const dispatch = useDispatch();
+
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const [isUpdate, setIsUpdate] = useState(false);
     const [noteUpdate, setNoteUpdate] = useState(false);
@@ -54,6 +53,11 @@ export const SelectNote: React.FC = () => {
     const { _id } = useParams();
     const [selectNote, setSelectNote] = useState<NoteData>();
 
+    useEffect(() => {
+        dispatch(fetchSelectNote(_id));
+    });
+
+    // REWRITE IN REDUX
     useEffect(() => {
         const fetchNote = async () => {
             try {
@@ -72,6 +76,7 @@ export const SelectNote: React.FC = () => {
         fetchNote();
     }, [_id, isUpdate, noteUpdate]);
 
+    // OBTAINING USERNAME
     useEffect(() => {
         const myAccount = async () => {
             try {
@@ -88,8 +93,9 @@ export const SelectNote: React.FC = () => {
     return (
         <div className='relative'>
             <Menu setMenuOpen={setMenuOpen} menuOpen={menuOpen} isUpdate={isUpdate} setIsUpdate={setIsUpdate} username={username} controlCords={controlCords} setControlCords={setControlCords} setIsControl={setIsControl} />
-            {isControl && <Control name={selectNote?.name} id={selectNote?._id} username={username} controlCords={controlCords} setIsControl={setIsControl} />}
+            <Header menuOpen={menuOpen} name={selectNote?.name} smile={selectNote?.smile} />
             <NoteContent menuOpen={menuOpen} imageUrl={selectNote?.imageUrl} name={selectNote?.name} smile={selectNote?.smile} text={selectNote?.text} id={selectNote?._id} noteUpdate={noteUpdate} setNoteUpdate={setNoteUpdate} blocks={selectNote?.blocks} />
+            {isControl && <Control name={selectNote?.name} id={selectNote?._id} username={username} controlCords={controlCords} setIsControl={setIsControl} />}
         </div>
     )
 }

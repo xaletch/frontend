@@ -5,3 +5,17 @@
 .img:hover .button-img {
     display: flex;
 }
+
+.note-setting {
+    opacity: 0;
+}
+
+.note-hover:hover .note-setting {
+    opacity: 1;
+}
+
+textarea {
+    padding: 0;
+    line-height: 3rem;
+    overflow: hidden;
+}

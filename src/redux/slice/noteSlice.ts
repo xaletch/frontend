@@ -40,17 +40,24 @@ export const fetchNotes = createAsyncThunk<NoteData[], void>('notes/fetchNotes',
     return data;
 }) as any;
 
+export const fetchSelectNote = createAsyncThunk('/notes/oneNote', async (_id) => {
+    const { data } = await Axios.get('/notes/oneNote/' + _id);
+    return data;
+}) as any;
+
 export const fetchDeleteNote = createAsyncThunk('notes/fetchDeleteNote', async (id) => {
     await Axios.delete(`/notes/delete/${id}`);
 }) as any;
 
 interface NoteState {
-    itemsNote: NoteData[]
+    itemsNote: NoteData[];
+    itemsSelectNote: NoteData[];
     status: string;
 }
 
 const initialState: NoteState= {
     itemsNote: [],
+    itemsSelectNote: [],
     status: 'loading',
 };
 
@@ -60,6 +67,7 @@ export const noteSlice = createSlice({
     reducers: {
     },
     extraReducers: {
+        // GET ALL NOTE
         [fetchNotes.pending.type]: (state) => {
             state.itemsNote = [];
             state.status = 'loading';
@@ -72,9 +80,25 @@ export const noteSlice = createSlice({
             state.itemsNote = [];
             state.status = 'error';
         },
+        
+        // DELETE NOTE
         [fetchDeleteNote.fulfilled.type]: (state, action) => {
             state.itemsNote = state.itemsNote.filter((item) => item._id !== action.meta.arg);
-        }
+        },
+
+        // GET ONE NOTE
+        [fetchSelectNote.pending.type]: (state) => {
+            state.itemsSelectNote = [];
+            state.status = 'loading';
+        },
+        [fetchSelectNote.fulfilled.type]: (state, action) => {
+            state.itemsSelectNote = action.payload;
+            state.status = 'loaded';
+        },
+        [fetchSelectNote.rejected.type]: (state) => {
+            state.itemsSelectNote = [];
+            state.status = 'error';
+        },
     },
 });
 

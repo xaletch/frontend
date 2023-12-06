@@ -49,6 +49,8 @@ export default {
         'white-2': '#F0F0F0',
         'text-home': '#050505',
         'button': '#121212',
+        'button2': 'hsl(0, 0%, 100%)',
+        'btn-hover': 'hsl(0, 0%, 96%)',
       },
     extend: {},
   },
