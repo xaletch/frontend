@@ -51,13 +51,13 @@ export const fetchDeleteNote = createAsyncThunk('notes/fetchDeleteNote', async (
 
 interface NoteState {
     itemsNote: NoteData[];
-    itemsSelectNote: NoteData[];
+    itemsSelectNote: NoteData;
     status: string;
 }
 
 const initialState: NoteState= {
     itemsNote: [],
-    itemsSelectNote: [],
+    itemsSelectNote: {} as NoteData,
     status: 'loading',
 };
 
@@ -88,7 +88,6 @@ export const noteSlice = createSlice({
 
         // GET ONE NOTE
         [fetchSelectNote.pending.type]: (state) => {
-            state.itemsSelectNote = [];
             state.status = 'loading';
         },
         [fetchSelectNote.fulfilled.type]: (state, action) => {
@@ -96,7 +95,6 @@ export const noteSlice = createSlice({
             state.status = 'loaded';
         },
         [fetchSelectNote.rejected.type]: (state) => {
-            state.itemsSelectNote = [];
             state.status = 'error';
         },
     },

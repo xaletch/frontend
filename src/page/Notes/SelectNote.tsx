@@ -6,8 +6,9 @@ import Axios from '../../axios';
 
 import { Control } from '../../components/Notes/Control/Control';
 import { Header } from '../../components/Notes/Header/Header';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchSelectNote } from '../../redux/slice/noteSlice';
+import { RootState } from '../../redux/store';
 
 interface User {
     username: string;
@@ -54,8 +55,10 @@ export const SelectNote: React.FC = () => {
     const [selectNote, setSelectNote] = useState<NoteData>();
 
     useEffect(() => {
-        dispatch(fetchSelectNote(_id));
-    });
+        if (_id) {
+            dispatch(fetchSelectNote(_id));
+        }
+    }, [_id]);
 
     // REWRITE IN REDUX
     useEffect(() => {
@@ -94,7 +97,7 @@ export const SelectNote: React.FC = () => {
         <div className='relative'>
             <Menu setMenuOpen={setMenuOpen} menuOpen={menuOpen} isUpdate={isUpdate} setIsUpdate={setIsUpdate} username={username} controlCords={controlCords} setControlCords={setControlCords} setIsControl={setIsControl} />
             <Header menuOpen={menuOpen} name={selectNote?.name} smile={selectNote?.smile} />
-            <NoteContent menuOpen={menuOpen} imageUrl={selectNote?.imageUrl} name={selectNote?.name} smile={selectNote?.smile} text={selectNote?.text} id={selectNote?._id} noteUpdate={noteUpdate} setNoteUpdate={setNoteUpdate} blocks={selectNote?.blocks} />
+            <NoteContent menuOpen={menuOpen} setNoteUpdate={setNoteUpdate} />
             {isControl && <Control name={selectNote?.name} id={selectNote?._id} username={username} controlCords={controlCords} setIsControl={setIsControl} />}
         </div>
     )
