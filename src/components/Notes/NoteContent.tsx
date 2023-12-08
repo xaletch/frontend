@@ -4,9 +4,8 @@ import { Smile } from '../../components/Notes/Smile/Smile';
 import Axios from '../../axios';
 
 import './NoteContent.css';
-import { fetchNotes, fetchSelectNote } from '../../redux/slice/noteSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { fetchNotes, } from '../../redux/slice/noteSlice';
+import { useDispatch } from 'react-redux';
 
 interface PartialBlock {
   id: string;
@@ -38,17 +37,11 @@ interface NoteContentInterface {
 
 export const NoteContent: React.FC<NoteContentInterface> = ({ imageUrl, name, smile, _id, blocks, menuOpen, setNoteUpdate, isName, setName}) => {
   const dispatch = useDispatch();
-  
-  // RECEIVING A SINGLE NOTE THROUGH REDUX
-  // const selectNote = useSelector((state: RootState) => state.note.itemsSelectNote);
-  // if (selectNote.blocks) { JSON.parse(JSON.stringify(selectNote.blocks))};
-  // selectNote.blocks = JSON.parse(selectNote.blocks);
 
   const [showEmoji, setShowEmoji] = useState<boolean>(false);
   const [isRename, setRename] = useState<boolean>(false);
   const [selectEmoji, setSelectEmoji] = useState<string>("");
   const [image, setImage] = useState<string>("");
-  // const [isName, setName] = useState(name);
 
   const fileRef = useRef<any>(null);
   const textareaRef: any = useRef<HTMLInputElement>(null);

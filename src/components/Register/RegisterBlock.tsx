@@ -29,7 +29,7 @@ export const RegisterBlock = () => {
   };
 
   if (redirect) {
-    return <Navigate to='/frontend'/>
+    return <Navigate to='/home'/>
   }
 
   return (

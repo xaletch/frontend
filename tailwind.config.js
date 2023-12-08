@@ -51,6 +51,7 @@ export default {
         'button': '#121212',
         'button2': 'hsl(0, 0%, 100%)',
         'btn-hover': 'hsl(0, 0%, 96%)',
+        'color-note': 'rgba(103, 103, 103)',
       },
     extend: {},
   },

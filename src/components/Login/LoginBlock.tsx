@@ -28,7 +28,7 @@ export const LoginBlock = () => {
   };
 
   if (redirect) {
-    return <Navigate to='/frontend'/>
+    return <Navigate to='/home'/>
   }
 
   return (

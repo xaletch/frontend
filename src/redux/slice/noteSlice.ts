@@ -40,11 +40,6 @@ export const fetchNotes = createAsyncThunk<NoteData[], void>('notes/fetchNotes',
     return data;
 }) as any;
 
-export const fetchSelectNote = createAsyncThunk('/notes/oneNote', async (_id) => {
-    const { data } = await Axios.get('/notes/oneNote/' + _id);
-    return data;
-}) as any;
-
 export const fetchDeleteNote = createAsyncThunk('notes/fetchDeleteNote', async (id) => {
     await Axios.delete(`/notes/delete/${id}`);
 }) as any;
@@ -84,18 +79,6 @@ export const noteSlice = createSlice({
         // DELETE NOTE
         [fetchDeleteNote.fulfilled.type]: (state, action) => {
             state.itemsNote = state.itemsNote.filter((item) => item._id !== action.meta.arg);
-        },
-
-        // GET ONE NOTE
-        [fetchSelectNote.pending.type]: (state) => {
-            state.status = 'loading';
-        },
-        [fetchSelectNote.fulfilled.type]: (state, action) => {
-            state.itemsSelectNote = action.payload;
-            state.status = 'loaded';
-        },
-        [fetchSelectNote.rejected.type]: (state) => {
-            state.status = 'error';
         },
     },
 });

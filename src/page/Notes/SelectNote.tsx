@@ -6,8 +6,6 @@ import Axios from '../../axios';
 
 import { Control } from '../../components/Notes/Control/Control';
 import { Header } from '../../components/Notes/Header/Header';
-import { useDispatch } from 'react-redux';
-import { fetchSelectNote } from '../../redux/slice/noteSlice';
 
 interface User {
     username: string;
@@ -41,8 +39,6 @@ type NoteData = {
 };
 
 export const SelectNote: React.FC = () => {
-    const dispatch = useDispatch();
-
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const [isUpdate, setIsUpdate] = useState(false);
     const [noteUpdate, setNoteUpdate] = useState(false);
@@ -91,7 +87,6 @@ export const SelectNote: React.FC = () => {
             <Menu setMenuOpen={setMenuOpen} menuOpen={menuOpen} isUpdate={isUpdate} setIsUpdate={setIsUpdate} username={username} controlCords={controlCords} setControlCords={setControlCords} setIsControl={setIsControl} />
             <Header menuOpen={menuOpen} name={selectNote?.name} smile={selectNote?.smile} />
             <NoteContent imageUrl={selectNote?.imageUrl} name={selectNote?.name} smile={selectNote?.smile} _id={selectNote?._id} blocks={selectNote?.blocks} menuOpen={menuOpen} setNoteUpdate={setNoteUpdate} isName={isName} setName={setName} />
-            {/* <NoteContent menuOpen={menuOpen} setNoteUpdate={setNoteUpdate} /> */}
             {isControl && <Control name={selectNote?.name} id={selectNote?._id} username={username} controlCords={controlCords} setIsControl={setIsControl} />}
         </div>
     )
