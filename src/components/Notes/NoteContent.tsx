@@ -33,9 +33,10 @@ interface NoteContentInterface {
   setNoteUpdate: Dispatch<SetStateAction<boolean>>;
   isName: string | undefined;
   setName: Dispatch<SetStateAction<string | undefined>>;
+  setIsControl: Dispatch<SetStateAction<boolean>>;
 }
 
-export const NoteContent: React.FC<NoteContentInterface> = ({ imageUrl, name, smile, _id, blocks, menuOpen, setNoteUpdate, isName, setName}) => {
+export const NoteContent: React.FC<NoteContentInterface> = ({ imageUrl, name, smile, _id, blocks, menuOpen, setNoteUpdate, isName, setName, setIsControl }) => {
   const dispatch = useDispatch();
 
   const [showEmoji, setShowEmoji] = useState<boolean>(false);
@@ -152,7 +153,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({ imageUrl, name, sm
   }, [isRename, isName]);
 
   return (
-    <div className='flex-1 h-screen relative z-0' style={{width: `${menuOpen === true ? `calc(100%)` : `calc(100% - 240px)`}`, left: `${menuOpen === true ? `0` : `240px`}`}}>
+    <div className='flex-1 h-screen relative z-0' style={{width: `${menuOpen === true ? `calc(100%)` : `calc(100% - 240px)`}`, left: `${menuOpen === true ? `0` : `240px`}`}} onClick={() => setIsControl(false)}>
       <div className=''>
         {imageUrl && (
           <div className='img relative w-full h-[28vh] group top-0 z-0'>

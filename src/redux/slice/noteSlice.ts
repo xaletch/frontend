@@ -41,18 +41,26 @@ export const fetchNotes = createAsyncThunk<NoteData[], void>('notes/fetchNotes',
 }) as any;
 
 export const fetchDeleteNote = createAsyncThunk('notes/fetchDeleteNote', async (id) => {
-    await Axios.delete(`/notes/delete/${id}`);
+    const { data } = await Axios.delete(`/notes/delete/${id}`);
+    console.log(data);
+    return data;
 }) as any;
 
 interface NoteState {
     itemsNote: NoteData[];
+    cart: NoteData[],
     itemsSelectNote: NoteData;
     status: string;
 }
 
-const initialState: NoteState= {
+const savedCart = localStorage.getItem('cart');
+const cartItem = savedCart !== null ? JSON.parse(savedCart) : [];
+
+const initialState: NoteState = {
     itemsNote: [],
     itemsSelectNote: {} as NoteData,
+    //! ПЛОХОЙ СПОСОБ СОХРАНЕНИЯ УДАЛЕННЫХ ЗАМЕТОК!
+    cart: Array.isArray(cartItem) ? cartItem : [],
     status: 'loading',
 };
 
@@ -79,6 +87,8 @@ export const noteSlice = createSlice({
         // DELETE NOTE
         [fetchDeleteNote.fulfilled.type]: (state, action) => {
             state.itemsNote = state.itemsNote.filter((item) => item._id !== action.meta.arg);
+            state.cart.push(action.payload.note);
+            localStorage.setItem('cart', JSON.stringify(state.cart));
         },
     },
 });

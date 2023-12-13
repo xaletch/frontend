@@ -1,16 +1,9 @@
 import React, { Dispatch, SetStateAction } from 'react'
-import Axios from '../../../axios';
 
 import './Control.css';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { fetchDeleteNote } from '../../../redux/slice/noteSlice';
-
-type NoteType = {
-    _id: string;
-    name: string;
-    smile: string;
-};
 
 type ControlTypes = {
   name: string | undefined;
@@ -29,21 +22,9 @@ export const Control: React.FC<ControlTypes> = ({ name, username, controlCords, 
         setIsControl(false);
         navigate('/documents');
     };
-
-    // const handleDeleteNote = async (id: string) => {
-    //     try {
-    //         await Axios.delete(`/notes/delete/${id}`);
-    //         // setNote(note => note.filter(item => item._id !== id));
-
-    //         setIsControl(false);
-    //         navigate('/documents');
-    //     } catch (err) {
-    //         console.log('Не удалось удалить заметку: \n', err);
-    //     }
-    // };
     
     return (
-        <div className='absolute left-[195px] w-[225px] bg-white box-shadow z-50' style={{top: controlCords.y}}>
+        <div className='absolute left-[195px] w-[225px] bg-white box-shadow z-50' onClick={(e) => e.stopPropagation()} style={{top: controlCords.y}}>
             <div className=''>
                 <div className='bg-white'></div>
                 <div className='p-2 px-0'>
