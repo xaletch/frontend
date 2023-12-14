@@ -35,14 +35,27 @@ type NoteData = {
     blocks: Blocks[];
 }
 
+// ALL NOTE
 export const fetchNotes = createAsyncThunk<NoteData[], void>('notes/fetchNotes', async () => {
     const { data } = await Axios.get('/notes');
     return data;
 }) as any;
 
+// RECEIVING YOUR CART
+export const fetchNoteCart = createAsyncThunk('notes/fetchNoteCart', async () => {
+    const { data } = await Axios.get('/notes/cart/note');
+    return data;
+}) as any;
+
+// ADD TO CART NOTE
+export const fetchAddNoteCart = createAsyncThunk('notes/fetchAddNoteCart', async (id) => {
+    const { data } = await Axios.post(`/notes/add-to-cart/${id}`);
+    return data;
+}) as any;
+
+// DELETE NOTE
 export const fetchDeleteNote = createAsyncThunk('notes/fetchDeleteNote', async (id) => {
     const { data } = await Axios.delete(`/notes/delete/${id}`);
-    console.log(data);
     return data;
 }) as any;
 
@@ -51,16 +64,12 @@ interface NoteState {
     cart: NoteData[],
     itemsSelectNote: NoteData;
     status: string;
-}
-
-const savedCart = localStorage.getItem('cart');
-const cartItem = savedCart !== null ? JSON.parse(savedCart) : [];
+};
 
 const initialState: NoteState = {
     itemsNote: [],
     itemsSelectNote: {} as NoteData,
-    //! ПЛОХОЙ СПОСОБ СОХРАНЕНИЯ УДАЛЕННЫХ ЗАМЕТОК!
-    cart: Array.isArray(cartItem) ? cartItem : [],
+    cart: [],
     status: 'loading',
 };
 
@@ -83,12 +92,30 @@ export const noteSlice = createSlice({
             state.itemsNote = [];
             state.status = 'error';
         },
+
+        // RECEIVING YOUR CART
+        [fetchNoteCart.pending.type]: (state) => {
+            state.cart = [];
+            state.status = 'loading';
+        },
+        [fetchNoteCart.fulfilled.type]: (state, action) => {
+            state.cart = action.payload;
+            state.status = 'loaded';
+        },
+        [fetchNoteCart.rejected.type]: (state) => {
+            state.cart = [];
+            state.status = 'error';
+        },
         
         // DELETE NOTE
         [fetchDeleteNote.fulfilled.type]: (state, action) => {
             state.itemsNote = state.itemsNote.filter((item) => item._id !== action.meta.arg);
-            state.cart.push(action.payload.note);
-            localStorage.setItem('cart', JSON.stringify(state.cart));
+        },
+
+        // ADD NOTE CART
+        [fetchAddNoteCart.fulfilled.type]: (state, action) => {
+            state.itemsNote = state.itemsNote.filter((item) => item._id !== action.meta.arg);
+            state.status = 'loaded';
         },
     },
 });

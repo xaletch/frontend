@@ -10,7 +10,7 @@ import { Login } from './page/Login/Login';
 import { SelectNote } from './page/Notes/SelectNote';
 import { Documents } from './page/Documents/Documents';
 import { useDispatch } from 'react-redux';
-import { fetchNotes } from './redux/slice/noteSlice';
+import { fetchNoteCart, fetchNotes } from './redux/slice/noteSlice';
 import { NotFound } from './page/NotFound/NotFound';
 
 function App() {
@@ -18,6 +18,7 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchNotes());
+    dispatch(fetchNoteCart());
   }, [dispatch]);
   
   return (
