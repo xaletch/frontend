@@ -325,7 +325,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
                 </div>
                 {!isRename ? (
                   <h1
-                    className="text-7xl font-bold text-secondary-900 leading-none"
+                    className="text-6xl font-bold text-secondary-900 leading-none"
                     onClick={handleRename}
                   >
                     {name}
