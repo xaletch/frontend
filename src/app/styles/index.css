@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Inter */
+  @font-face {
+    font-family: "Inter";
+    src: url("../fonts/Inter/Inter-Regular.woff") format("woff"),
+      url("../fonts/Inter/Inter-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Inter";
+    src: url("../fonts/Inter/Inter-Medium.woff") format("woff"),
+      url("../fonts/Inter/Inter-Medium.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Inter";
+    src: url("../fonts/Inter/Inter-SemiBold.woff") format("woff"),
+      url("../fonts/Inter/Inter-SemiBold.woff2") format("woff2");
+    font-weight: 600;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "Inter";
+    src: url("../fonts/Inter/Inter-Bold.woff") format("woff"),
+      url("../fonts/Inter/Inter-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+  }
+}
+
+/* ::selection {
+  background: #ede9fe;
+  color: #4c1d95;
+} */
+
+body {
+  /* background-color: rgb(248 250 252); */
+  /* background-color: rgb(241, 245, 249); */
+}

@@ -1,5 +1,5 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Dispatch, SetStateAction } from "react";
+import { Link } from "react-router-dom";
 
 interface HeaderInterface {
   isMenu: boolean;
@@ -7,42 +7,53 @@ interface HeaderInterface {
   username: string;
 }
 
-export const Header: React.FC<HeaderInterface> = ({ isMenu, setMenu, username }) => {
-  const user = localStorage.getItem('logged_in');
+export const Header: React.FC<HeaderInterface> = ({
+  isMenu,
+  setMenu,
+  username,
+}) => {
+  const user = localStorage.getItem("logged_in");
 
   const openMenu = () => {
     setMenu(!isMenu);
   };
 
   return (
-    <div className='w-full'>
-      <div className='p-6'>
-        <div className='flex justify-between items-center'>
-          <div className=''>
-            Logo
-          </div>
-          <div className=''>
-            {user ?
-              <div className='w-[32px] h-[32px] bg-light-grey rounded-md flex justify-center items-center cursor-pointer select-none' onClick={openMenu}>
-                <span className='text-base uppercase font-medium text-username'>{username[0]}</span>
+    <div className="container w-full mx-auto">
+      <div className="py-6">
+        <div className="flex justify-between items-center">
+          <div className="">Kotion</div>
+          <div className="">
+            {user ? (
+              <div
+                className="w-9 h-9 bg-secondary-100 rounded-md flex justify-center items-center cursor-pointer select-none"
+                onClick={openMenu}
+              >
+                <span className="text-base uppercase font-medium text-secondary-800">
+                  {username[0]}
+                </span>
               </div>
-            : 
-              <ul className='flex items-center gap-4'>
+            ) : (
+              <ul className="flex items-center gap-4">
                 <li>
-                  <Link to='/login'>
-                    <div className='px-3 p-1 text-text-home hover:bg-secondary rounded'>Log in</div>
+                  <Link to="/login">
+                    <div className="px-3 p-1 text-secondary-900 text-sm font-normal hover:bg-secondary-100 rounded duration-200 ease-in">
+                      Log in
+                    </div>
                   </Link>
                 </li>
                 <li>
-                  <Link to='/register'>
-                    <div className='px-3 p-1 text-white font-medium bg-button rounded hover:opacity-90'>Get name free</div>
+                  <Link to="/register">
+                    <div className="px-3 p-1 text-secondary-50 text-sm font-normal bg-secondary-900 rounded hover:bg-secondary-800 duration-200 ease-in">
+                      Get started
+                    </div>
                   </Link>
                 </li>
               </ul>
-            }
+            )}
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

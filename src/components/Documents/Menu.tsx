@@ -47,22 +47,22 @@ export const Menu: React.FC = () => {
 
   return (
     // onClick={(e) => handleCords(e)}
-    <div className="bg-secondary h-full w-60 fixed top-0 left-0 overflow-auto">
-      <div className="bg-secondary flex flex-col">
+    <div className="bg-secondary-150 h-full w-60 fixed top-0 left-0 overflow-hidden">
+      <div className="h-full bg-secondary-150 flex flex-col">
         <div>
           <div className="p-3 flex justify-between text-center">
             <div className="gap-2 flex items-center">
-              <div className="w-[24px] h-[24px] bg-light-grey rounded-md flex justify-center items-center">
-                <span className="text-base uppercase font-medium text-username">
+              <div className="w-[24px] h-[24px] bg-secondary-200 rounded-md flex justify-center items-center">
+                <span className="text-sm uppercase font-medium text-secondary-900">
                   {username[0]}
                 </span>
               </div>
-              <span className="text-base font-medium capitalize text-noteName">
+              <span className="text-base font-medium capitalize text-secondary-800">
                 {username}
               </span>
             </div>
             <div
-              className="p-1 cursor-pointer flex items-center rounded hover:bg-grey"
+              className="p-1 cursor-pointer flex items-center rounded hover:bg-secondary-200 duration-200 ease-in"
               onClick={handleCloseMenu}
             >
               <svg
@@ -81,7 +81,7 @@ export const Menu: React.FC = () => {
             </div>
           </div>
           <div className="">
-            <div className="p-1 px-3 flex items-center font-medium cursor-pointer hover:bg-light-grey">
+            <div className="p-1 px-3 flex items-center font-medium text-base cursor-pointer hover:bg-secondary-200">
               <svg
                 className="mr-2"
                 xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +97,7 @@ export const Menu: React.FC = () => {
               </svg>
               <span style={{ color: "#676767" }}>Поиск</span>
             </div>
-            <div className="p-1 px-3 flex items-center font-medium cursor-pointer hover:bg-light-grey">
+            <div className="p-1 px-3 flex items-center font-medium text-base cursor-pointer hover:bg-secondary-200">
               <svg
                 className="mr-2"
                 xmlns="http://www.w3.org/2000/svg"
@@ -115,7 +115,7 @@ export const Menu: React.FC = () => {
               </svg>
               <span style={{ color: "#676767" }}>Настройки</span>
             </div>
-            <div className="p-1 px-3 flex items-center font-medium cursor-pointer hover:bg-light-grey">
+            <div className="p-1 px-3 flex items-center font-medium text-base cursor-pointer hover:bg-secondary-200">
               <svg
                 className="mr-2"
                 width="18"
@@ -147,7 +147,7 @@ export const Menu: React.FC = () => {
           </div>
           <div className="mt-4">
             {/* CREATE PAGE */}
-            <div className="p-1 px-3 flex items-center font-medium cursor-pointer hover:bg-light-grey">
+            <div className="p-1 px-3 flex items-center font-medium text-base cursor-pointer hover:bg-secondary-200">
               <svg
                 className="mr-3"
                 xmlns="http://www.w3.org/2000/svg"
@@ -168,7 +168,7 @@ export const Menu: React.FC = () => {
             </div>
 
             {/* BASKET */}
-            <div className="mt-4 p-1 px-3 flex items-center font-medium cursor-pointer hover:bg-light-grey">
+            <div className="p-1 px-3 flex items-center font-medium text-base cursor-pointer hover:bg-secondary-200">
               <svg
                 className="mr-2"
                 xmlns="http://www.w3.org/2000/svg"
