@@ -12,7 +12,7 @@ export const RegisterBlock = () => {
     try {
       e.preventDefault();
       const data = { username, email, password };
-      const loginData = await Axios.post("/user/register", data);
+      const loginData = await Axios.post("/api/user/register", data);
       console.log(loginData);
 
       if (loginData.statusText === "OK") {

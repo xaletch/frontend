@@ -11,7 +11,7 @@ export const LoginBlock = () => {
     try {
       e.preventDefault();
       const data = { email, password };
-      const loginData = await Axios.post("/user/login", data);
+      const loginData = await Axios.post("/api/user/login", data);
       console.log(loginData);
 
       if (loginData.statusText === "OK") {

@@ -1,13 +1,20 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { useDispatch } from 'react-redux';
+import { configureStore } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
+import { setupListeners } from "@reduxjs/toolkit/query";
 
-import note from './slice/noteSlice';
+import note from "./slice/noteSlice";
+import { noteApi } from "./api";
 
 export const store = configureStore({
-    reducer: {
-        note,
-    },
+  reducer: {
+    note,
+    [noteApi.reducerPath]: noteApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(noteApi.middleware),
 });
+
+setupListeners(store.dispatch);
 
 export type RootState = ReturnType<typeof store.getState>;
 

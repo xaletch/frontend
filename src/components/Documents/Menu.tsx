@@ -20,7 +20,7 @@ export const Menu: React.FC = () => {
 
   const handleCreateNote = async () => {
     try {
-      const data = await Axios.post("/notes/save", noteName);
+      const data = await Axios.post("/api/notes/save", noteName);
 
       dispatch(fetchNotes(data.data));
 
@@ -33,7 +33,7 @@ export const Menu: React.FC = () => {
   useEffect(() => {
     const myAccount = async () => {
       try {
-        const { data } = await Axios.get("/user/account");
+        const { data } = await Axios.get("/api/user/account");
         setUsername(data.username);
       } catch (err) {
         console.log(

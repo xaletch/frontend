@@ -19,7 +19,7 @@ export const Item: React.FC<DocType> = ({ _id, name, smile }) => {
 
   const handleCreateNote = async () => {
     try {
-      await Axios.post("/notes/save");
+      await Axios.post("/api/notes/save");
     } catch (err) {
       console.log("Не удалось создать заметку: \n", err);
     }

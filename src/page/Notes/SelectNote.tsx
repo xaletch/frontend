@@ -74,7 +74,7 @@ export const SelectNote: React.FC = () => {
   useEffect(() => {
     const myAccount = async () => {
       try {
-        const { data } = await Axios.get("/user/account");
+        const { data } = await Axios.get("/api/user/account");
         setUsername(data.username);
       } catch (err) {
         console.log(

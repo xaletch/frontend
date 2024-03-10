@@ -43,7 +43,7 @@ export const Menu: React.FC<MenuInterface> = ({
   const documents = useSelector((state: RootState) => state.note.items);
 
   const handleSelectNote = async (id: any) => {
-    await Axios.get(`/notes/oneNote/${id}`);
+    await Axios.get(`/api/notes/oneNote/${id}`);
   };
 
   const handleCloseMenu = () => {
@@ -52,7 +52,7 @@ export const Menu: React.FC<MenuInterface> = ({
 
   const handleCreateNote = async () => {
     try {
-      const data = await Axios.post("/notes/save", noteName);
+      const data = await Axios.post("/api/notes/save", noteName);
 
       dispatch(fetchNotes(data.data));
 

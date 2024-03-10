@@ -39,7 +39,7 @@ type NoteData = {
 export const fetchNotes = createAsyncThunk<NoteData[], void>(
   "notes/fetchNotes",
   async () => {
-    const { data } = await Axios.get("/notes");
+    const { data } = await Axios.get("/api/notes");
     return data;
   }
 ) as any;
@@ -48,7 +48,7 @@ export const fetchNotes = createAsyncThunk<NoteData[], void>(
 export const fetchNoteCart = createAsyncThunk(
   "notes/fetchNoteCart",
   async () => {
-    const { data } = await Axios.get("/notes/cart/note");
+    const { data } = await Axios.get("/api/notes/cart/note");
     return data;
   }
 ) as any;
@@ -57,7 +57,7 @@ export const fetchNoteCart = createAsyncThunk(
 export const fetchAddNoteCart = createAsyncThunk(
   "notes/fetchAddNoteCart",
   async (id) => {
-    const { data } = await Axios.post(`/notes/add-to-cart/${id}`);
+    const { data } = await Axios.post(`/api/notes/add-to-cart/${id}`);
     return data;
   }
 ) as any;
@@ -66,7 +66,7 @@ export const fetchAddNoteCart = createAsyncThunk(
 export const fetchDeleteNote = createAsyncThunk(
   "notes/fetchDeleteNote",
   async (id) => {
-    const { data } = await Axios.delete(`/notes/delete/${id}`);
+    const { data } = await Axios.delete(`/api/notes/delete/${id}`);
     return data;
   }
 ) as any;

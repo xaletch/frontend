@@ -45,7 +45,7 @@ export const Item: React.FC<NoteItemProps> = ({
     try {
       const update = async () => {
         if (isUpdate) {
-          await Axios.patch("/notes/update/" + noteId, { name: noteName });
+          await Axios.patch("/api/notes/update/" + noteId, { name: noteName });
         }
       };
       update();

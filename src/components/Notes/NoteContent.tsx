@@ -72,7 +72,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
 
   const handleRemoveSmile = async () => {
     try {
-      const data = await Axios.patch("/notes/update/" + _id, { smile: "" });
+      const data = await Axios.patch("/api/notes/update/" + _id, { smile: "" });
       dispatch(fetchNotes(data.data));
       setNoteUpdate(true);
     } catch (err) {
@@ -97,7 +97,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
     try {
       const noteContent = async () => {
         if (name) {
-          const data = await Axios.patch("/notes/update/" + _id, {
+          const data = await Axios.patch("/api/notes/update/" + _id, {
             smile: selectEmoji ? selectEmoji : smile,
             imageUrl: image ? image : imageUrl,
           });
@@ -114,7 +114,9 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
 
   const handleRemoveImg = async () => {
     try {
-      const data = await Axios.patch("/notes/update/" + _id, { imageUrl: "" });
+      const data = await Axios.patch("/api/notes/update/" + _id, {
+        imageUrl: "",
+      });
       dispatch(fetchNotes(data.data));
       setNoteUpdate(true);
     } catch (err) {
@@ -125,7 +127,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
   const onChange = async (content: string) => {
     try {
       const data = JSON.stringify(content);
-      await Axios.patch("/notes/update/" + _id, { blocks: data });
+      await Axios.patch("/api/notes/update/" + _id, { blocks: data });
     } catch (err) {
       console.log(
         "При добавлении контента в заметке произошла ошибка: \n",
@@ -155,7 +157,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
     const rename = async () => {
       if (isRename) {
         try {
-          const data = await Axios.patch("/notes/update/" + _id, {
+          const data = await Axios.patch("/api/notes/update/" + _id, {
             name: isName,
           });
           dispatch(fetchNotes(data.data));
