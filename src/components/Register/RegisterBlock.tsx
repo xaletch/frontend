@@ -1,32 +1,56 @@
 import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
-import Axios from "../../axios";
+
+import { useForm } from "react-hook-form";
+import { useFetchRegisterMutation } from "../../redux/api";
+
+type RegistrationValue = {
+  username: string;
+  email: string;
+  password: string;
+};
 
 export const RegisterBlock = () => {
-  const [username, setUsername] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
   const [redirect, setRedirect] = useState<boolean>(false);
 
-  const handleSubmit = async (e: any) => {
+  const [fetchRegister] = useFetchRegisterMutation();
+
+  const setCookieWithExpiration = (
+    cookieName: string,
+    cookieValue: string,
+    expHours: number
+  ) => {
+    const date = new Date();
+    date.setTime(date.getTime() + expHours * 60 * 60 * 1000);
+    const expires = date.toUTCString();
+    document.cookie = `${cookieName}=${cookieValue}; expires=${expires}; path=/;`;
+  };
+
+  const {
+    register: registration,
+    handleSubmit: handleSubmitReg,
+    formState: { errors: errorsReg },
+  } = useForm({
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
+    },
+    mode: "onSubmit",
+  });
+
+  const onSubmitRegistration = async (value: RegistrationValue) => {
     try {
-      e.preventDefault();
-      const data = { username, email, password };
-      const loginData = await Axios.post("/api/user/register", data);
-      console.log(loginData);
+      const data = await fetchRegister(value);
 
-      if (loginData.statusText === "OK") {
-        setRedirect(true);
-      }
-
-      if ("token" in loginData.data) {
-        window.localStorage.setItem("logged_in", loginData.data.token);
+      if ("data" in data) {
+        if (data.data.access_token) {
+          setCookieWithExpiration("access_token", data.data.access_token, 24);
+          setRedirect(true);
+        }
       }
     } catch (err) {
-      console.log(
-        "Данное имя или логин уже используется другим пользователем: \n",
-        err
-      );
+      console.log("При регистрации произошла ошибка: ", err);
     }
   };
 
@@ -39,28 +63,60 @@ export const RegisterBlock = () => {
       <h2 className="text-4xl text-secondary-900 font-medium text-center mb-3">
         Регистрация
       </h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmitReg(onSubmitRegistration)}>
         <input
-          className="p-2 px-4 rounded-xl w-full text-base font-normal text-secondary-800 border border-secondary-800 outline-none mb-2 placeholder:text-secondary-400 placeholder:font-normal placeholder:text-base"
+          className={`${
+            errorsReg?.username ? "border-primary-500" : "mb-2"
+          } p-2 px-4 rounded-xl w-full text-base font-normal text-secondary-800 border border-secondary-800 outline-none placeholder:text-secondary-400 placeholder:font-normal placeholder:text-base`}
           type="text"
-          value={username}
-          onChange={(e: any) => setUsername(e.target.value)}
           placeholder="Введите ваше имя"
+          {...registration("username", {
+            required: "Поле обязательно к заполнению",
+            minLength: {
+              value: 3,
+              message: "Имя должно состоять не менее чем из 3 символов",
+            },
+          })}
         ></input>
+        {errorsReg?.username && (
+          <p className="text-sm pl-2 mb-2 text-primary-500">
+            {errorsReg?.username?.message}
+          </p>
+        )}
         <input
-          className="p-2 px-4 rounded-xl w-full text-base font-normal text-secondary-800 border border-secondary-800 outline-none mb-2 placeholder:text-secondary-400 placeholder:font-normal placeholder:text-base"
+          className={`${
+            errorsReg?.email ? "border-primary-500" : "mb-2"
+          } p-2 px-4 rounded-xl w-full text-base font-normal text-secondary-800 border border-secondary-800 outline-none placeholder:text-secondary-400 placeholder:font-normal placeholder:text-base`}
           type="email"
-          value={email}
-          onChange={(e: any) => setEmail(e.target.value)}
           placeholder="Ваш email"
+          {...registration("email", {
+            required: "Поле обязательно к заполнению",
+          })}
         ></input>
+        {errorsReg?.email && (
+          <p className="text-sm pl-2 mb-2 text-primary-500">
+            Поле обязательно к заполнению
+          </p>
+        )}
         <input
-          className="p-2 px-4 rounded-xl w-full text-base font-normal text-secondary-800 border border-secondary-800 outline-none mb-2 placeholder:text-secondary-400 placeholder:font-normal placeholder:text-base"
+          className={`${
+            errorsReg?.password ? "border-primary-500" : "mb-2"
+          } p-2 px-4 rounded-xl w-full text-base font-normal text-secondary-800 border border-secondary-800 outline-none placeholder:text-secondary-400 placeholder:font-normal placeholder:text-base`}
           type="password"
-          value={password}
-          onChange={(e: any) => setPassword(e.target.value)}
           placeholder="Пароль"
+          {...registration("password", {
+            required: "Поле обязательно к заполнению",
+            minLength: {
+              value: 8,
+              message: "Пароль должен состоять не менее чем из 8 символов",
+            },
+          })}
         ></input>
+        {errorsReg?.password && (
+          <p className="text-sm pl-2 mb-2 text-primary-500">
+            {errorsReg?.password?.message}
+          </p>
+        )}
         <button
           className="p-2 px-4 rounded-xl w-full border-none text-base font-normal outline-none bg-secondary-900 text-secondary-50 hover:bg-secondary-800 duration-200 ease-in"
           type="submit"
