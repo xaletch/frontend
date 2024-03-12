@@ -43,8 +43,6 @@ export const LoginBlock = () => {
     try {
       const data = await fetchLogin(value);
 
-      console.log(data);
-
       if ("data" in data) {
         if (data.data.access_token) {
           setCookieWithExpiration("access_token", data.data.access_token, 24);

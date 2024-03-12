@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { Link } from "react-router-dom";
+import { isAuth } from "../../interfaces/interfaces";
 
 interface HeaderInterface {
   isMenu: boolean;
@@ -12,8 +13,6 @@ export const Header: React.FC<HeaderInterface> = ({
   setMenu,
   username,
 }) => {
-  const user = localStorage.getItem("logged_in");
-
   const openMenu = () => {
     setMenu(!isMenu);
   };
@@ -24,7 +23,7 @@ export const Header: React.FC<HeaderInterface> = ({
         <div className="flex justify-between items-center">
           <div className="">Kotion</div>
           <div className="">
-            {user ? (
+            {isAuth ? (
               <div
                 className="w-9 h-9 bg-secondary-100 rounded-md flex justify-center items-center cursor-pointer select-none"
                 onClick={openMenu}

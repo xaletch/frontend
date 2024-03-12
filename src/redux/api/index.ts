@@ -120,7 +120,7 @@ export const noteApi = createApi({
     }),
   }),
 });
-
+export const { useGetCartNotesQuery } = noteApi;
 export const {
   useFetchRegisterMutation,
   useFetchLoginMutation,
@@ -130,7 +130,6 @@ export const {
   useGetOneNoteQuery,
   usePatchUpdateNoteMutation,
   useFetchAddNoteCartMutation,
-  useGetCartNotesQuery,
   useFetchRecoveryNoteMutation,
   useFetchDeleteNoteMutation,
   useFetchUploadImageMutation,
