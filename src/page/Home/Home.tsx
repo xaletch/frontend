@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import "./home.css";
 import { Cart } from "../../components/Cart/Cart";
-import { useGetUserInfoQuery } from "../../redux/api";
+import { useGetUserInfoQuery, useLazyGetUserInfoQuery } from "../../redux/api";
 import { isAuth } from "../../interfaces/interfaces";
 
 export const Home: React.FC = () => {
@@ -24,6 +24,7 @@ export const Home: React.FC = () => {
     isLoading: isLoadingUserData,
     refetch: refetchUserData,
   } = useGetUserInfoQuery("");
+  const [trigger] = useLazyGetUserInfoQuery();
 
   const closeMenu = () => {
     isMenu && setMenu(false);
@@ -34,13 +35,15 @@ export const Home: React.FC = () => {
       "access_token=; expires=Thu, 14 March 2024 00:00:00 UTC; path=/;";
 
     setMenu(false);
+    trigger("");
   };
 
   useEffect(() => {
     if (accessToken) {
       setUsername(userData?.username);
+      trigger("");
     }
-  }, [isAuth, isUserData, userData?.username]);
+  }, [isAuth, isUserData, userData?.username, trigger]);
 
   return (
     <div onClick={closeMenu}>

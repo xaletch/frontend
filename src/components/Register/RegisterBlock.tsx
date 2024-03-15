@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
-import { useFetchRegisterMutation } from "../../redux/api";
+import {
+  useFetchRegisterMutation,
+  useLazyGetUserInfoQuery,
+} from "../../redux/api";
 
 type RegistrationValue = {
   username: string;
@@ -14,6 +17,8 @@ export const RegisterBlock = () => {
   const [redirect, setRedirect] = useState<boolean>(false);
 
   const [fetchRegister] = useFetchRegisterMutation();
+  // ЗАПРОС НА ИНФОРМАЦИЮ О ПОЛЬЗОВАТЕЛЕ
+  const [trigger] = useLazyGetUserInfoQuery();
 
   const setCookieWithExpiration = (
     cookieName: string,
@@ -44,6 +49,7 @@ export const RegisterBlock = () => {
       const data = await fetchRegister(value);
 
       if ("data" in data) {
+        trigger("");
         if (data.data.access_token) {
           setCookieWithExpiration("access_token", data.data.access_token, 24);
           setRedirect(true);

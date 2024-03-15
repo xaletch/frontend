@@ -1,3 +1,12 @@
+import { MutationTrigger } from "@reduxjs/toolkit/dist/query/react/buildHooks";
+import {
+  BaseQueryFn,
+  FetchArgs,
+  FetchBaseQueryError,
+  FetchBaseQueryMeta,
+  MutationDefinition,
+} from "@reduxjs/toolkit/query";
+
 interface Block {
   id: string;
   type: string;
@@ -39,4 +48,46 @@ export interface CartItemInterface {
     smile: string;
     name: string;
   }[];
+}
+
+export interface UserInterface {
+  email: string;
+  passwordHash: string;
+  username: string;
+  __v: number;
+  _id: string;
+}
+
+export interface DocumentsInterface {
+  blocks: Block[];
+  imageUrl: string;
+  name: string;
+  smile: string;
+  user: UserInterface[];
+  __v: number;
+  _id: string;
+}
+
+export interface MenuProps {
+  selectNote: MutationTrigger<
+    MutationDefinition<
+      string,
+      BaseQueryFn<
+        string | FetchArgs,
+        unknown,
+        FetchBaseQueryError,
+        {},
+        FetchBaseQueryMeta
+      >,
+      "CreateNote" | "CheckAuth",
+      any,
+      "noteApi"
+    >
+  >;
+}
+
+export interface DocInterface {
+  _id: string;
+  name: string;
+  smile: string;
 }

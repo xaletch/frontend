@@ -13,6 +13,7 @@ function getCookieValue(name: string) {
 
 export const noteApi = createApi({
   reducerPath: "noteApi",
+  tagTypes: ["CreateNote", "CheckAuth"],
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8000/",
     prepareHeaders: (headers, { getState }) => {
@@ -31,6 +32,7 @@ export const noteApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: [{ type: "CheckAuth", id: "LIST" }],
     }),
     // АВТОРИЗАЦИЯ
     fetchLogin: builder.mutation({
@@ -39,6 +41,7 @@ export const noteApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: [{ type: "CheckAuth", id: "LIST" }],
     }),
     // ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ
     getUserInfo: builder.query({
@@ -46,6 +49,7 @@ export const noteApi = createApi({
         url: "/api/user/account",
         method: "GET",
       }),
+      providesTags: ["CheckAuth"],
     }),
     // ПОЛУЧЕНИЕ ВСЕХ ЗАМЕТОК
     getNotes: builder.query({
@@ -53,6 +57,16 @@ export const noteApi = createApi({
         url: "/api/notes",
         method: "GET",
       }),
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }: { id: string }) => ({
+                type: "CreateNote" as const,
+                id,
+              })),
+              { type: "CreateNote", id: "LIST" },
+            ]
+          : [{ type: "CreateNote", id: "LIST" }],
     }),
     // СОЗДАНИЕ ЗАМЕТКИ
     fetchCreateNotes: builder.mutation({
@@ -60,9 +74,10 @@ export const noteApi = createApi({
         url: "/api/notes/save",
         method: "POST",
       }),
+      invalidatesTags: [{ type: "CreateNote", id: "LIST" }],
     }),
     // ПОЛУЧЕНИЕ ЗАМЕТКИ ПО ID
-    getOneNote: builder.query({
+    getOneNote: builder.mutation({
       query: (id: string) => ({
         url: `/api/notes/oneNote/${id}`,
         method: "GET",
@@ -125,9 +140,11 @@ export const {
   useFetchRegisterMutation,
   useFetchLoginMutation,
   useGetUserInfoQuery,
+  useLazyGetUserInfoQuery,
   useGetNotesQuery,
   useFetchCreateNotesMutation,
-  useGetOneNoteQuery,
+  // useGetOneNoteQuery,
+  useGetOneNoteMutation,
   usePatchUpdateNoteMutation,
   useFetchAddNoteCartMutation,
   useFetchRecoveryNoteMutation,

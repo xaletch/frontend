@@ -70,3 +70,11 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
+
+.setting {
+  opacity: 0;
+  transition: all 0.1s linear;
+}
+.page:hover .setting {
+  opacity: 1;
+}

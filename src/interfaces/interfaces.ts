@@ -33,10 +33,16 @@ export interface DataNotes {
         text: string;
         styles: {};
       }[];
-      children: any[]; // или более конкретный тип
+      children: any[];
     }[];
     user: string;
     __v: number;
   }[];
   __v: number;
+}
+
+export interface NoteItem {
+  _id: string;
+  name: string;
+  smile: string;
 }

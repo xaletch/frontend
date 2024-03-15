@@ -27,9 +27,9 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />}></Route>
         <Route path="/home" element={<Home />}></Route>
-        {/* <Route path="/documents/:_id" element={<SelectNote />}></Route> */}
+        <Route path="/documents/:_id" element={<Documents />}></Route>
         {/* <Route path="*" element={<NotFound />}></Route> */}
-        {/* <Route path="/documents" element={<Documents />}></Route> */}
+        <Route path="/documents" element={<Documents />}></Route>
       </Routes>
     </div>
   );

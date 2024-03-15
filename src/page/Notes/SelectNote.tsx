@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Menu } from "../../components/Notes/Menu/Menu";
+// import { Menu } from "../../components/Notes/Menu/Menu";
 import { NoteContent } from "../../components/Notes/NoteContent";
 import { useParams } from "react-router-dom";
 import Axios from "../../axios";
@@ -9,6 +9,8 @@ import { Header } from "../../components/Notes/Header/Header";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Cart } from "../../components/Cart/Cart";
+import { Menu } from "../../components/Documents/Menu";
+import { useGetOneNoteMutation } from "../../redux/api";
 
 interface User {
   username: string;
@@ -42,53 +44,76 @@ type NoteData = {
 };
 
 export const SelectNote: React.FC = () => {
-  const [menuOpen, setMenuOpen] = useState<boolean>(false);
-  const [isUpdate, setIsUpdate] = useState(false);
-  const [noteUpdate, setNoteUpdate] = useState(false);
-  const [isControl, setIsControl] = useState(false);
-  const [username, setUsername] = useState<string>("");
-  const [controlCords, setControlCords] = useState({ x: 0, y: 0 });
-
   const { _id } = useParams();
-  const [selectNote, setSelectNote] = useState<NoteData>();
-  const [isName, setName] = useState(selectNote?.name);
+
+  const [selectNoteData, setSelectNoteData] = useState();
+
+  const [selectNote, { data: noteData, isSuccess: isSelectNoteSuccess }] =
+    useGetOneNoteMutation();
 
   useEffect(() => {
-    const fetchNote = async () => {
-      try {
-        if (_id) {
-          const { data } = await Axios.get("/notes/oneNote/" + _id);
-          setSelectNote(data);
-          setIsUpdate(false);
-          setNoteUpdate(false);
-          data.blocks = JSON.parse(data.blocks);
-        }
-      } catch (err) {
-        console.log("Не удалось открыть заметку");
-      }
-    };
-    fetchNote();
-  }, [_id, isUpdate, noteUpdate, isName]);
+    if (_id && !selectNoteData) {
+      selectNote(_id);
+    }
+  }, [_id, selectNoteData]);
 
-  // OBTAINING USERNAME
   useEffect(() => {
-    const myAccount = async () => {
-      try {
-        const { data } = await Axios.get("/api/user/account");
-        setUsername(data.username);
-      } catch (err) {
-        console.log(
-          "При получении имени пользователя произошла ошибка: \n",
-          err
-        );
-      }
-    };
-    myAccount();
-  }, []);
+    if (isSelectNoteSuccess) {
+      setSelectNoteData(noteData);
+    }
+  }, [isSelectNoteSuccess, noteData]);
+
+  console.log(selectNoteData);
+  // const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  // const [isUpdate, setIsUpdate] = useState(false);
+  // const [noteUpdate, setNoteUpdate] = useState(false);
+  // const [isControl, setIsControl] = useState(false);
+  // const [username, setUsername] = useState<string>("");
+  // const [controlCords, setControlCords] = useState({ x: 0, y: 0 });
+
+  // const { _id } = useParams();
+  // const [selectNote, setSelectNote] = useState<NoteData>();
+  // const [isName, setName] = useState(selectNote?.name);
+
+  // console.log(_id);
+
+  // useEffect(() => {
+  //   const fetchNote = async () => {
+  //     try {
+  //       if (_id) {
+  //         const { data } = await Axios.get("/notes/oneNote/" + _id);
+  //         setSelectNote(data);
+  //         setIsUpdate(false);
+  //         setNoteUpdate(false);
+  //         data.blocks = JSON.parse(data.blocks);
+  //       }
+  //     } catch (err) {
+  //       console.log("Не удалось открыть заметку");
+  //     }
+  //   };
+  //   fetchNote();
+  // }, [_id, isUpdate, noteUpdate, isName]);
+
+  // // OBTAINING USERNAME
+  // useEffect(() => {
+  //   const myAccount = async () => {
+  //     try {
+  //       const { data } = await Axios.get("/api/user/account");
+  //       setUsername(data.username);
+  //     } catch (err) {
+  //       console.log(
+  //         "При получении имени пользователя произошла ошибка: \n",
+  //         err
+  //       );
+  //     }
+  //   };
+  //   myAccount();
+  // }, []);
 
   return (
     <div className="relative">
-      <Menu
+      <Menu />
+      {/* <Menu
         setMenuOpen={setMenuOpen}
         menuOpen={menuOpen}
         isUpdate={isUpdate}
@@ -123,7 +148,7 @@ export const SelectNote: React.FC = () => {
           controlCords={controlCords}
           setIsControl={setIsControl}
         />
-      )}
+      )} */}
       {/* <Cart /> */}
     </div>
   );
