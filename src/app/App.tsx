@@ -14,22 +14,22 @@ import { fetchNoteCart, fetchNotes } from "../redux/slice/noteSlice";
 import { NotFound } from "../page/NotFound/NotFound";
 
 function App() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchNotes());
-    dispatch(fetchNoteCart());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchNotes());
+  //   dispatch(fetchNoteCart());
+  // }, [dispatch]);
 
   return (
     <div className="App font-body">
       <Routes>
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />}></Route>
+        {/* <Route path="/register" element={<Register />} /> */}
+        {/* <Route path="/login" element={<Login />}></Route> */}
         <Route path="/home" element={<Home />}></Route>
-        <Route path="/documents/:_id" element={<SelectNote />}></Route>
-        <Route path="*" element={<NotFound />}></Route>
-        <Route path="/documents" element={<Documents />}></Route>
+        {/* <Route path="/documents/:_id" element={<SelectNote />}></Route> */}
+        {/* <Route path="*" element={<NotFound />}></Route> */}
+        {/* <Route path="/documents" element={<Documents />}></Route> */}
       </Routes>
     </div>
   );

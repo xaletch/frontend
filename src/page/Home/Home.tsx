@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Axios from "../../axios";
 
 import "./home.css";
+import { Cart } from "../../components/Cart/Cart";
 
 export const Home: React.FC = () => {
   const [username, setUsername] = useState<string>("");
@@ -11,20 +12,20 @@ export const Home: React.FC = () => {
   const user = localStorage.getItem("logged_in");
 
   // OBTAINING USERNAME
-  useEffect(() => {
-    const myAccount = async () => {
-      try {
-        const { data } = await Axios.get("/api/user/account");
-        setUsername(data.username);
-      } catch (err) {
-        console.log(
-          "При получении имени пользователя произошла ошибка: \n",
-          err
-        );
-      }
-    };
-    myAccount();
-  }, []);
+  // useEffect(() => {
+  //   const myAccount = async () => {
+  //     try {
+  //       const { data } = await Axios.get("/api/user/account");
+  //       setUsername(data.username);
+  //     } catch (err) {
+  //       console.log(
+  //         "При получении имени пользователя произошла ошибка: \n",
+  //         err
+  //       );
+  //     }
+  //   };
+  //   myAccount();
+  // }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("logged_in");
@@ -40,6 +41,7 @@ export const Home: React.FC = () => {
   return (
     <div onClick={closeMenu}>
       <Header isMenu={isMenu} setMenu={setMenu} username={username} />
+      {/* <Cart /> */}
       <div className="container mx-auto">
         <div className="flex justify-center flex-col text-center mt-24">
           <div className="flex flex-col items-center gap-3">

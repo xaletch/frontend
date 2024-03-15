@@ -18,5 +18,27 @@ export interface MenuInterface {
 }
 
 export interface DataNotes {
-  data: Note[];
+  _id: string;
+  notes: {
+    _id: string;
+    name: string;
+    blocks: {
+      id: string;
+      type: string;
+      props: {
+        textColor: string;
+        backgroundColor: string;
+        textAlignment: string;
+      };
+      content: {
+        type: string;
+        text: string;
+        styles: {};
+      }[];
+      children: any[]; // или более конкретный тип
+    }[];
+    user: string;
+    __v: number;
+  }[];
+  __v: number;
 }

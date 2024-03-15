@@ -30,6 +30,7 @@ export default {
       },
       secondary: {
         50: "#f8fafc",
+        // 50: "#f8fafc",
         100: "#F0F2F3",
         150: "#F1F1F1",
         200: "#E1E4E8",
@@ -40,6 +41,9 @@ export default {
         700: "#334155",
         800: "#1e293b",
         900: "#0f172a",
+      },
+      white: {
+        50: "#FFF",
       },
     },
     extend: {},

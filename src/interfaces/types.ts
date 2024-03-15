@@ -1,4 +1,4 @@
-interface Blocks {
+interface Block {
   id: string;
   type: string;
   props: {
@@ -6,26 +6,37 @@ interface Blocks {
     backgroundColor: string;
     textAlignment: string;
   };
-  content: Array<{
+  content: {
     type: string;
-    text?: string;
-    styles?: {};
-  }>;
-  children: Blocks[];
+    text: string;
+    styles: {};
+  }[];
+  children: any[];
 }
 
-export type Note = {
+export interface Note {
   _id: string;
   name: string;
-  user: {
-    _id: string;
-    username: string;
-    email: string;
-    passwordHash: string;
-    __v: number;
-  };
+  blocks: Block[];
+  user: string;
   __v: number;
-  imageUrl: string;
-  smile: string;
-  blocks: Blocks[];
-};
+}
+
+export interface NoteData {
+  _id: string;
+  notes: Note;
+  __v: number;
+}
+
+export interface ApiNoteResponse {
+  data: NoteData;
+  success: boolean;
+  message: string | null;
+}
+
+export interface CartItemInterface {
+  notes: {
+    smile: string;
+    name: string;
+  }[];
+}
