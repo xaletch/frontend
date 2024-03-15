@@ -59,3 +59,14 @@ body {
   background-color: #f8fafc;
   /* background-color: rgb(241, 245, 249); */
 }
+
+/*  */
+.cart_menu-buttons {
+  opacity: 0;
+  transform: translateY(100%);
+  transition: all 0.3s ease;
+}
+.cart_menu-item:hover .cart_menu-buttons {
+  opacity: 1;
+  transform: translateY(0);
+}

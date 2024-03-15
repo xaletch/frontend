@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useFetchLoginMutation } from "../../redux/api";
+import { useFetchLoginMutation, useGetUserInfoQuery } from "../../redux/api";
 
 type LoginValue = {
   email: string;
@@ -9,12 +9,11 @@ type LoginValue = {
 };
 
 export const LoginBlock = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
   const [redirect, setRedirect] = useState<boolean>(false);
   const [isStatus, setStatus] = useState<number>();
 
   const [fetchLogin] = useFetchLoginMutation();
+  const { refetch: refetchUserData } = useGetUserInfoQuery("");
 
   const setCookieWithExpiration = (
     cookieName: string,

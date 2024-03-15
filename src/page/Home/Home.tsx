@@ -1,42 +1,46 @@
 import React, { useEffect, useState } from "react";
 import { Header } from "../../components/Header/Header";
 import { Link } from "react-router-dom";
-import Axios from "../../axios";
 
 import "./home.css";
 import { Cart } from "../../components/Cart/Cart";
+import { useGetUserInfoQuery } from "../../redux/api";
+import { isAuth } from "../../interfaces/interfaces";
 
 export const Home: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [isMenu, setMenu] = useState<boolean>(false);
-  const user = localStorage.getItem("logged_in");
+  const [accessToken, setAccessToken] = useState<string>("");
 
-  // OBTAINING USERNAME
-  // useEffect(() => {
-  //   const myAccount = async () => {
-  //     try {
-  //       const { data } = await Axios.get("/api/user/account");
-  //       setUsername(data.username);
-  //     } catch (err) {
-  //       console.log(
-  //         "При получении имени пользователя произошла ошибка: \n",
-  //         err
-  //       );
-  //     }
-  //   };
-  //   myAccount();
-  // }, []);
+  useEffect(() => {
+    if (isAuth) {
+      setAccessToken(isAuth);
+    }
+  }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("logged_in");
-    setMenu(false);
-  };
+  const {
+    data: userData,
+    isSuccess: isUserData,
+    isLoading: isLoadingUserData,
+    refetch: refetchUserData,
+  } = useGetUserInfoQuery("");
 
   const closeMenu = () => {
     isMenu && setMenu(false);
   };
 
-  console.log(isMenu);
+  const handleLogout = () => {
+    document.cookie =
+      "access_token=; expires=Thu, 14 March 2024 00:00:00 UTC; path=/;";
+
+    setMenu(false);
+  };
+
+  useEffect(() => {
+    if (accessToken) {
+      setUsername(userData?.username);
+    }
+  }, [isAuth, isUserData, userData?.username]);
 
   return (
     <div onClick={closeMenu}>
@@ -52,7 +56,7 @@ export const Home: React.FC = () => {
               Name is the connected workspace where better, faster work happens.
             </p>
             <Link
-              to={user ? "/documents" : "/login"}
+              to={isAuth ? "/documents" : "/login"}
               className="mt-2 w-[160px]"
             >
               <button className="px-8 p-1 h-[34px] text-secondary-50 font-medium text-sm bg-secondary-900 rounded hover:bg-secondary-800 duration-300">

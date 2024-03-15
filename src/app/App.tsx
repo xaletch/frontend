@@ -24,8 +24,8 @@ function App() {
   return (
     <div className="App font-body">
       <Routes>
-        {/* <Route path="/register" element={<Register />} /> */}
-        {/* <Route path="/login" element={<Login />}></Route> */}
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />}></Route>
         <Route path="/home" element={<Home />}></Route>
         {/* <Route path="/documents/:_id" element={<SelectNote />}></Route> */}
         {/* <Route path="*" element={<NotFound />}></Route> */}
