@@ -7,10 +7,8 @@ import React, {
 } from "react";
 import { Editor } from "./Editor/Editor";
 import { Smile } from "../../components/Notes/Smile/Smile";
-import Axios from "../../axios";
 
 import "./NoteContent.css";
-import { fetchNotes } from "../../redux/slice/noteSlice";
 import { useDispatch } from "react-redux";
 import { usePatchUpdateNoteMutation } from "../../redux/api";
 
@@ -118,15 +116,15 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
   // };
 
   const onChange = async (content: string) => {
-    try {
-      const data = JSON.stringify(content);
-      await Axios.patch("/api/notes/update/" + _id, { blocks: data });
-    } catch (err) {
-      console.log(
-        "При добавлении контента в заметке произошла ошибка: \n",
-        err
-      );
-    }
+    // try {
+    //   const data = JSON.stringify(content);
+    //   await Axios.patch("/api/notes/update/" + _id, { blocks: data });
+    // } catch (err) {
+    //   console.log(
+    //     "При добавлении контента в заметке произошла ошибка: \n",
+    //     err
+    //   );
+    // }
   };
 
   // const handleRename = () => {
@@ -168,18 +166,23 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
   const [noteName, setNoteName] = useState<string>("");
   const [newNoteName] = usePatchUpdateNoteMutation();
 
+  const typingTimer = useRef<any>(null);
+
   useEffect(() => {
     if (isSelectNoteSuccess) {
       setNoteName(name);
     }
   }, [isSelectNoteSuccess, name]);
 
-  const handleInput = (e: any) => {
+  const handleInput = (e: React.ChangeEvent<HTMLHeadingElement>) => {
     const newName = e.target.innerText;
     setNoteName(newName);
-    newNoteName({ id: _id, data: { name: newName } });
 
-    console.log("ОБНОВЛЕНИЕ ИМЕНИ: ", noteName);
+    clearTimeout(typingTimer.current);
+    typingTimer.current = setTimeout(() => {
+      newNoteName({ id: _id, data: { name: newName } });
+      console.log({ id: _id, name: newName });
+    }, 300);
   };
 
   return (

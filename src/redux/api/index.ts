@@ -13,7 +13,7 @@ function getCookieValue(name: string) {
 
 export const noteApi = createApi({
   reducerPath: "noteApi",
-  tagTypes: ["CreateNote", "CheckAuth"],
+  tagTypes: ["CreateNote", "CheckAuth", "UpdateNote"],
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8000/",
     prepareHeaders: (headers, { getState }) => {
@@ -88,8 +88,9 @@ export const noteApi = createApi({
       query: (args: { id: string; data: any }) => ({
         url: `/api/notes/update/${args.id}`,
         method: "PATCH",
-        data: args.data,
+        body: args.data,
       }),
+      invalidatesTags: [{ type: "CreateNote", id: "LIST" }],
     }),
     // ДОБАВЛЕНИЕ ЗАМЕТКИ В КОРЗИНУ
     fetchAddNoteCart: builder.mutation({

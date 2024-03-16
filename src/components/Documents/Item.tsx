@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Axios from "../../axios";
 import { DocInterface } from "../../interfaces/types";
 
 export const Item: React.FC<DocInterface> = ({

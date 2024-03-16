@@ -1,4 +1,3 @@
-import Axios from "../../../axios";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -41,18 +40,18 @@ export const Item: React.FC<NoteItemProps> = ({
     }
   }, [isUpdate]);
 
-  useEffect(() => {
-    try {
-      const update = async () => {
-        if (isUpdate) {
-          await Axios.patch("/api/notes/update/" + noteId, { name: noteName });
-        }
-      };
-      update();
-    } catch (err) {
-      console.log("При обновлении заметки произошла ошибка: \n", err);
-    }
-  }, [isUpdate, noteId, noteName]);
+  // useEffect(() => {
+  //   try {
+  //     const update = async () => {
+  //       if (isUpdate) {
+  //         await Axios.patch("/api/notes/update/" + noteId, { name: noteName });
+  //       }
+  //     };
+  //     update();
+  //   } catch (err) {
+  //     console.log("При обновлении заметки произошла ошибка: \n", err);
+  //   }
+  // }, [isUpdate, noteId, noteName]);
 
   const handleOpenUnderNote = (i: string) => {
     if (i === id) {

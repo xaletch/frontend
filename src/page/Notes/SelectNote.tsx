@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 // import { Menu } from "../../components/Notes/Menu/Menu";
 import { NoteContent } from "../../components/Notes/NoteContent";
 import { useParams } from "react-router-dom";
-import Axios from "../../axios";
 
 import { Control } from "../../components/Notes/Control/Control";
 import { Header } from "../../components/Notes/Header/Header";

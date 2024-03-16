@@ -2,12 +2,10 @@ import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import { setupListeners } from "@reduxjs/toolkit/query";
 
-import note from "./slice/noteSlice";
 import { noteApi } from "./api";
 
 export const store = configureStore({
   reducer: {
-    note,
     [noteApi.reducerPath]: noteApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
