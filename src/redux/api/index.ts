@@ -13,7 +13,7 @@ function getCookieValue(name: string) {
 
 export const noteApi = createApi({
   reducerPath: "noteApi",
-  tagTypes: ["CreateNote", "CheckAuth", "UpdateNote"],
+  tagTypes: ["CreateNote", "CheckAuth", "UpdateNote", "DeleteCartNote"],
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8000/",
     prepareHeaders: (headers, { getState }) => {
@@ -98,6 +98,7 @@ export const noteApi = createApi({
         url: `/api/notes/add-to-cart/${id}`,
         method: "POST",
       }),
+      invalidatesTags: [{ type: "CreateNote", id: "LIST" }],
     }),
     // ПОЛУЧЕНИЕ ЗАМЕТОК В КОРЗИНЕ
     GetCartNotes: builder.query({
@@ -105,19 +106,30 @@ export const noteApi = createApi({
         url: "/api/notes/cart/note",
         method: "GET",
       }),
-    }),
-    // ВОССТАНОВЛЕНИЕ ЗАМЕТКИ ИЗ КОРЗИНЫ
-    fetchRecoveryNote: builder.mutation({
-      query: (id: string) => ({
-        url: `/api/notes/recovery/${id}`,
-        method: "POST",
-      }),
+      providesTags: (result) =>
+        result && Array.isArray(result)
+          ? [
+              ...result.map(({ id }: { id: string }) => ({
+                type: "DeleteCartNote" as const,
+                id,
+              })),
+              { type: "DeleteCartNote", id: "LIST" },
+            ]
+          : [{ type: "DeleteCartNote", id: "LIST" }],
     }),
     // УДАЛЕНИЕ ЗАМЕТКИ БЕЗ ВОЗМОЖНОСТИ НА ВОССТАНОВЛЕНИЕ
     fetchDeleteNote: builder.mutation({
       query: (id: string) => ({
         url: `/api/notes/delete/${id}`,
         method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "DeleteCartNote", id: "LIST" }],
+    }),
+    // ВОССТАНОВЛЕНИЕ ЗАМЕТКИ ИЗ КОРЗИНЫ
+    fetchRecoveryNote: builder.mutation({
+      query: (id: string) => ({
+        url: `/api/notes/recovery/${id}`,
+        method: "POST",
       }),
     }),
     // ЗАГРУЗКА КАРТИНОК

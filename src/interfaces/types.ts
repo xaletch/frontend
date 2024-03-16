@@ -6,6 +6,7 @@ import {
   FetchBaseQueryMeta,
   MutationDefinition,
 } from "@reduxjs/toolkit/query";
+import { Dispatch, SetStateAction } from "react";
 
 interface Block {
   id: string;
@@ -65,7 +66,9 @@ export interface CartItemInterface {
   notes: {
     smile: string;
     name: string;
+    _id: string;
   }[];
+  _id: string;
 }
 
 export interface UserInterface {
@@ -109,4 +112,7 @@ export interface DocInterface {
   name: string;
   smile: string;
   selectNoteId: string | undefined;
+  isOpenNoteControl: boolean;
+  setOpenNoteControl: Dispatch<SetStateAction<boolean>>;
+  setControlCords: Dispatch<SetStateAction<{ x: number; y: number }>>;
 }

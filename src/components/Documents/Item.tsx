@@ -7,6 +7,9 @@ export const Item: React.FC<DocInterface> = ({
   name,
   smile,
   selectNoteId,
+  isOpenNoteControl,
+  setOpenNoteControl,
+  setControlCords,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -14,6 +17,14 @@ export const Item: React.FC<DocInterface> = ({
     if (i === _id) {
       setIsOpen(!isOpen);
     }
+  };
+
+  const handleClickWindow = (e: any) => {
+    const x = e.clientX;
+    const y = e.clientY;
+    setControlCords({ x, y });
+
+    setOpenNoteControl(!isOpenNoteControl);
   };
 
   // const handleCreateNote = async () => {
@@ -84,7 +95,11 @@ export const Item: React.FC<DocInterface> = ({
             {/* onClick={actionNote} */}
             <button
               className="w-4 h-4 flex justify-center items-center rounded hover:bg-secondary-300 duration-150 ease-linear"
-              onClick={(e) => e.preventDefault()}
+              // onClick={(e) => {
+              // e.preventDefault();
+              // handleOpenControlMenu();
+              // }}
+              onClick={handleClickWindow}
             >
               <svg
                 className="fill-secondary-400"

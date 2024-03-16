@@ -1,15 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Item } from "./Item";
 import { useFetchCreateNotesMutation, useGetNotesQuery } from "../../redux/api";
 import { NoteItem } from "../../interfaces/interfaces";
-import { DocumentsInterface, MenuProps } from "../../interfaces/types";
+import { DocumentsInterface } from "../../interfaces/types";
 
 interface MenuInterface {
   selectNoteId: string | undefined;
   username: string;
+  isOpenNoteControl: boolean;
+  setOpenNoteControl: Dispatch<SetStateAction<boolean>>;
+  setOpenNoteCart: Dispatch<SetStateAction<boolean>>;
+  setControlCords: Dispatch<SetStateAction<{ x: number; y: number }>>;
 }
 
-export const Menu: React.FC<MenuInterface> = ({ selectNoteId, username }) => {
+export const Menu: React.FC<MenuInterface> = ({
+  selectNoteId,
+  username,
+  setOpenNoteControl,
+  setControlCords,
+  isOpenNoteControl,
+  setOpenNoteCart,
+}) => {
   const [note, setNote] = useState<DocumentsInterface[] | undefined>();
 
   const { data: dataNote, isSuccess: isDataNoteSuccess } = useGetNotesQuery("");
@@ -25,9 +36,13 @@ export const Menu: React.FC<MenuInterface> = ({ selectNoteId, username }) => {
     createNote("");
   };
 
+  const handleOpenCartMenu = () => {
+    setOpenNoteCart((props) => !props);
+  };
+
   return (
     // onClick={(e) => handleCords(e)}
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col pb-12">
       <div>
         <div className="p-3 flex justify-between text-center">
           <div className="gap-2 flex items-center">
@@ -115,11 +130,18 @@ export const Menu: React.FC<MenuInterface> = ({ selectNoteId, username }) => {
           </div>
         </div>
       </div>
-      <div className="mt-4 overflow-hidden">
+      <div className="mt-4 h-full flex flex-col justify-between overflow-hidden">
         <div className="h-[500px] overflow-auto">
           {note &&
             note.map((obj: NoteItem, index: any) => (
-              <Item {...obj} selectNoteId={selectNoteId} key={index} />
+              <Item
+                {...obj}
+                selectNoteId={selectNoteId}
+                isOpenNoteControl={isOpenNoteControl}
+                setOpenNoteControl={setOpenNoteControl}
+                setControlCords={setControlCords}
+                key={index}
+              />
             ))}
         </div>
         <div className="mt-4">
@@ -144,7 +166,10 @@ export const Menu: React.FC<MenuInterface> = ({ selectNoteId, username }) => {
           </div>
 
           {/* BASKET */}
-          <div className="p-1 px-3 flex items-center font-medium text-base cursor-pointer hover:bg-secondary-200">
+          <div
+            className="p-1 px-3 flex items-center font-medium text-base cursor-pointer hover:bg-secondary-200"
+            onClick={handleOpenCartMenu}
+          >
             <svg
               className="mr-2 fill-secondary-400"
               width="16"

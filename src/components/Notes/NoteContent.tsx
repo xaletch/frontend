@@ -115,9 +115,10 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
   //   }
   // };
 
-  const onChange = async (content: string) => {
+  const onChange = (content: string) => {
     // try {
-    //   const data = JSON.stringify(content);
+    const data = JSON.stringify(content);
+    console.log(data);
     //   await Axios.patch("/api/notes/update/" + _id, { blocks: data });
     // } catch (err) {
     //   console.log(
@@ -353,7 +354,6 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
                     accept="image/*, .png, .jpg, .gif, .web"
                   />
                 </div>
-                {/* {!isRename ? ( */}
                 <h1
                   className="text-5xl font-bold text-secondary-900 leading-none border-none outline-none"
                   ref={noteNateRef}
@@ -362,18 +362,6 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
                 >
                   {noteName}
                 </h1>
-                {/* ) : ( */}
-                {/* <textarea */}
-                {/* ref={textareaRef} */}
-                {/* value={isName} */}
-                {/* onChange={(e: any) => setName(e.target.value)} */}
-                {/* onKeyDown={onKeyDown} */}
-                {/* className="text-7xl font-bold text-secondary-900 resize-none break-words outline-none h-auto" */}
-                {/* // style={{ background: "rgb(248 250 252)" }} */}
-                {/* > */}
-                {/* {name} */}
-                {/* </textarea> */}
-                {/* )} */}
               </div>
               <div>
                 <div className="mt-2 ">

@@ -4,6 +4,8 @@ import { NoteContent } from "../../components/Notes/NoteContent";
 import { useParams } from "react-router-dom";
 import { useGetOneNoteMutation } from "../../redux/api";
 import { Note } from "../../interfaces/types";
+import { Control } from "../../components/Notes/Control/Control";
+import { Cart } from "../../components/Cart/Cart";
 // import { useGetOneNoteQuery } from "../../redux/api";
 
 interface User {
@@ -46,6 +48,9 @@ export const Documents: React.FC<UsernameInterface> = ({ username }) => {
 
   const [selectNoteData, setSelectNoteData] = useState<NoteData>();
   const [selectNoteId, setSelectNoteId] = useState<string>();
+  const [controlCords, setControlCords] = useState({ x: 0, y: 0 });
+  const [isOpenNoteControl, setOpenNoteControl] = useState<boolean>(false);
+  const [isOpenNoteCart, setOpenNoteCart] = useState<boolean>(false);
 
   const [selectNote, { data: noteData, isSuccess: isSelectNoteSuccess }] =
     useGetOneNoteMutation();
@@ -66,9 +71,26 @@ export const Documents: React.FC<UsernameInterface> = ({ username }) => {
   return (
     <div className="relative flex">
       <div className="bg-secondary-150 h-screen w-56 overflow-hidden">
-        <Menu selectNoteId={selectNoteId} username={username} />
+        <Menu
+          selectNoteId={selectNoteId}
+          username={username}
+          setOpenNoteControl={setOpenNoteControl}
+          setControlCords={setControlCords}
+          isOpenNoteControl={isOpenNoteControl}
+          setOpenNoteCart={setOpenNoteCart}
+        />
       </div>
-      <div className="flex-1">
+      {isOpenNoteControl && (
+        <Control
+          controlCords={controlCords}
+          name={selectNoteData?.name || ""}
+          _id={selectNoteData?._id || ""}
+          username={username}
+          setOpenNoteControl={setOpenNoteControl}
+        />
+      )}
+      {isOpenNoteCart && <Cart setOpenNoteCart={setOpenNoteCart} />}
+      <div className={`flex-1 ${isOpenNoteCart ? "relative -z-50" : ""}`}>
         <NoteContent
           imageUrl={selectNoteData?.imageUrl || ""}
           name={selectNoteData?.name || ""}
