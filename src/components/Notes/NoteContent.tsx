@@ -167,7 +167,8 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
   const [newNoteName] = usePatchUpdateNoteMutation();
 
   const typingTimer = useRef<any>(null);
-
+  const noteNateRef = useRef<HTMLHeadingElement>(null);
+  const cursorPos = useRef<number>(0);
   useEffect(() => {
     if (isSelectNoteSuccess) {
       setNoteName(name);
@@ -178,12 +179,24 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
     const newName = e.target.innerText;
     setNoteName(newName);
 
+    cursorPos.current = window.getSelection()?.focusOffset || 0;
+
     clearTimeout(typingTimer.current);
     typingTimer.current = setTimeout(() => {
       newNoteName({ id: _id, data: { name: newName } });
-      console.log({ id: _id, name: newName });
     }, 300);
   };
+
+  useEffect(() => {
+    if (noteNateRef.current && cursorPos.current) {
+      const sel = window.getSelection();
+      const range = document.createRange();
+      range.setStart(noteNateRef.current.childNodes[0], cursorPos.current);
+      range.collapse(true);
+      sel?.removeAllRanges();
+      sel?.addRange(range);
+    }
+  }, [noteName]);
 
   return (
     <div
@@ -343,6 +356,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
                 {/* {!isRename ? ( */}
                 <h1
                   className="text-5xl font-bold text-secondary-900 leading-none border-none outline-none"
+                  ref={noteNateRef}
                   contentEditable={true}
                   onInput={handleInput}
                 >
