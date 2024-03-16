@@ -7,8 +7,11 @@ import { Cart } from "../../components/Cart/Cart";
 import { useGetUserInfoQuery, useLazyGetUserInfoQuery } from "../../redux/api";
 import { isAuth } from "../../interfaces/interfaces";
 
-export const Home: React.FC = () => {
-  const [username, setUsername] = useState<string>("");
+interface UsernameInterface {
+  username: string;
+}
+
+export const Home: React.FC<UsernameInterface> = ({ username }) => {
   const [isMenu, setMenu] = useState<boolean>(false);
   const [accessToken, setAccessToken] = useState<string>("");
 
@@ -17,13 +20,6 @@ export const Home: React.FC = () => {
       setAccessToken(isAuth);
     }
   }, []);
-
-  const {
-    data: userData,
-    isSuccess: isUserData,
-    isLoading: isLoadingUserData,
-    refetch: refetchUserData,
-  } = useGetUserInfoQuery("");
   const [trigger] = useLazyGetUserInfoQuery();
 
   const closeMenu = () => {
@@ -37,13 +33,6 @@ export const Home: React.FC = () => {
     setMenu(false);
     trigger("");
   };
-
-  useEffect(() => {
-    if (accessToken) {
-      setUsername(userData?.username);
-      trigger("");
-    }
-  }, [isAuth, isUserData, userData?.username, trigger]);
 
   return (
     <div onClick={closeMenu}>

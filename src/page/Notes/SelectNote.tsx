@@ -112,7 +112,7 @@ export const SelectNote: React.FC = () => {
 
   return (
     <div className="relative">
-      <Menu />
+      {/* <Menu /> */}
       {/* <Menu
         setMenuOpen={setMenuOpen}
         menuOpen={menuOpen}

@@ -12,8 +12,9 @@ import Axios from "../../axios";
 import "./NoteContent.css";
 import { fetchNotes } from "../../redux/slice/noteSlice";
 import { useDispatch } from "react-redux";
+import { usePatchUpdateNoteMutation } from "../../redux/api";
 
-interface PartialBlock {
+interface Blocks {
   id: string;
   type: string;
   props: {
@@ -26,20 +27,16 @@ interface PartialBlock {
     text?: string;
     styles?: {};
   }>;
-  children: PartialBlock[];
+  children: Blocks[];
 }
 
 interface NoteContentInterface {
-  menuOpen: boolean;
-  imageUrl: string | undefined;
-  name: string | undefined;
-  smile: string | undefined;
-  _id: string | undefined;
-  blocks: PartialBlock[] | undefined;
-  setNoteUpdate: Dispatch<SetStateAction<boolean>>;
-  isName: string | undefined;
-  setName: Dispatch<SetStateAction<string | undefined>>;
-  setIsControl: Dispatch<SetStateAction<boolean>>;
+  imageUrl: string;
+  name: string;
+  smile: string;
+  _id: string;
+  blocks: Blocks[];
+  isSelectNoteSuccess: boolean;
 }
 
 export const NoteContent: React.FC<NoteContentInterface> = ({
@@ -48,81 +45,77 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
   smile,
   _id,
   blocks,
-  menuOpen,
-  setNoteUpdate,
-  isName,
-  setName,
-  setIsControl,
+  isSelectNoteSuccess,
 }) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const [showEmoji, setShowEmoji] = useState<boolean>(false);
-  const [isRename, setRename] = useState<boolean>(false);
-  const [selectEmoji, setSelectEmoji] = useState<string>("");
-  const [image, setImage] = useState<string>("");
+  // const [showEmoji, setShowEmoji] = useState<boolean>(false);
+  // const [isRename, setRename] = useState<boolean>(false);
+  // const [selectEmoji, setSelectEmoji] = useState<string>("");
+  // const [image, setImage] = useState<string>("");
 
-  const fileRef = useRef<any>(null);
-  const textareaRef: any = useRef<HTMLInputElement>(null);
+  // const fileRef = useRef<any>(null);
+  // const textareaRef: any = useRef<HTMLInputElement>(null);
 
-  const handleOpenFile = () => {
-    if (fileRef.current) {
-      fileRef.current.click();
-    }
-  };
+  // const handleOpenFile = () => {
+  //   if (fileRef.current) {
+  //     fileRef.current.click();
+  //   }
+  // };
 
-  const handleRemoveSmile = async () => {
-    try {
-      const data = await Axios.patch("/api/notes/update/" + _id, { smile: "" });
-      dispatch(fetchNotes(data.data));
-      setNoteUpdate(true);
-    } catch (err) {
-      console.log("Не удалось удалить смайлик: \n", err);
-    }
-  };
+  // const handleRemoveSmile = async () => {
+  //   try {
+  //     const data = await Axios.patch("/api/notes/update/" + _id, { smile: "" });
+  //     dispatch(fetchNotes(data.data));
+  //     setNoteUpdate(true);
+  //   } catch (err) {
+  //     console.log("Не удалось удалить смайлик: \n", err);
+  //   }
+  // };
 
-  const handleChange = async (event: any) => {
-    try {
-      const formData = new FormData();
-      formData.append("image", event.target.files[0]);
+  // const handleChange = async (event: any) => {
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append("image", event.target.files[0]);
 
-      const { data } = await Axios.post("/uploads", formData);
-      setImage(data.url);
-      setNoteUpdate(true);
-    } catch (err) {
-      console.log("Не удалось отправить картинку на сервер: \n", err);
-    }
-  };
+  //     const { data } = await Axios.post("/uploads", formData);
+  //     setImage(data.url);
+  //     setNoteUpdate(true);
+  //   } catch (err) {
+  //     console.log("Не удалось отправить картинку на сервер: \n", err);
+  //   }
+  // };
 
-  useEffect(() => {
-    try {
-      const noteContent = async () => {
-        if (name) {
-          const data = await Axios.patch("/api/notes/update/" + _id, {
-            smile: selectEmoji ? selectEmoji : smile,
-            imageUrl: image ? image : imageUrl,
-          });
-          setNoteUpdate(true);
-          setShowEmoji(false);
-          dispatch(fetchNotes(data.data));
-        }
-      };
-      noteContent();
-    } catch (err) {
-      console.log(err);
-    }
-  }, [image, selectEmoji]);
+  // useEffect(() => {
+  //   try {
+  //     const noteContent = async () => {
+  //       if (name) {
+  //         const data = await Axios.patch("/api/notes/update/" + _id, {
+  //           smile: selectEmoji ? selectEmoji : smile,
+  //           imageUrl: image ? image : imageUrl,
+  //         });
+  //         setNoteUpdate(true);
+  //         setShowEmoji(false);
+  //         dispatch(fetchNotes(data.data));
+  //       }
+  //     };
+  //     noteContent();
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }, [image, selectEmoji]);
 
-  const handleRemoveImg = async () => {
-    try {
-      const data = await Axios.patch("/api/notes/update/" + _id, {
-        imageUrl: "",
-      });
-      dispatch(fetchNotes(data.data));
-      setNoteUpdate(true);
-    } catch (err) {
-      console.log("Не удалось удалить смайлик: \n", err);
-    }
-  };
+  // const handleRemoveImg = async () => {
+  //   try {
+  //     const data = await Axios.patch("/api/notes/update/" + _id, {
+  //       imageUrl: "",
+  //     });
+  //     dispatch(fetchNotes(data.data));
+  //     setNoteUpdate(true);
+  //   } catch (err) {
+  //     console.log("Не удалось удалить смайлик: \n", err);
+  //   }
+  // };
 
   const onChange = async (content: string) => {
     try {
@@ -136,50 +129,69 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
     }
   };
 
-  const handleRename = () => {
-    setRename(true);
-  };
+  // const handleRename = () => {
+  //   setRename(true);
+  // };
+
+  // useEffect(() => {
+  //   if (isRename) {
+  //     textareaRef.current.focus();
+  //   }
+  // }, [isRename]);
+
+  // const onKeyDown = (e: any) => {
+  //   if (e.key === "Enter" || e.key === "Escape") {
+  //     setRename(false);
+  //     setNoteUpdate(true);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   const rename = async () => {
+  //     if (isRename) {
+  //       try {
+  //         const data = await Axios.patch("/api/notes/update/" + _id, {
+  //           name: isName,
+  //         });
+  //         dispatch(fetchNotes(data.data));
+  //       } catch (err) {
+  //         console.log("Не удалось изменить название заметки: \n", err);
+  //       }
+  //     }
+  //   };
+
+  //   if (isName !== name) {
+  //     rename();
+  //   }
+  // }, [isRename, isName]);
+
+  const [noteName, setNoteName] = useState<string>("");
+  const [newNoteName] = usePatchUpdateNoteMutation();
 
   useEffect(() => {
-    if (isRename) {
-      textareaRef.current.focus();
+    if (isSelectNoteSuccess) {
+      setNoteName(name);
     }
-  }, [isRename]);
+  }, [isSelectNoteSuccess, name]);
 
-  const onKeyDown = (e: any) => {
-    if (e.key === "Enter" || e.key === "Escape") {
-      setRename(false);
-      setNoteUpdate(true);
-    }
+  const handleInput = (e: any) => {
+    const newName = e.target.innerText;
+    setNoteName(newName);
+    newNoteName({ id: _id, data: { name: newName } });
+
+    console.log("ОБНОВЛЕНИЕ ИМЕНИ: ", noteName);
   };
-
-  useEffect(() => {
-    const rename = async () => {
-      if (isRename) {
-        try {
-          const data = await Axios.patch("/api/notes/update/" + _id, {
-            name: isName,
-          });
-          dispatch(fetchNotes(data.data));
-        } catch (err) {
-          console.log("Не удалось изменить название заметки: \n", err);
-        }
-      }
-    };
-
-    if (isName !== name) {
-      rename();
-    }
-  }, [isRename, isName]);
 
   return (
     <div
       className="flex-1 h-screen relative z-0"
-      style={{
-        width: `${menuOpen === true ? `calc(100%)` : `calc(100% - 240px)`}`,
-        left: `${menuOpen === true ? `0` : `240px`}`,
-      }}
-      onClick={() => setIsControl(false)}
+      style={
+        {
+          // width: `${menuOpen === true ? `calc(100%)` : `calc(100% - 240px)`}`,
+          // left: `${menuOpen === true ? `0` : `240px`}`,
+        }
+      }
+      // onClick={() => setIsControl(false)}
     >
       <div className="">
         {imageUrl && (
@@ -193,7 +205,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
               <button
                 className="m-[1px] px-3 rounded-md bg-secondary-50 text-sm font-normal text-secondary-900 h-[34px] flex items-center justify-center hover:bg-secondary-100 duration-200 ease-in gap-1"
                 onClick={() => {
-                  handleOpenFile();
+                  // handleOpenFile();
                 }}
               >
                 <svg
@@ -216,7 +228,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
               </button>
               <button
                 className="m-[1px] px-3 rounded-md bg-secondary-50 text-sm font-normal text-secondary-900 h-[34px] flex items-center justify-center hover:bg-secondary-100 duration-200 ease-in gap-1"
-                onClick={handleRemoveImg}
+                // onClick={handleRemoveImg}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -250,7 +262,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
                 {smile && (
                   <button
                     className="p-3 border border-secondary-200 rounded-full hover:border-secondary-300 duration-200 ease-in"
-                    onClick={handleRemoveSmile}
+                    // onClick={handleRemoveSmile}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -273,7 +285,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
                     className={`flex cursor-pointer text-sm font-normal text-secondary-800 items-center gap-2 border border-secondary-200 hover:bg-secondary-100 rounded-md p-2 px-3 h-[36px] duration-200 ease-in ${
                       smile ? "hidden" : ""
                     }`}
-                    onClick={() => setShowEmoji(true)}
+                    // onClick={() => setShowEmoji(true)}
                   >
                     <svg
                       width="20"
@@ -290,7 +302,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
                       imageUrl ? "hidden" : ""
                     }`}
                     onClick={() => {
-                      handleOpenFile();
+                      // handleOpenFile();
                     }}
                   >
                     <svg
@@ -311,39 +323,40 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
                     </svg>
                     Add cover
                   </button>
-                  {showEmoji && (
+                  {/* {showEmoji && (
                     <Smile
                       selectEmoji={selectEmoji}
                       setSelectEmoji={setSelectEmoji}
                     />
-                  )}
+                  )} */}
                   <input
                     className="hidden"
                     type="file"
-                    ref={fileRef}
-                    onChange={handleChange}
+                    // ref={fileRef}
+                    // onChange={handleChange}
                     accept="image/*, .png, .jpg, .gif, .web"
                   />
                 </div>
-                {!isRename ? (
-                  <h1
-                    className="text-6xl font-bold text-secondary-900 leading-none"
-                    onClick={handleRename}
-                  >
-                    {name}
-                  </h1>
-                ) : (
-                  <textarea
-                    ref={textareaRef}
-                    value={isName}
-                    onChange={(e: any) => setName(e.target.value)}
-                    onKeyDown={onKeyDown}
-                    className="text-7xl font-bold text-secondary-900 resize-none break-words outline-none h-auto"
-                    // style={{ background: "rgb(248 250 252)" }}
-                  >
-                    {name}
-                  </textarea>
-                )}
+                {/* {!isRename ? ( */}
+                <h1
+                  className="text-5xl font-bold text-secondary-900 leading-none border-none outline-none"
+                  contentEditable={true}
+                  onInput={handleInput}
+                >
+                  {noteName}
+                </h1>
+                {/* ) : ( */}
+                {/* <textarea */}
+                {/* ref={textareaRef} */}
+                {/* value={isName} */}
+                {/* onChange={(e: any) => setName(e.target.value)} */}
+                {/* onKeyDown={onKeyDown} */}
+                {/* className="text-7xl font-bold text-secondary-900 resize-none break-words outline-none h-auto" */}
+                {/* // style={{ background: "rgb(248 250 252)" }} */}
+                {/* > */}
+                {/* {name} */}
+                {/* </textarea> */}
+                {/* )} */}
               </div>
               <div>
                 <div className="mt-2 ">

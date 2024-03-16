@@ -23,9 +23,27 @@ interface Block {
   children: any[];
 }
 
+export interface PartialInlineContent {
+  id: string;
+  type: string;
+  props: {
+    textColor: string;
+    backgroundColor: string;
+    textAlignment: string;
+  };
+  content: Array<{
+    type: string;
+    text?: string;
+    styles?: {};
+  }>;
+  children: PartialInlineContent[];
+}
+
 export interface Note {
   _id: string;
   name: string;
+  imageUrl: string;
+  smile: string;
   blocks: Block[];
   user: string;
   __v: number;
@@ -90,4 +108,5 @@ export interface DocInterface {
   _id: string;
   name: string;
   smile: string;
+  selectNoteId: string | undefined;
 }

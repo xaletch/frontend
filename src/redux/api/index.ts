@@ -85,10 +85,10 @@ export const noteApi = createApi({
     }),
     // ИЗМЕНЕНИЕ ИМЕНИ ЗАМЕТКИ ПО ID
     patchUpdateNote: builder.mutation({
-      query: (args: { id: string; newName: string }) => ({
+      query: (args: { id: string; data: any }) => ({
         url: `/api/notes/update/${args.id}`,
         method: "PATCH",
-        body: { name: args.newName },
+        data: args.data,
       }),
     }),
     // ДОБАВЛЕНИЕ ЗАМЕТКИ В КОРЗИНУ

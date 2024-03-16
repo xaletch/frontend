@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 import Axios from "../../axios";
 import { DocInterface } from "../../interfaces/types";
 
-export const Item: React.FC<DocInterface> = ({ _id, name, smile }) => {
+export const Item: React.FC<DocInterface> = ({
+  _id,
+  name,
+  smile,
+  selectNoteId,
+}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleOpenUnderNote = (i: string) => {
@@ -12,13 +17,13 @@ export const Item: React.FC<DocInterface> = ({ _id, name, smile }) => {
     }
   };
 
-  const handleCreateNote = async () => {
-    try {
-      await Axios.post("/api/notes/save");
-    } catch (err) {
-      console.log("Не удалось создать заметку: \n", err);
-    }
-  };
+  // const handleCreateNote = async () => {
+  //   try {
+  //     await Axios.post("/api/notes/save");
+  //   } catch (err) {
+  //     console.log("Не удалось создать заметку: \n", err);
+  //   }
+  // };
 
   // const handleSelectNote = () => {
   //   selectNote(_id);
@@ -28,7 +33,9 @@ export const Item: React.FC<DocInterface> = ({ _id, name, smile }) => {
     <div className="px-1">
       <Link to={`/documents/${_id}`}>
         <div
-          className={`page p-1 px-3 h-8 flex items-center rounded justify-between text-base font-medium cursor-pointer hover:bg-secondary-200 relative`}
+          className={`page p-1 px-3 h-8 flex items-center rounded justify-between text-base font-medium cursor-pointer hover:bg-secondary-250 relative ${
+            _id === selectNoteId ? " bg-secondary-200" : ""
+          }`}
           // onClick={handleSelectNote}
         >
           <div className="flex items-center">
@@ -95,7 +102,7 @@ export const Item: React.FC<DocInterface> = ({ _id, name, smile }) => {
               className="w-4 h-4 flex justify-center items-center rounded hover:bg-secondary-300 duration-150 ease-linear"
               onClick={(e) => {
                 e.preventDefault();
-                handleCreateNote();
+                // handleCreateNote();
               }}
             >
               <svg
