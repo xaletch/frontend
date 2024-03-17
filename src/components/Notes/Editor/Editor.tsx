@@ -35,6 +35,7 @@ export const Editor: React.FC<EditorProps> = ({ onChange, initialContent }) => {
     initialContent: transformedInitialContent,
     onEditorContentChange: (editor) => {
       onChange(JSON.stringify(editor.topLevelBlocks, null, 2));
+      console.log(editor);
     },
   });
 

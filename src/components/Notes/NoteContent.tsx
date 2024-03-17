@@ -10,7 +10,10 @@ import { Smile } from "../../components/Notes/Smile/Smile";
 
 import "./NoteContent.css";
 import { useDispatch } from "react-redux";
-import { usePatchUpdateNoteMutation } from "../../redux/api";
+import {
+  useFetchUploadImageMutation,
+  usePatchUpdateNoteMutation,
+} from "../../redux/api";
 
 interface Blocks {
   id: string;
@@ -33,7 +36,7 @@ interface NoteContentInterface {
   name: string;
   smile: string;
   _id: string;
-  blocks: Blocks[];
+  blocks: Blocks[] | undefined;
   isSelectNoteSuccess: boolean;
 }
 
@@ -52,14 +55,14 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
   // const [selectEmoji, setSelectEmoji] = useState<string>("");
   // const [image, setImage] = useState<string>("");
 
-  // const fileRef = useRef<any>(null);
+  const fileRef = useRef<any>(null);
   // const textareaRef: any = useRef<HTMLInputElement>(null);
 
-  // const handleOpenFile = () => {
-  //   if (fileRef.current) {
-  //     fileRef.current.click();
-  //   }
-  // };
+  const handleOpenFile = () => {
+    if (fileRef.current) {
+      fileRef.current.click();
+    }
+  };
 
   // const handleRemoveSmile = async () => {
   //   try {
@@ -71,18 +74,19 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
   //   }
   // };
 
-  // const handleChange = async (event: any) => {
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append("image", event.target.files[0]);
+  const [uploadImage, { data: uploadImageResponse }] =
+    useFetchUploadImageMutation();
 
-  //     const { data } = await Axios.post("/uploads", formData);
-  //     setImage(data.url);
-  //     setNoteUpdate(true);
-  //   } catch (err) {
-  //     console.log("Не удалось отправить картинку на сервер: \n", err);
-  //   }
-  // };
+  const handleChange = async (event: any) => {
+    const formData = new FormData();
+    formData.append("image", event.target.files[0]);
+
+    uploadImage(formData);
+
+    // const { data } = await Axios.post("/uploads", formData);
+    // setImage(data.url);
+    // setNoteUpdate(true);
+  };
 
   // useEffect(() => {
   //   try {
@@ -115,54 +119,17 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
   //   }
   // };
 
+  const typingTimerBlocks = useRef<any>(null);
+  const [blocksUpdate] = usePatchUpdateNoteMutation();
+
   const onChange = (content: string) => {
-    // try {
     const data = JSON.stringify(content);
-    console.log(data);
-    //   await Axios.patch("/api/notes/update/" + _id, { blocks: data });
-    // } catch (err) {
-    //   console.log(
-    //     "При добавлении контента в заметке произошла ошибка: \n",
-    //     err
-    //   );
-    // }
+
+    clearTimeout(typingTimerBlocks.current);
+    typingTimerBlocks.current = setTimeout(() => {
+      blocksUpdate({ id: _id, data: { blocks: data } });
+    }, 300);
   };
-
-  // const handleRename = () => {
-  //   setRename(true);
-  // };
-
-  // useEffect(() => {
-  //   if (isRename) {
-  //     textareaRef.current.focus();
-  //   }
-  // }, [isRename]);
-
-  // const onKeyDown = (e: any) => {
-  //   if (e.key === "Enter" || e.key === "Escape") {
-  //     setRename(false);
-  //     setNoteUpdate(true);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const rename = async () => {
-  //     if (isRename) {
-  //       try {
-  //         const data = await Axios.patch("/api/notes/update/" + _id, {
-  //           name: isName,
-  //         });
-  //         dispatch(fetchNotes(data.data));
-  //       } catch (err) {
-  //         console.log("Не удалось изменить название заметки: \n", err);
-  //       }
-  //     }
-  //   };
-
-  //   if (isName !== name) {
-  //     rename();
-  //   }
-  // }, [isRename, isName]);
 
   const [noteName, setNoteName] = useState<string>("");
   const [newNoteName] = usePatchUpdateNoteMutation();
@@ -208,7 +175,6 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
           // left: `${menuOpen === true ? `0` : `240px`}`,
         }
       }
-      // onClick={() => setIsControl(false)}
     >
       <div className="">
         {imageUrl && (
@@ -221,9 +187,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
             <div className="button-img absolute z-10 bottom-3 right-6 flex gap-2">
               <button
                 className="m-[1px] px-3 rounded-md bg-secondary-50 text-sm font-normal text-secondary-900 h-[34px] flex items-center justify-center hover:bg-secondary-100 duration-200 ease-in gap-1"
-                onClick={() => {
-                  // handleOpenFile();
-                }}
+                onClick={handleOpenFile}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -318,9 +282,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
                     className={`flex cursor-pointer text-sm font-normal text-secondary-800 items-center gap-2 border border-secondary-200 hover:bg-secondary-100 rounded-md p-2 px-3 h-[36px] duration-200 ease-in ${
                       imageUrl ? "hidden" : ""
                     }`}
-                    onClick={() => {
-                      // handleOpenFile();
-                    }}
+                    onClick={handleOpenFile}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -349,8 +311,8 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
                   <input
                     className="hidden"
                     type="file"
-                    // ref={fileRef}
-                    // onChange={handleChange}
+                    ref={fileRef}
+                    onChange={handleChange}
                     accept="image/*, .png, .jpg, .gif, .web"
                   />
                 </div>

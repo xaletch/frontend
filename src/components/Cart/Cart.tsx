@@ -1,7 +1,14 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   useFetchDeleteNoteMutation,
   useGetCartNotesQuery,
+  useGetSearchNotesMutation,
 } from "../../redux/api";
 import { CartItemInterface } from "../../interfaces/types";
 
@@ -11,9 +18,12 @@ interface CartInterface {
 
 export const Cart: React.FC<CartInterface> = ({ setOpenNoteCart }) => {
   const [cartItems, setCartItems] = useState([]);
+  const [value, setValue] = useState<string>("");
+  const typingTimer = useRef<any>(null);
 
   const { data: cart, isSuccess: cartSuccess } = useGetCartNotesQuery("");
   const [deleteNote] = useFetchDeleteNoteMutation();
+  const [search] = useGetSearchNotesMutation();
 
   useEffect(() => {
     if (cartSuccess) {
@@ -21,10 +31,21 @@ export const Cart: React.FC<CartInterface> = ({ setOpenNoteCart }) => {
     }
   }, [cartSuccess, cart?.data]);
 
+  // ПОИСК ЗАМЕТОК
+  const searchCartNote = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+
+    clearTimeout(typingTimer.current);
+    typingTimer.current = setTimeout(() => {
+      search(value);
+    }, 300);
+  };
+
   // УДАЛНИЕ ЗАМЕТКИ ПО ID
   const handleDeleteNote = (id: string) => {
     deleteNote(id);
   };
+
   return (
     <div
       className="fixed w-full h-screen top-0"
@@ -53,6 +74,8 @@ export const Cart: React.FC<CartInterface> = ({ setOpenNoteCart }) => {
           <input
             className="outline-none w-full px-4 py-2 mt-3 rounded-lg bg-white-50 shadow-sm text-secondary-900 text-base font-normal placeholder:text-base placeholder:font-normal placeholder:text-secondary-300 placeholder:select-none"
             type="text"
+            value={value}
+            onChange={searchCartNote}
             placeholder="Поиск по корзине"
           />
           <div className="h-[73%] flex flex-col gap-2 mt-4 overflow-y-scroll scroll-smooth">

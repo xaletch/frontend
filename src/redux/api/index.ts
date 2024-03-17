@@ -140,7 +140,7 @@ export const noteApi = createApi({
       }),
     }),
     // ПОИСК ЗАМЕТОК ПО ИМЕНИ
-    getSearchNotes: builder.query({
+    getSearchNotes: builder.mutation({
       query: (name: string) => ({
         url: `/api/notes/search/${name}`,
         method: "GET",
@@ -163,5 +163,5 @@ export const {
   useFetchRecoveryNoteMutation,
   useFetchDeleteNoteMutation,
   useFetchUploadImageMutation,
-  useGetSearchNotesQuery,
+  useGetSearchNotesMutation,
 } = noteApi;
