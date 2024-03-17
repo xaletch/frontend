@@ -116,3 +116,9 @@ export interface DocInterface {
   setOpenNoteControl: Dispatch<SetStateAction<boolean>>;
   setControlCords: Dispatch<SetStateAction<{ x: number; y: number }>>;
 }
+
+export interface SearchInterface {
+  smile: string;
+  name: string;
+  _id: string;
+}

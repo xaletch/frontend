@@ -3,10 +3,9 @@ import { Menu } from "../../components/Documents/Menu";
 import { NoteContent } from "../../components/Notes/NoteContent";
 import { useParams } from "react-router-dom";
 import { useGetOneNoteMutation } from "../../redux/api";
-import { Note } from "../../interfaces/types";
 import { Control } from "../../components/Notes/Control/Control";
 import { Cart } from "../../components/Cart/Cart";
-// import { useGetOneNoteQuery } from "../../redux/api";
+import { Search } from "../../components/Search/Search";
 
 interface User {
   username: string;
@@ -51,6 +50,7 @@ export const Documents: React.FC<UsernameInterface> = ({ username }) => {
   const [controlCords, setControlCords] = useState({ x: 0, y: 0 });
   const [isOpenNoteControl, setOpenNoteControl] = useState<boolean>(false);
   const [isOpenNoteCart, setOpenNoteCart] = useState<boolean>(false);
+  const [isOpenSearch, setOpenSearch] = useState<boolean>(false);
 
   const [selectNote, { data: noteData, isSuccess: isSelectNoteSuccess }] =
     useGetOneNoteMutation();
@@ -78,6 +78,7 @@ export const Documents: React.FC<UsernameInterface> = ({ username }) => {
           setControlCords={setControlCords}
           isOpenNoteControl={isOpenNoteControl}
           setOpenNoteCart={setOpenNoteCart}
+          setOpenSearch={setOpenSearch}
         />
       </div>
       {isOpenNoteControl && (
@@ -90,7 +91,14 @@ export const Documents: React.FC<UsernameInterface> = ({ username }) => {
         />
       )}
       {isOpenNoteCart && <Cart setOpenNoteCart={setOpenNoteCart} />}
-      <div className={`flex-1 ${isOpenNoteCart ? "relative -z-50" : ""}`}>
+      {isOpenSearch && (
+        <Search setOpenSearch={setOpenSearch} _id={selectNoteData?._id || ""} />
+      )}
+      <div
+        className={`flex-1 ${
+          isOpenNoteCart || isOpenSearch ? "relative -z-50" : ""
+        }`}
+      >
         <NoteContent
           imageUrl={selectNoteData?.imageUrl || ""}
           name={selectNoteData?.name || ""}

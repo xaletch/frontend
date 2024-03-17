@@ -2,63 +2,79 @@ import React, {
   Dispatch,
   SetStateAction,
   useEffect,
-  // useRef,
+  useRef,
   useState,
 } from "react";
+import { Link } from "react-router-dom";
 import {
-  useFetchDeleteNoteMutation,
-  useGetCartNotesQuery,
-  // useGetSearchNotesMutation,
+  useFetchAddNoteCartMutation,
+  useLazyGetSearchNotesQuery,
 } from "../../redux/api";
-import { CartItemInterface } from "../../interfaces/types";
+import { CartItemInterface, SearchInterface } from "../../interfaces/types";
 
-interface CartInterface {
-  setOpenNoteCart: Dispatch<SetStateAction<boolean>>;
+interface SearchProps {
+  setOpenSearch: Dispatch<SetStateAction<boolean>>;
+  _id: string;
 }
 
-export const Cart: React.FC<CartInterface> = ({ setOpenNoteCart }) => {
-  const [cartItems, setCartItems] = useState([]);
+export const Search: React.FC<SearchProps> = ({ setOpenSearch, _id }) => {
   const [value, setValue] = useState<string>("");
-  // const typingTimer = useRef<any>(null);
+  const [searchData, setSearchData] = useState([]);
 
-  const { data: cart, isSuccess: cartSuccess } = useGetCartNotesQuery("");
-  const [deleteNote] = useFetchDeleteNoteMutation();
-  // const [search] = useGetSearchNotesMutation();
+  const typingTimer = useRef<any>(null);
 
-  useEffect(() => {
-    if (cartSuccess) {
-      setCartItems(cart?.data);
-    }
-  }, [cartSuccess, cart?.data]);
+  const [
+    search,
+    {
+      data,
+      isLoading: searchDataLoading,
+      isSuccess: searchDataSuccess,
+      isError: searchDataError,
+    },
+  ] = useLazyGetSearchNotesQuery();
+
+  // ДОБАВЛЕНИЕ В КОРЗИНУ
+  const [addCart] = useFetchAddNoteCartMutation();
 
   // ПОИСК ЗАМЕТОК
-  // const searchCartNote = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setValue(event.target.value);
+  const searchCartNote = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
 
-  //   clearTimeout(typingTimer.current);
-  //   typingTimer.current = setTimeout(() => {
-  //     search(value);
-  //   }, 300);
-  // };
-
-  // УДАЛНИЕ ЗАМЕТКИ ПО ID
-  const handleDeleteNote = (id: string) => {
-    deleteNote(id);
+    clearTimeout(typingTimer.current);
+    typingTimer.current = setTimeout(() => {
+      search(event.target.value);
+    }, 600);
   };
+
+  // ПОМЕЩАЕМ ЗАМЕТКУ В КОРЗИНУ
+  const handleDeleteNote = (id: string) => {
+    addCart(id);
+  };
+  useEffect(() => {
+    if (searchDataSuccess) {
+      setSearchData(data);
+    }
+  }, [data, searchDataSuccess]);
+
+  useEffect(() => {
+    if (searchDataError) {
+      setSearchData([]);
+    }
+  }, [searchDataError]);
 
   return (
     <div
       className="fixed w-full h-screen top-0"
-      onClick={() => setOpenNoteCart(false)}
+      onClick={() => setOpenSearch(false)}
     >
       <div
-        className="w-[500px] h-[300px] shadow-xl top-1/4 bg-secondary-50 rounded-xl relative left-2/4 transform -translate-x-1/2"
+        className="w-[500px] shadow-xl top-1/4 bg-secondary-50 rounded-xl relative left-2/4 transform -translate-x-1/2"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="p-5 h-full">
+        <div className="p-5">
           <div
             className="absolute right-3 top-3 cursor-pointer z-[60]"
-            onClick={() => setOpenNoteCart(false)}
+            onClick={() => setOpenSearch(false)}
           >
             <svg
               className="fill-secondary-300 hover:fill-secondary-400 duration-100 ease-in"
@@ -75,40 +91,40 @@ export const Cart: React.FC<CartInterface> = ({ setOpenNoteCart }) => {
             className="outline-none w-full px-4 py-2 mt-3 rounded-lg bg-white-50 shadow-sm text-secondary-900 text-base font-normal placeholder:text-base placeholder:font-normal placeholder:text-secondary-300 placeholder:select-none"
             type="text"
             value={value}
-            // onChange={searchCartNote}
-            placeholder="Поиск по корзине"
+            placeholder="Поиск заметок"
+            onChange={searchCartNote}
           />
           <div className="h-[73%] flex flex-col gap-2 mt-4 overflow-y-scroll scroll-smooth">
-            {cartItems?.map((items: CartItemInterface, index) => (
-              <div
+            {searchData?.map((item: SearchInterface, index: any) => (
+              <Link
+                to={item._id}
                 className="px-3 py-5 min-h-[40px] max-h-[40px] flex items-center justify-between rounded-lg bg-white-50 cursor-default relative shadow-sm overflow-hidden cart_menu-item"
                 key={index}
+                onClick={() => setOpenSearch(false)}
               >
-                {items?.notes.map((item, index) => (
-                  <>
-                    <div className="flex items-center relative z-50">
-                      {item.smile && (
-                        <div className="mr-1 text-sm">{item.smile}</div>
-                      )}
-                      <div>
-                        <span className="text-sm text-secondary-900 font-medium">
-                          {item.name && item.name.length > 20
-                            ? `${item.name.slice(0, 20)}...`
-                            : item.name}
-                        </span>
-                      </div>
+                <>
+                  <div className="flex items-center relative z-50">
+                    {item?.smile && (
+                      <div className="mr-1 text-sm">{item.smile}</div>
+                    )}
+                    <div>
+                      <span className="text-sm text-secondary-900 font-medium">
+                        {item.name && item.name.length > 20
+                          ? `${item.name.slice(0, 20)}...`
+                          : item.name}
+                      </span>
                     </div>
-                    <div className="absolute right-3 bottom-1 flex items-center gap-1 text-xs font-normal text-secondary-400 z-20">
-                      <span>15.03.2024</span>
-                      <span>12:19</span>
-                    </div>
-                  </>
-                ))}
+                  </div>
+                  <div className="absolute right-3 bottom-1 flex items-center gap-1 text-xs font-normal text-secondary-400 z-20">
+                    <span>15.03.2024</span>
+                    <span>12:19</span>
+                  </div>
+                </>
                 <div className="flex justify-end items-center absolute top-0 left-0 right-0 bottom-0 rounded-lg bg-white-50 z-30 shadow-sm cart_menu-buttons">
                   <div className="mr-3 flex items-center gap-2">
                     <button
                       className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-white-50 hover:shadow-sm duration-200 ease-linear"
-                      onClick={() => handleDeleteNote(items._id)}
+                      onClick={() => handleDeleteNote(item._id)}
                     >
                       <svg
                         width="14"
@@ -123,24 +139,31 @@ export const Cart: React.FC<CartInterface> = ({ setOpenNoteCart }) => {
                         />
                       </svg>
                     </button>
-                    <button className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-white-50 hover:shadow-sm duration-200 ease-linear">
-                      <svg
-                        width="18"
-                        height="16"
-                        viewBox="0 0 18 16"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M10.0417 0.500001C5.80002 0.383334 2.32502 3.78333 2.32502 8H0.833351C0.458351 8 0.275017 8.45 0.541684 8.70833L2.86668 11.0417C3.03335 11.2083 3.29168 11.2083 3.45835 11.0417L5.78335 8.70833C6.05002 8.45 5.85835 8 5.49168 8H3.99168C3.99168 4.75 6.64168 2.125 9.90835 2.16667C13.0084 2.20833 15.6167 4.81667 15.6584 7.91667C15.7 11.175 13.075 13.8333 9.82502 13.8333C8.48335 13.8333 7.24168 13.375 6.25835 12.6C5.92502 12.3417 5.45835 12.3667 5.15835 12.6667C4.80835 13.025 4.83335 13.6083 5.22502 13.9167C6.49168 14.9083 8.09168 15.5 9.82502 15.5C14.0334 15.5 17.4417 12.025 17.325 7.78333C17.2167 3.875 13.95 0.608334 10.0417 0.500001ZM9.61668 4.66667C9.27502 4.66667 8.99168 4.95 8.99168 5.29167V8.35833C8.99168 8.65 9.15002 8.925 9.40002 9.075L12 10.6167C12.3 10.7917 12.6834 10.6917 12.8584 10.4C13.0334 10.1 12.9334 9.71667 12.6417 9.54167L10.2417 8.11667V5.28333C10.2417 4.95 9.96668 4.66667 9.61668 4.66667Z"
-                          fill="#1E293B"
-                        />
-                      </svg>
-                    </button>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
+            {searchDataLoading && (
+              <div className="w-full flex items-center justify-center py-2">
+                <p className="text-sm text-secondary-900 font-normal">
+                  Идет поиск...
+                </p>
+              </div>
+            )}
+            {value.length > 0 && searchData.length === 0 && (
+              <div className="w-full flex items-center justify-center py-2">
+                <p className="text-sm text-secondary-900 font-normal">
+                  Ничего не найдено
+                </p>
+              </div>
+            )}
+            {value.length === 0 && (
+              <div className="w-full flex items-center justify-center py-2">
+                <p className="text-sm text-secondary-900 font-normal">
+                  Для поиска используйте название заметок
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>

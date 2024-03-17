@@ -10,6 +10,7 @@ interface MenuInterface {
   isOpenNoteControl: boolean;
   setOpenNoteControl: Dispatch<SetStateAction<boolean>>;
   setOpenNoteCart: Dispatch<SetStateAction<boolean>>;
+  setOpenSearch: Dispatch<SetStateAction<boolean>>;
   setControlCords: Dispatch<SetStateAction<{ x: number; y: number }>>;
 }
 
@@ -20,6 +21,7 @@ export const Menu: React.FC<MenuInterface> = ({
   setControlCords,
   isOpenNoteControl,
   setOpenNoteCart,
+  setOpenSearch,
 }) => {
   const [note, setNote] = useState<DocumentsInterface[] | undefined>();
 
@@ -38,6 +40,10 @@ export const Menu: React.FC<MenuInterface> = ({
 
   const handleOpenCartMenu = () => {
     setOpenNoteCart((props) => !props);
+  };
+
+  const handleOpenSearchMenu = () => {
+    setOpenSearch((props) => !props);
   };
 
   return (
@@ -75,7 +81,10 @@ export const Menu: React.FC<MenuInterface> = ({
           </div>
         </div>
         <div className="">
-          <div className="p-1 px-3 flex items-center font-medium text-base cursor-pointer hover:bg-secondary-200">
+          <div
+            className="p-1 px-3 flex items-center font-medium text-base cursor-pointer hover:bg-secondary-200"
+            onClick={handleOpenSearchMenu}
+          >
             <svg
               className="mr-2 fill-secondary-400"
               xmlns="http://www.w3.org/2000/svg"
