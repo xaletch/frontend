@@ -112,6 +112,16 @@ export const noteApi = createApi({
         url: "/api/notes/cart/note",
         method: "GET",
       }),
+      providesTags: (result) =>
+        Array.isArray(result)
+          ? [
+              ...result.map(({ id }: { id: string }) => ({
+                type: "DeleteCartNote" as const,
+                id,
+              })),
+              { type: "DeleteCartNote", id: "LIST" },
+            ]
+          : [{ type: "DeleteCartNote", id: "LIST" }],
     }),
     // УДАЛЕНИЕ ЗАМЕТКИ БЕЗ ВОЗМОЖНОСТИ НА ВОССТАНОВЛЕНИЕ
     fetchDeleteNote: builder.mutation({
@@ -119,10 +129,7 @@ export const noteApi = createApi({
         url: `/api/notes/delete/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [
-        { type: "DeleteCartNote", id: "LIST" },
-        { type: "DeleteSearch", id: "LIST" },
-      ],
+      invalidatesTags: [{ type: "DeleteCartNote", id: "LIST" }],
     }),
     // ВОССТАНОВЛЕНИЕ ЗАМЕТКИ ИЗ КОРЗИНЫ
     fetchRecoveryNote: builder.mutation({
@@ -133,10 +140,12 @@ export const noteApi = createApi({
     }),
     // ЗАГРУЗКА КАРТИНОК
     fetchUploadImage: builder.mutation({
-      query: () => ({
+      query: (imageUrl: any) => ({
         url: "/api/uploads",
         method: "POST",
+        body: imageUrl,
       }),
+      invalidatesTags: [{ type: "CreateNote", id: "LIST" }],
     }),
     // ПОИСК ЗАМЕТОК ПО ИМЕНИ
     getSearchNotes: builder.query({
@@ -144,16 +153,6 @@ export const noteApi = createApi({
         url: `/api/notes/search/${name}`,
         method: "GET",
       }),
-      providesTags: (result: any) =>
-        result
-          ? [
-              ...result.map(({ id }: { id: string }) => ({
-                type: "DeleteSearch" as const,
-                id,
-              })),
-              { type: "DeleteSearch", id: "LIST" },
-            ]
-          : [{ type: "DeleteSearch", id: "LIST" }],
     }),
   }),
 });

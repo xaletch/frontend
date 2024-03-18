@@ -53,7 +53,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
   // const [showEmoji, setShowEmoji] = useState<boolean>(false);
   // const [isRename, setRename] = useState<boolean>(false);
   // const [selectEmoji, setSelectEmoji] = useState<string>("");
-  // const [image, setImage] = useState<string>("");
+  const [image, setImage] = useState<string>("");
 
   const fileRef = useRef<any>(null);
   // const textareaRef: any = useRef<HTMLInputElement>(null);
@@ -74,19 +74,28 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
   //   }
   // };
 
-  const [uploadImage, { data: uploadImageResponse }] =
-    useFetchUploadImageMutation();
+  const [
+    uploadImage,
+    { data: uploadImageResponse, isSuccess: uploadImageSuccess },
+  ] = useFetchUploadImageMutation();
+  const [updateNoteContent] = usePatchUpdateNoteMutation();
 
   const handleChange = async (event: any) => {
     const formData = new FormData();
     formData.append("image", event.target.files[0]);
 
     uploadImage(formData);
-
-    // const { data } = await Axios.post("/uploads", formData);
-    // setImage(data.url);
-    // setNoteUpdate(true);
   };
+
+  useEffect(() => {
+    if (uploadImageSuccess) {
+      setImage(uploadImageResponse?.url);
+      updateNoteContent({
+        id: _id,
+        data: { imageUrl: uploadImageResponse?.url },
+      });
+    }
+  }, [uploadImageSuccess, uploadImageResponse]);
 
   // useEffect(() => {
   //   try {
@@ -107,17 +116,12 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
   //   }
   // }, [image, selectEmoji]);
 
-  // const handleRemoveImg = async () => {
-  //   try {
-  //     const data = await Axios.patch("/api/notes/update/" + _id, {
-  //       imageUrl: "",
-  //     });
-  //     dispatch(fetchNotes(data.data));
-  //     setNoteUpdate(true);
-  //   } catch (err) {
-  //     console.log("Не удалось удалить смайлик: \n", err);
-  //   }
-  // };
+  const handleRemoveImg = async () => {
+    updateNoteContent({
+      id: _id,
+      data: { imageUrl: "" },
+    });
+  };
 
   const typingTimerBlocks = useRef<any>(null);
   const [blocksUpdate] = usePatchUpdateNoteMutation();
@@ -209,7 +213,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
               </button>
               <button
                 className="m-[1px] px-3 rounded-md bg-secondary-50 text-sm font-normal text-secondary-900 h-[34px] flex items-center justify-center hover:bg-secondary-100 duration-200 ease-in gap-1"
-                // onClick={handleRemoveImg}
+                onClick={handleRemoveImg}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

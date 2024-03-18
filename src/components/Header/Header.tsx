@@ -29,7 +29,7 @@ export const Header: React.FC<HeaderInterface> = ({
                 onClick={openMenu}
               >
                 <span className="text-base uppercase font-medium text-secondary-800">
-                  {username[0]}
+                  {username && username[0]}
                 </span>
               </div>
             ) : (

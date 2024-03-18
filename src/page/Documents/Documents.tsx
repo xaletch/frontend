@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Menu } from "../../components/Documents/Menu";
 import { NoteContent } from "../../components/Notes/NoteContent";
 import { useParams } from "react-router-dom";
-import { useGetOneNoteMutation } from "../../redux/api";
+import { useGetNotesQuery, useGetOneNoteMutation } from "../../redux/api";
 import { Control } from "../../components/Notes/Control/Control";
 import { Cart } from "../../components/Cart/Cart";
 import { Search } from "../../components/Search/Search";
+import { DocumentsInterface } from "../../interfaces/types";
 
 interface User {
   username: string;
@@ -33,7 +34,7 @@ type NoteData = {
   name: string;
   title: string;
   smile: string;
-  text: string;
+  createNote: string;
   user: User;
   blocks: Blocks[];
 };
@@ -51,9 +52,18 @@ export const Documents: React.FC<UsernameInterface> = ({ username }) => {
   const [isOpenNoteControl, setOpenNoteControl] = useState<boolean>(false);
   const [isOpenNoteCart, setOpenNoteCart] = useState<boolean>(false);
   const [isOpenSearch, setOpenSearch] = useState<boolean>(false);
+  const [note, setNote] = useState<DocumentsInterface[] | undefined>();
 
   const [selectNote, { data: noteData, isSuccess: isSelectNoteSuccess }] =
     useGetOneNoteMutation();
+
+  const { data: dataNote, isSuccess: isDataNoteSuccess } = useGetNotesQuery("");
+
+  useEffect(() => {
+    if (isDataNoteSuccess) {
+      setNote(dataNote);
+    }
+  }, [isDataNoteSuccess, dataNote]);
 
   useEffect(() => {
     if (_id && _id !== selectNoteId) {
@@ -79,6 +89,7 @@ export const Documents: React.FC<UsernameInterface> = ({ username }) => {
           isOpenNoteControl={isOpenNoteControl}
           setOpenNoteCart={setOpenNoteCart}
           setOpenSearch={setOpenSearch}
+          note={note}
         />
       </div>
       {isOpenNoteControl && (
@@ -87,13 +98,12 @@ export const Documents: React.FC<UsernameInterface> = ({ username }) => {
           name={selectNoteData?.name || ""}
           _id={selectNoteData?._id || ""}
           username={username}
+          createNote={selectNoteData?.createNote || ""}
           setOpenNoteControl={setOpenNoteControl}
         />
       )}
       {isOpenNoteCart && <Cart setOpenNoteCart={setOpenNoteCart} />}
-      {isOpenSearch && (
-        <Search setOpenSearch={setOpenSearch} _id={selectNoteData?._id || ""} />
-      )}
+      {isOpenSearch && <Search setOpenSearch={setOpenSearch} note={note} />}
       <div
         className={`flex-1 ${
           isOpenNoteCart || isOpenSearch ? "relative -z-50" : ""

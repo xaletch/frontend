@@ -27,18 +27,6 @@ export const Item: React.FC<DocInterface> = ({
     setOpenNoteControl(!isOpenNoteControl);
   };
 
-  // const handleCreateNote = async () => {
-  //   try {
-  //     await Axios.post("/api/notes/save");
-  //   } catch (err) {
-  //     console.log("Не удалось создать заметку: \n", err);
-  //   }
-  // };
-
-  // const handleSelectNote = () => {
-  //   selectNote(_id);
-  // };
-
   return (
     <div className="px-1">
       <Link to={`/documents/${_id}`}>

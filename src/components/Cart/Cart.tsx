@@ -98,13 +98,9 @@ export const Cart: React.FC<CartInterface> = ({ setOpenNoteCart }) => {
                         </span>
                       </div>
                     </div>
-                    <div className="absolute right-3 bottom-1 flex items-center gap-1 text-xs font-normal text-secondary-400 z-20">
-                      <span>15.03.2024</span>
-                      <span>12:19</span>
-                    </div>
                   </>
                 ))}
-                <div className="flex justify-end items-center absolute top-0 left-0 right-0 bottom-0 rounded-lg bg-white-50 z-30 shadow-sm cart_menu-buttons">
+                <div className="flex justify-end items-center absolute top-0 left-0 right-0 bottom-0 rounded-lg bg-white-50 z-30 shadow-sm">
                   <div className="mr-3 flex items-center gap-2">
                     <button
                       className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-white-50 hover:shadow-sm duration-200 ease-linear"

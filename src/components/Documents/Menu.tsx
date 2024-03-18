@@ -12,6 +12,7 @@ interface MenuInterface {
   setOpenNoteCart: Dispatch<SetStateAction<boolean>>;
   setOpenSearch: Dispatch<SetStateAction<boolean>>;
   setControlCords: Dispatch<SetStateAction<{ x: number; y: number }>>;
+  note: DocumentsInterface[] | undefined;
 }
 
 export const Menu: React.FC<MenuInterface> = ({
@@ -22,17 +23,9 @@ export const Menu: React.FC<MenuInterface> = ({
   isOpenNoteControl,
   setOpenNoteCart,
   setOpenSearch,
+  note,
 }) => {
-  const [note, setNote] = useState<DocumentsInterface[] | undefined>();
-
-  const { data: dataNote, isSuccess: isDataNoteSuccess } = useGetNotesQuery("");
   const [createNote] = useFetchCreateNotesMutation();
-
-  useEffect(() => {
-    if (isDataNoteSuccess) {
-      setNote(dataNote);
-    }
-  }, [isDataNoteSuccess, dataNote]);
 
   const handleCreateNote = () => {
     createNote("");
