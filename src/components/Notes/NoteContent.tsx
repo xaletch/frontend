@@ -1,15 +1,8 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Editor } from "./Editor/Editor";
 import { Smile } from "../../components/Notes/Smile/Smile";
 
 import "./NoteContent.css";
-import { useDispatch } from "react-redux";
 import {
   useFetchUploadImageMutation,
   usePatchUpdateNoteMutation,
@@ -48,15 +41,18 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
   blocks,
   isSelectNoteSuccess,
 }) => {
-  // const dispatch = useDispatch();
-
-  // const [showEmoji, setShowEmoji] = useState<boolean>(false);
-  // const [isRename, setRename] = useState<boolean>(false);
-  // const [selectEmoji, setSelectEmoji] = useState<string>("");
+  const [showEmoji, setShowEmoji] = useState<boolean>(false);
+  const [selectEmoji, setSelectEmoji] = useState<string>("");
   const [image, setImage] = useState<string>("");
+  const [noteName, setNoteName] = useState<string>("");
 
   const fileRef = useRef<any>(null);
-  // const textareaRef: any = useRef<HTMLInputElement>(null);
+
+  const typingTimer = useRef<any>(null);
+  const noteNateRef = useRef<HTMLHeadingElement>(null);
+  const cursorPos = useRef<number>(0);
+
+  const typingTimerBlocks = useRef<any>(null);
 
   const handleOpenFile = () => {
     if (fileRef.current) {
@@ -64,20 +60,12 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
     }
   };
 
-  // const handleRemoveSmile = async () => {
-  //   try {
-  //     const data = await Axios.patch("/api/notes/update/" + _id, { smile: "" });
-  //     dispatch(fetchNotes(data.data));
-  //     setNoteUpdate(true);
-  //   } catch (err) {
-  //     console.log("Не удалось удалить смайлик: \n", err);
-  //   }
-  // };
-
+  // ЗАГРУЗКА КАРТИНОК
   const [
     uploadImage,
     { data: uploadImageResponse, isSuccess: uploadImageSuccess },
   ] = useFetchUploadImageMutation();
+
   const [updateNoteContent] = usePatchUpdateNoteMutation();
 
   const handleChange = async (event: any) => {
@@ -97,25 +85,6 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
     }
   }, [uploadImageSuccess, uploadImageResponse]);
 
-  // useEffect(() => {
-  //   try {
-  //     const noteContent = async () => {
-  //       if (name) {
-  //         const data = await Axios.patch("/api/notes/update/" + _id, {
-  //           smile: selectEmoji ? selectEmoji : smile,
-  //           imageUrl: image ? image : imageUrl,
-  //         });
-  //         setNoteUpdate(true);
-  //         setShowEmoji(false);
-  //         dispatch(fetchNotes(data.data));
-  //       }
-  //     };
-  //     noteContent();
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }, [image, selectEmoji]);
-
   const handleRemoveImg = async () => {
     updateNoteContent({
       id: _id,
@@ -123,24 +92,27 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
     });
   };
 
-  const typingTimerBlocks = useRef<any>(null);
-  const [blocksUpdate] = usePatchUpdateNoteMutation();
+  // СОХРАНЕНИЕ СМАЙЛИКА
+  useEffect(() => {
+    if (selectEmoji !== "") {
+      updateNoteContent({
+        id: _id,
+        data: { smile: selectEmoji },
+      });
+    }
+  }, [selectEmoji]);
 
-  const onChange = (content: string) => {
-    const data = JSON.stringify(content);
-
-    clearTimeout(typingTimerBlocks.current);
-    typingTimerBlocks.current = setTimeout(() => {
-      blocksUpdate({ id: _id, data: { blocks: data } });
-    }, 300);
+  // УДАЛЕНИЕ СМАЙЛИКА
+  const handleRemoveSmile = () => {
+    updateNoteContent({
+      id: _id,
+      data: { smile: "" },
+    });
   };
 
-  const [noteName, setNoteName] = useState<string>("");
+  // РЕДАКТИРОВАНИЕ ИМЕНИ ЗАМЕТКИ
   const [newNoteName] = usePatchUpdateNoteMutation();
 
-  const typingTimer = useRef<any>(null);
-  const noteNateRef = useRef<HTMLHeadingElement>(null);
-  const cursorPos = useRef<number>(0);
   useEffect(() => {
     if (isSelectNoteSuccess) {
       setNoteName(name);
@@ -169,6 +141,18 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
       sel?.addRange(range);
     }
   }, [noteName]);
+
+  // КОНТЕНТ ЗАМЕТКИ
+  const [blocksUpdate] = usePatchUpdateNoteMutation();
+
+  const onChange = (content: string) => {
+    clearTimeout(typingTimerBlocks.current);
+    typingTimerBlocks.current = setTimeout(() => {
+      blocksUpdate({ id: _id, data: { blocks: content } });
+    }, 300);
+  };
+
+  console.log(JSON.stringify(blocks));
 
   return (
     <div
@@ -247,7 +231,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
                 {smile && (
                   <button
                     className="p-3 border border-secondary-200 rounded-full hover:border-secondary-300 duration-200 ease-in"
-                    // onClick={handleRemoveSmile}
+                    onClick={handleRemoveSmile}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -270,7 +254,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
                     className={`flex cursor-pointer text-sm font-normal text-secondary-800 items-center gap-2 border border-secondary-200 hover:bg-secondary-100 rounded-md p-2 px-3 h-[36px] duration-200 ease-in ${
                       smile ? "hidden" : ""
                     }`}
-                    // onClick={() => setShowEmoji(true)}
+                    onClick={() => setShowEmoji(true)}
                   >
                     <svg
                       width="20"
@@ -306,12 +290,12 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
                     </svg>
                     Add cover
                   </button>
-                  {/* {showEmoji && (
+                  {showEmoji && (
                     <Smile
                       selectEmoji={selectEmoji}
                       setSelectEmoji={setSelectEmoji}
                     />
-                  )} */}
+                  )}
                   <input
                     className="hidden"
                     type="file"
@@ -332,9 +316,8 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
               <div>
                 <div className="mt-2 ">
                   <Editor
-                    key={JSON.stringify(blocks)}
                     onChange={onChange}
-                    initialContent={blocks}
+                    initialContent={JSON.stringify(blocks)}
                   />
                 </div>
               </div>
