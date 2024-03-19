@@ -7,6 +7,7 @@ import { Control } from "../../components/Notes/Control/Control";
 import { Cart } from "../../components/Cart/Cart";
 import { Search } from "../../components/Search/Search";
 import { DocumentsInterface } from "../../interfaces/types";
+import { PartialBlock } from "@blocknote/core";
 
 interface User {
   username: string;
@@ -36,7 +37,7 @@ type NoteData = {
   smile: string;
   createNote: string;
   user: User;
-  blocks: Blocks[];
+  blocks: PartialBlock[];
 };
 
 interface UsernameInterface {

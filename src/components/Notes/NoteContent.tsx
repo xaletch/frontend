@@ -7,10 +7,11 @@ import {
   useFetchUploadImageMutation,
   usePatchUpdateNoteMutation,
 } from "../../redux/api";
+import { PartialBlock } from "@blocknote/core";
 
 interface Blocks {
   id: string;
-  type: string;
+  type: "image";
   props: {
     textColor: string;
     backgroundColor: string;
@@ -29,7 +30,7 @@ interface NoteContentInterface {
   name: string;
   smile: string;
   _id: string;
-  blocks: Blocks[] | undefined;
+  blocks: PartialBlock[];
   isSelectNoteSuccess: boolean;
 }
 
@@ -151,8 +152,6 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
       blocksUpdate({ id: _id, data: { blocks: content } });
     }, 300);
   };
-
-  console.log(JSON.stringify(blocks));
 
   return (
     <div
@@ -315,10 +314,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
               </div>
               <div>
                 <div className="mt-2 ">
-                  <Editor
-                    onChange={onChange}
-                    initialContent={JSON.stringify(blocks)}
-                  />
+                  <Editor onChange={onChange} initialContent={blocks} />
                 </div>
               </div>
             </div>

@@ -8,25 +8,25 @@ import {
 } from "@reduxjs/toolkit/query";
 import { Dispatch, SetStateAction } from "react";
 
-interface Block {
+export interface Block {
   id: string;
-  type: string;
+  type: "image";
   props: {
     textColor: string;
     backgroundColor: string;
     textAlignment: string;
   };
-  content: {
+  content: Array<{
     type: string;
-    text: string;
-    styles: {};
-  }[];
+    text?: string;
+    styles?: {};
+  }>;
   children: any[];
 }
 
 export interface PartialInlineContent {
   id: string;
-  type: string;
+  type: "image";
   props: {
     textColor: string;
     backgroundColor: string;
