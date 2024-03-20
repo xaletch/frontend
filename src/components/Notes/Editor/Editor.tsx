@@ -1,40 +1,27 @@
-import React, { useEffect, useState } from "react";
-import {
-  BlockNoteEditor,
-  PartialBlock,
-  PartialInlineContent,
-} from "@blocknote/core";
+import { BlockNoteEditor, PartialBlock } from "@blocknote/core";
 import { BlockNoteView, useBlockNote } from "@blocknote/react";
 import "@blocknote/core/style.css";
 
 import "./Edirot.css";
 
-interface Blocks {
-  id: string;
-  type: "paragraph" | "image";
-  props: {
-    textColor: string;
-    backgroundColor: string;
-    textAlignment: string;
-  };
-  content: string | PartialInlineContent[];
-  children: Blocks[];
-}
-
 interface EditorProps {
   onChange: (value: string) => void;
-  initialContent?: PartialBlock[];
+  initialContent?: PartialBlock[] | string;
 }
 
 export const Editor = ({ onChange, initialContent }: EditorProps) => {
+  let transformedInitialContent;
+  if (initialContent && typeof initialContent === "string") {
+    transformedInitialContent = JSON.parse(initialContent);
+  }
   const editor: BlockNoteEditor = useBlockNote({
-    initialContent: initialContent ? initialContent : [],
+    initialContent: transformedInitialContent,
     onEditorContentChange: (editor) => {
       onChange(JSON.stringify(editor.topLevelBlocks, null, 2));
     },
   });
 
-  // console.log("initialContent: ", initialContent);
+  console.log("initialContent: ", initialContent);
 
   return (
     <div>

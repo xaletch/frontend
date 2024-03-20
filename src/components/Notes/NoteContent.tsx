@@ -147,11 +147,10 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
   const [blocksUpdate] = usePatchUpdateNoteMutation();
 
   const onChange = (content: string) => {
-    console.log(content);
-    // clearTimeout(typingTimerBlocks.current);
-    // typingTimerBlocks.current = setTimeout(() => {
-    //   blocksUpdate({ id: _id, data: { blocks: content } });
-    // }, 300);
+    clearTimeout(typingTimerBlocks.current);
+    typingTimerBlocks.current = setTimeout(() => {
+      blocksUpdate({ id: _id, data: { blocks: content } });
+    }, 300);
   };
 
   return (
