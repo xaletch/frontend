@@ -34,6 +34,8 @@ export const Editor = ({ onChange, initialContent }: EditorProps) => {
     },
   });
 
+  // console.log("initialContent: ", initialContent);
+
   return (
     <div>
       <BlockNoteView editor={editor} theme={"light"} />
