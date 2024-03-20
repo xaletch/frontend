@@ -38,7 +38,7 @@ export const noteApi = createApi({
         method: "POST",
         body,
       }),
-      invalidatesTags: [{ type: "CheckAuth", id: "LIST" }],
+      invalidatesTags: [{ type: "CheckAuth", id: "ACCOUNT" }],
     }),
     // АВТОРИЗАЦИЯ
     fetchLogin: builder.mutation({
@@ -47,7 +47,7 @@ export const noteApi = createApi({
         method: "POST",
         body,
       }),
-      invalidatesTags: [{ type: "CheckAuth", id: "LIST" }],
+      invalidatesTags: [{ type: "CheckAuth", id: "ACCOUNT" }],
     }),
     // ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ
     getUserInfo: builder.query({
@@ -55,7 +55,10 @@ export const noteApi = createApi({
         url: "/api/user/account",
         method: "GET",
       }),
-      providesTags: ["CheckAuth"],
+      providesTags: (result) =>
+        result
+          ? [{ type: "CheckAuth", id: "ACCOUNT" }]
+          : [{ type: "CheckAuth", id: "ACCOUNT" }],
     }),
     // ПОЛУЧЕНИЕ ВСЕХ ЗАМЕТОК
     getNotes: builder.query({
@@ -83,11 +86,18 @@ export const noteApi = createApi({
       invalidatesTags: [{ type: "CreateNote", id: "LIST" }],
     }),
     // ПОЛУЧЕНИЕ ЗАМЕТКИ ПО ID
-    getOneNote: builder.mutation({
+    getOneNote: builder.query({
       query: (id: string) => ({
         url: `/api/notes/oneNote/${id}`,
         method: "GET",
       }),
+      providesTags: (result) =>
+        result
+          ? [
+              { type: "UpdateNote", id: result.id },
+              { type: "UpdateNote", id: "CONTENT" },
+            ]
+          : [{ type: "UpdateNote", id: "CONTENT" }],
     }),
     // ИЗМЕНЕНИЕ ИМЕНИ ЗАМЕТКИ ПО ID
     patchUpdateNote: builder.mutation({
@@ -96,7 +106,10 @@ export const noteApi = createApi({
         method: "PATCH",
         body: args.data,
       }),
-      invalidatesTags: [{ type: "CreateNote", id: "LIST" }],
+      invalidatesTags: [
+        { type: "CreateNote", id: "LIST" },
+        { type: "UpdateNote", id: "CONTENT" },
+      ],
     }),
     // ДОБАВЛЕНИЕ ЗАМЕТКИ В КОРЗИНУ
     fetchAddNoteCart: builder.mutation({
@@ -145,7 +158,10 @@ export const noteApi = createApi({
         method: "POST",
         body: imageUrl,
       }),
-      invalidatesTags: [{ type: "CreateNote", id: "LIST" }],
+      invalidatesTags: [
+        { type: "CreateNote", id: "LIST" },
+        { type: "UpdateNote", id: "CONTENT" },
+      ],
     }),
     // ПОИСК ЗАМЕТОК ПО ИМЕНИ
     getSearchNotes: builder.query({
@@ -165,7 +181,8 @@ export const {
   useGetNotesQuery,
   useFetchCreateNotesMutation,
   // useGetOneNoteQuery,
-  useGetOneNoteMutation,
+  useLazyGetOneNoteQuery,
+  // useGetOneNoteMutation,
   usePatchUpdateNoteMutation,
   useFetchAddNoteCartMutation,
   useFetchRecoveryNoteMutation,

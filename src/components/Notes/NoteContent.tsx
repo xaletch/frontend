@@ -9,22 +9,6 @@ import {
 } from "../../redux/api";
 import { PartialBlock } from "@blocknote/core";
 
-interface Blocks {
-  id: string;
-  type: "image";
-  props: {
-    textColor: string;
-    backgroundColor: string;
-    textAlignment: string;
-  };
-  content: Array<{
-    type: string;
-    text?: string;
-    styles?: {};
-  }>;
-  children: Blocks[];
-}
-
 interface NoteContentInterface {
   imageUrl: string;
   name: string;
@@ -314,7 +298,11 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
               </div>
               <div>
                 <div className="mt-2 ">
-                  <Editor onChange={onChange} initialContent={blocks} />
+                  <Editor
+                    key={_id}
+                    onChange={onChange}
+                    initialContent={blocks}
+                  />
                 </div>
               </div>
             </div>

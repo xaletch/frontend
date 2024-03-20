@@ -41,7 +41,7 @@ export const Menu: React.FC<MenuInterface> = ({
 
   return (
     // onClick={(e) => handleCords(e)}
-    <div className="h-full flex flex-col pb-12">
+    <div className="w-56 h-full flex flex-col pb-12 bg-secondary-150 fixed">
       <div>
         <div className="p-3 flex justify-between text-center">
           <div className="gap-2 flex items-center">

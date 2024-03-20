@@ -3,8 +3,7 @@ import { Header } from "../../components/Header/Header";
 import { Link } from "react-router-dom";
 
 import "./home.css";
-import { Cart } from "../../components/Cart/Cart";
-import { useGetUserInfoQuery, useLazyGetUserInfoQuery } from "../../redux/api";
+import { useLazyGetUserInfoQuery } from "../../redux/api";
 import { isAuth } from "../../interfaces/interfaces";
 
 interface UsernameInterface {
@@ -13,13 +12,6 @@ interface UsernameInterface {
 
 export const Home: React.FC<UsernameInterface> = ({ username }) => {
   const [isMenu, setMenu] = useState<boolean>(false);
-  const [accessToken, setAccessToken] = useState<string>("");
-
-  useEffect(() => {
-    if (isAuth) {
-      setAccessToken(isAuth);
-    }
-  }, []);
   const [trigger] = useLazyGetUserInfoQuery();
 
   const closeMenu = () => {

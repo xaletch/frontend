@@ -1,15 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import { Menu } from "../../components/Notes/Menu/Menu";
-import { NoteContent } from "../../components/Notes/NoteContent";
-import { useParams } from "react-router-dom";
-
-import { Control } from "../../components/Notes/Control/Control";
-import { Header } from "../../components/Notes/Header/Header";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
-import { Cart } from "../../components/Cart/Cart";
-import { Menu } from "../../components/Documents/Menu";
-import { useGetOneNoteMutation } from "../../redux/api";
 
 interface User {
   username: string;
@@ -43,26 +32,26 @@ type NoteData = {
 };
 
 export const SelectNote: React.FC = () => {
-  const { _id } = useParams();
+  // const { _id } = useParams();
 
-  const [selectNoteData, setSelectNoteData] = useState();
+  // const [selectNoteData, setSelectNoteData] = useState();
 
-  const [selectNote, { data: noteData, isSuccess: isSelectNoteSuccess }] =
-    useGetOneNoteMutation();
+  // const [selectNote, { data: noteData, isSuccess: isSelectNoteSuccess }] =
+  //   useGetOneNoteMutation();
 
-  useEffect(() => {
-    if (_id && !selectNoteData) {
-      selectNote(_id);
-    }
-  }, [_id, selectNoteData]);
+  // useEffect(() => {
+  //   if (_id && !selectNoteData) {
+  //     selectNote(_id);
+  //   }
+  // }, [_id, selectNoteData]);
 
-  useEffect(() => {
-    if (isSelectNoteSuccess) {
-      setSelectNoteData(noteData);
-    }
-  }, [isSelectNoteSuccess, noteData]);
+  // useEffect(() => {
+  //   if (isSelectNoteSuccess) {
+  //     setSelectNoteData(noteData);
+  //   }
+  // }, [isSelectNoteSuccess, noteData]);
 
-  console.log(selectNoteData);
+  // console.log(selectNoteData);
   // const [menuOpen, setMenuOpen] = useState<boolean>(false);
   // const [isUpdate, setIsUpdate] = useState(false);
   // const [noteUpdate, setNoteUpdate] = useState(false);

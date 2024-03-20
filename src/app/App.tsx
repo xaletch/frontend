@@ -19,7 +19,9 @@ function App() {
     isSuccess: isUserData,
     isLoading: isLoadingUserData,
     refetch: refetchUserData,
-  } = useGetUserInfoQuery("");
+  } = useGetUserInfoQuery("", {
+    skip: !isAuth,
+  });
 
   useEffect(() => {
     if (isAuth) {
