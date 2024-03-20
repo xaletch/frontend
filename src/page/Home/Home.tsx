@@ -1,18 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { Header } from "../../components/Header/Header";
 import { Link } from "react-router-dom";
 
 import "./home.css";
-import { useLazyGetUserInfoQuery } from "../../redux/api";
 import { isAuth } from "../../interfaces/interfaces";
 
 interface UsernameInterface {
   username: string;
+  isUserDataSuccess: boolean;
+  setUserDataSuccess: Dispatch<SetStateAction<boolean>>;
+  userDataTrigger: any;
 }
 
-export const Home: React.FC<UsernameInterface> = ({ username }) => {
+export const Home: React.FC<UsernameInterface> = ({
+  username,
+  isUserDataSuccess,
+  setUserDataSuccess,
+  userDataTrigger,
+}) => {
   const [isMenu, setMenu] = useState<boolean>(false);
-  const [trigger] = useLazyGetUserInfoQuery();
 
   const closeMenu = () => {
     isMenu && setMenu(false);
@@ -23,12 +29,17 @@ export const Home: React.FC<UsernameInterface> = ({ username }) => {
       "access_token=; expires=Thu, 14 March 2024 00:00:00 UTC; path=/;";
 
     setMenu(false);
-    trigger("");
+    setUserDataSuccess(false);
   };
 
   return (
     <div onClick={closeMenu}>
-      <Header isMenu={isMenu} setMenu={setMenu} username={username} />
+      <Header
+        isMenu={isMenu}
+        setMenu={setMenu}
+        username={username}
+        isUserDataSuccess={isUserDataSuccess}
+      />
       {/* <Cart /> */}
       <div className="container mx-auto">
         <div className="flex justify-center flex-col text-center mt-24">
@@ -40,7 +51,7 @@ export const Home: React.FC<UsernameInterface> = ({ username }) => {
               Name is the connected workspace where better, faster work happens.
             </p>
             <Link
-              to={isAuth ? "/documents" : "/login"}
+              to={isUserDataSuccess || isAuth ? "/documents" : "/login"}
               className="mt-2 w-[160px]"
             >
               <button className="px-8 p-1 h-[34px] text-secondary-50 font-medium text-sm bg-secondary-900 rounded hover:bg-secondary-800 duration-300">

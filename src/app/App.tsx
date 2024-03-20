@@ -9,32 +9,52 @@ import { Register } from "../page/Register/Register";
 import { Login } from "../page/Login/Login";
 import { Documents } from "../page/Documents/Documents";
 import { NotFound } from "../page/NotFound/NotFound";
-import { useGetUserInfoQuery } from "../redux/api";
+import { useLazyGetUserInfoQuery } from "../redux/api";
 import { isAuth } from "../interfaces/interfaces";
 
 function App() {
   const [username, setUsername] = useState<string>("");
-  const {
-    data: userData,
-    isSuccess: isUserData,
-    isLoading: isLoadingUserData,
-    refetch: refetchUserData,
-  } = useGetUserInfoQuery("", {
-    skip: !isAuth,
-  });
+  const [isUserDataSuccess, setUserDataSuccess] = useState<boolean>(false);
+  const [
+    userDataTrigger,
+    { data: userData, isSuccess: isUserData, isLoading: isLoadingUserData },
+  ] = useLazyGetUserInfoQuery();
+
+  useEffect(() => {
+    if (isUserData) {
+      setUsername(userData?.username);
+      setUserDataSuccess(true);
+    }
+  }, [isUserData, userData?.username, username, userDataTrigger]);
 
   useEffect(() => {
     if (isAuth) {
-      setUsername(userData?.username);
+      userDataTrigger("");
     }
-  }, [isAuth, isUserData, userData?.username]);
+  }, [isAuth]);
 
   return (
     <div className="App font-body">
       <Routes>
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/home" element={<Home username={username} />}></Route>
+        <Route
+          path="/register"
+          element={<Register userDataTrigger={userDataTrigger} />}
+        />
+        <Route
+          path="/login"
+          element={<Login userDataTrigger={userDataTrigger} />}
+        ></Route>
+        <Route
+          path="/home"
+          element={
+            <Home
+              username={username}
+              isUserDataSuccess={isUserDataSuccess}
+              setUserDataSuccess={setUserDataSuccess}
+              userDataTrigger={userDataTrigger}
+            />
+          }
+        ></Route>
         <Route
           path="/documents/:_id"
           element={<Documents username={username} />}

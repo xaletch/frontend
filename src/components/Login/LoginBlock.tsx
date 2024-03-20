@@ -1,23 +1,22 @@
 import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import {
-  useFetchLoginMutation,
-  useLazyGetUserInfoQuery,
-} from "../../redux/api";
+import { useFetchLoginMutation } from "../../redux/api";
 
 type LoginValue = {
   email: string;
   password: string;
 };
 
-export const LoginBlock = () => {
+interface UserDataTriggerInterface {
+  userDataTrigger: any;
+}
+
+export const LoginBlock = ({ userDataTrigger }: UserDataTriggerInterface) => {
   const [redirect, setRedirect] = useState<boolean>(false);
   const [isStatus, setStatus] = useState<number>();
 
   const [fetchLogin] = useFetchLoginMutation();
-  // ЗАПРОС НА ИНФОРМАЦИЮ О ПОЛЬЗОВАТЕЛЕ
-  const [trigger] = useLazyGetUserInfoQuery();
 
   const setCookieWithExpiration = (
     cookieName: string,
@@ -47,10 +46,11 @@ export const LoginBlock = () => {
       const data = await fetchLogin(value);
 
       if ("data" in data) {
-        trigger("");
         if (data.data.access_token) {
           setCookieWithExpiration("access_token", data.data.access_token, 24);
           setRedirect(true);
+
+          userDataTrigger();
         }
       } else if ("error" in data) {
         const status = data.error;

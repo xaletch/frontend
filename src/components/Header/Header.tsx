@@ -6,12 +6,14 @@ interface HeaderInterface {
   isMenu: boolean;
   setMenu: Dispatch<SetStateAction<boolean>>;
   username: string;
+  isUserDataSuccess: boolean;
 }
 
 export const Header: React.FC<HeaderInterface> = ({
   isMenu,
   setMenu,
   username,
+  isUserDataSuccess,
 }) => {
   const openMenu = () => {
     setMenu(!isMenu);
@@ -23,7 +25,7 @@ export const Header: React.FC<HeaderInterface> = ({
         <div className="flex justify-between items-center">
           <div className="">Kotion</div>
           <div className="">
-            {isAuth ? (
+            {isUserDataSuccess || isAuth ? (
               <div
                 className="w-9 h-9 bg-secondary-100 rounded-md flex justify-center items-center cursor-pointer select-none"
                 onClick={openMenu}
