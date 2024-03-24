@@ -1,4 +1,10 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Item } from "./Item";
 import { useFetchCreateNotesMutation, useGetNotesQuery } from "../../redux/api";
 import { NoteItem } from "../../interfaces/interfaces";
@@ -25,6 +31,11 @@ export const Menu: React.FC<MenuInterface> = ({
   setOpenSearch,
   note,
 }) => {
+  const isResizingRef = useRef(false);
+  const sidebarRef = useRef<HTMLDivElement>(null);
+
+  const navbarRef = useRef<HTMLDivElement>(null);
+
   const [createNote] = useFetchCreateNotesMutation();
 
   const handleCreateNote = () => {
@@ -39,11 +50,54 @@ export const Menu: React.FC<MenuInterface> = ({
     setOpenSearch((props) => !props);
   };
 
+  const handleMouseDown = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    isResizingRef.current = true;
+
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  };
+
+  const handleMouseMove = (event: MouseEvent) => {
+    if (!isResizingRef.current) return;
+
+    let newWidth = event.clientX;
+
+    if (newWidth < 224) newWidth = 224;
+    if (newWidth > 480) newWidth = 480;
+
+    if (sidebarRef.current && navbarRef.current) {
+      sidebarRef.current.style.width = `${newWidth}px`;
+
+      navbarRef.current.style.setProperty("left", `${newWidth}px`);
+      navbarRef.current.style.setProperty(
+        "width",
+        `calc(100% - ${newWidth}px)`
+      );
+    }
+  };
+
+  const handleMouseUp = () => {
+    isResizingRef.current = false;
+
+    document.removeEventListener("mousemove", handleMouseMove);
+    document.removeEventListener("mouseup", handleMouseUp);
+  };
+
   return (
     // onClick={(e) => handleCords(e)}
-    <div className="w-56 h-full flex flex-col pb-12 bg-secondary-150 fixed">
+    <div
+      className="w-56 h-full flex flex-col pb-12 bg-secondary-150 fixed cursor-ew-resize group-hover/sidebar:opacity-100"
+      onMouseDown={handleMouseDown}
+      onClick={() => {}}
+      ref={sidebarRef}
+    >
       <div>
-        <div className="p-3 flex justify-between text-center">
+        <div className="p-3 flex justify-between text-center" ref={navbarRef}>
           <div className="gap-2 flex items-center">
             <div className="w-[24px] h-[24px] bg-secondary-200 rounded-md flex justify-center items-center">
               <span className="text-sm uppercase font-medium text-secondary-900">

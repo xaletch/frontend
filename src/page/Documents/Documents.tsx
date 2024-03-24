@@ -8,6 +8,7 @@ import { Cart } from "../../components/Cart/Cart";
 import { Search } from "../../components/Search/Search";
 import { DocumentsInterface } from "../../interfaces/types";
 import { PartialBlock } from "@blocknote/core";
+import { CreateNote } from "../../components/CreateNote/CreateNote";
 
 interface User {
   username: string;
@@ -95,14 +96,18 @@ export const Documents: React.FC<UsernameInterface> = ({ username }) => {
           isOpenNoteCart || isOpenSearch ? "relative -z-50" : ""
         }`}
       >
-        <NoteContent
-          imageUrl={selectNoteData?.imageUrl || ""}
-          name={selectNoteData?.name || ""}
-          smile={selectNoteData?.smile || ""}
-          _id={selectNoteData?._id || ""}
-          blocks={selectNoteData?.blocks || []}
-          isSelectNoteSuccess={isSelectNoteSuccess}
-        />
+        {note?.length === 0 ? (
+          <CreateNote />
+        ) : (
+          <NoteContent
+            imageUrl={selectNoteData?.imageUrl || ""}
+            name={selectNoteData?.name || ""}
+            smile={selectNoteData?.smile || ""}
+            _id={selectNoteData?._id || ""}
+            blocks={selectNoteData?.blocks || []}
+            isSelectNoteSuccess={isSelectNoteSuccess}
+          />
+        )}
       </div>
     </div>
   );
