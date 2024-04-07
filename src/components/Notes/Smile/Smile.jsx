@@ -1,22 +1,23 @@
-import React from 'react';
+import React from "react";
 
-import data from '@emoji-mart/data';
-import Picker from '@emoji-mart/react';
+import data from "@emoji-mart/data";
+import Picker from "@emoji-mart/react";
 
-export const Smile = ({ selectEmoji, setSelectEmoji }) => {
-    
-    const handleAddEmoji = (e) => {
-        const sym = e.unified.split("_");
-        const codeArray = [];
-        sym.forEach((el) => codeArray.push("0x" + el));
+export const Smile = ({ selectEmoji, setSelectEmoji, setShowEmoji }) => {
+  const handleAddEmoji = (e) => {
+    const sym = e.unified.split("_");
+    const codeArray = [];
+    sym.forEach((el) => codeArray.push("0x" + el));
 
-        const emoji = String.fromCodePoint(...codeArray);
-        setSelectEmoji(selectEmoji + emoji);
-    };
+    setShowEmoji(false);
 
-    return (
-        <div className='absolute top-14 left-0 z-50'>
-            <Picker data={data} onEmojiSelect={handleAddEmoji} />
-        </div>
-    )
-}
+    const emoji = String.fromCodePoint(...codeArray);
+    setSelectEmoji(selectEmoji + emoji);
+  };
+
+  return (
+    <div className="absolute top-14 left-0 z-50">
+      <Picker data={data} onEmojiSelect={handleAddEmoji} />
+    </div>
+  );
+};

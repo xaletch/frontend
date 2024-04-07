@@ -117,11 +117,19 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
   };
 
   useEffect(() => {
+    if (noteNateRef.current && cursorPos.current > noteName.length) {
+      cursorPos.current = noteName.length;
+    }
+
     if (noteNateRef.current && cursorPos.current) {
       const sel = window.getSelection();
       const range = document.createRange();
-      range.setStart(noteNateRef.current.childNodes[0], cursorPos.current);
+
+      const position = Math.min(cursorPos.current, noteName.length);
+
+      range.setStart(noteNateRef.current.childNodes[0], position);
       range.collapse(true);
+
       sel?.removeAllRanges();
       sel?.addRange(range);
     }
@@ -275,6 +283,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
                   </button>
                   {showEmoji && (
                     <Smile
+                      setShowEmoji={setShowEmoji}
                       selectEmoji={selectEmoji}
                       setSelectEmoji={setSelectEmoji}
                     />

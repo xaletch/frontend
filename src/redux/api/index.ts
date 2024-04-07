@@ -17,7 +17,7 @@ export const noteApi = createApi({
     "CreateNote",
     "CheckAuth",
     "UpdateNote",
-    "DeleteCartNote",
+    "CartNote",
     "DeleteSearch",
   ],
   baseQuery: fetchBaseQuery({
@@ -129,12 +129,12 @@ export const noteApi = createApi({
         Array.isArray(result)
           ? [
               ...result.map(({ id }: { id: string }) => ({
-                type: "DeleteCartNote" as const,
+                type: "CartNote" as const,
                 id,
               })),
-              { type: "DeleteCartNote", id: "LIST" },
+              { type: "CartNote", id: "LIST" },
             ]
-          : [{ type: "DeleteCartNote", id: "LIST" }],
+          : [{ type: "CartNote", id: "LIST" }],
     }),
     // УДАЛЕНИЕ ЗАМЕТКИ БЕЗ ВОЗМОЖНОСТИ НА ВОССТАНОВЛЕНИЕ
     fetchDeleteNote: builder.mutation({
@@ -142,7 +142,7 @@ export const noteApi = createApi({
         url: `/api/notes/delete/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [{ type: "DeleteCartNote", id: "LIST" }],
+      invalidatesTags: [{ type: "CartNote", id: "LIST" }],
     }),
     // ВОССТАНОВЛЕНИЕ ЗАМЕТКИ ИЗ КОРЗИНЫ
     fetchRecoveryNote: builder.mutation({
@@ -150,6 +150,10 @@ export const noteApi = createApi({
         url: `/api/notes/recovery/${id}`,
         method: "POST",
       }),
+      invalidatesTags: [
+        { type: "CreateNote", id: "LIST" },
+        { type: "CartNote", id: "LIST" },
+      ],
     }),
     // ЗАГРУЗКА КАРТИНОК
     fetchUploadImage: builder.mutation({

@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import {
   useFetchDeleteNoteMutation,
+  useFetchRecoveryNoteMutation,
   useGetCartNotesQuery,
   // useGetSearchNotesMutation,
 } from "../../redux/api";
@@ -23,6 +24,7 @@ export const Cart: React.FC<CartInterface> = ({ setOpenNoteCart }) => {
 
   const { data: cart, isSuccess: cartSuccess } = useGetCartNotesQuery("");
   const [deleteNote] = useFetchDeleteNoteMutation();
+  const [refetchNote] = useFetchRecoveryNoteMutation();
   // const [search] = useGetSearchNotesMutation();
 
   useEffect(() => {
@@ -44,6 +46,11 @@ export const Cart: React.FC<CartInterface> = ({ setOpenNoteCart }) => {
   // УДАЛНИЕ ЗАМЕТКИ ПО ID
   const handleDeleteNote = (id: string) => {
     deleteNote(id);
+  };
+
+  // ВОССТАНОВЛЕНИЕ ЗАМЕТКИ ПО ID
+  const handleRecoveryNote = (id: string) => {
+    refetchNote(id);
   };
 
   return (
@@ -119,7 +126,10 @@ export const Cart: React.FC<CartInterface> = ({ setOpenNoteCart }) => {
                         />
                       </svg>
                     </button>
-                    <button className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-white-50 hover:shadow-sm duration-200 ease-linear">
+                    <button
+                      className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-white-50 hover:shadow-sm duration-200 ease-linear"
+                      onClick={() => handleRecoveryNote(item._id)}
+                    >
                       <svg
                         width="18"
                         height="16"
