@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Menu } from "../../components/Documents/Menu";
 import { NoteContent } from "../../components/Notes/NoteContent";
 import { useParams } from "react-router-dom";
@@ -65,9 +65,81 @@ export const Documents: React.FC<UsernameInterface> = ({ username }) => {
     }
   }, [isSelectNoteSuccess, noteData]);
 
+  // МЕНЮ
+  const isResizingRef = useRef(false);
+  const sidebarRef = useRef<HTMLDivElement>(null);
+
+  const navbarRef = useRef<HTMLDivElement>(null);
+  const [closeMenu, setCloseMenu] = useState(false);
+
+  const handleMouseDown = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    isResizingRef.current = true;
+
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  };
+
+  const handleMouseMove = (event: MouseEvent) => {
+    if (!isResizingRef.current) return;
+
+    let newWidth = event.clientX;
+
+    if (newWidth < 224) newWidth = 224;
+    if (newWidth > 480) newWidth = 480;
+
+    if (sidebarRef.current && navbarRef.current) {
+      sidebarRef.current.style.width = `${newWidth}px`;
+
+      navbarRef.current.style.setProperty("left", `${newWidth}px`);
+      // navbarRef.current.style.setProperty(
+      //   "width",
+      //   `calc(100% - ${newWidth}px)`
+      // );
+    }
+  };
+
+  const handleMouseUp = () => {
+    isResizingRef.current = false;
+
+    document.removeEventListener("mousemove", handleMouseMove);
+    document.removeEventListener("mouseup", handleMouseUp);
+  };
+
+  const resetWidth = () => {
+    if (sidebarRef.current && navbarRef.current) {
+      setCloseMenu(false);
+
+      sidebarRef.current.style.width = "224px";
+      navbarRef.current.style.setProperty("left", "240px");
+    }
+  };
+
+  const collapse = () => {
+    if (sidebarRef.current && navbarRef.current) {
+      setCloseMenu(true);
+
+      sidebarRef.current.style.width = "0";
+      sidebarRef.current.style.overflow = "hidden";
+      navbarRef.current.style.setProperty("width", "100%");
+      navbarRef.current.style.setProperty("left", "0");
+    }
+  };
+
   return (
     <div className="relative flex">
-      <div className="bg-secondary-150 h-screen w-56 overflow-hidden">
+      <div
+        className={`bg-secondary-150 h-screen w-56 relative duration-300 ease-out ${
+          closeMenu ? "" : ""
+        }`}
+        onMouseDown={handleMouseDown}
+        onClick={() => {}}
+        ref={sidebarRef}
+      >
         <Menu
           selectNoteId={selectNoteId}
           username={username}
@@ -77,8 +149,31 @@ export const Documents: React.FC<UsernameInterface> = ({ username }) => {
           setOpenNoteCart={setOpenNoteCart}
           setOpenSearch={setOpenSearch}
           note={note}
+          navbarRef={navbarRef}
+          setCloseMenu={setCloseMenu}
+          collapse={collapse}
+          resetWidth={resetWidth}
         />
       </div>
+      {closeMenu && (
+        <div className="p-3">
+          <div
+            className=" w-6 h-6 rounded p-1 cursor-pointer flex items-center hover:bg-secondary-200 duration-200 ease-in"
+            onClick={resetWidth}
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 14 14"
+              fill="none"
+              className="fill-secondary-400 rotate-180"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M0,1.25 L14,1.25 L14,2.75 L0,2.75 L0,1.25 Z M0,6.25 L14,6.25 L14,7.75 L0,7.75 L0,6.25 Z M0,11.25 L14,11.25 L14,12.75 L0,12.75 L0,11.25 Z"></path>
+            </svg>
+          </div>
+        </div>
+      )}
       {isOpenNoteControl && (
         <Control
           controlCords={controlCords}

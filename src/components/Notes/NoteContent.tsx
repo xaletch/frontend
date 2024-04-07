@@ -184,7 +184,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
                     fill="#333332"
                   />
                 </svg>
-                Change cover
+                Заменить
               </button>
               <button
                 className="m-[1px] px-3 rounded-md bg-secondary-50 text-sm font-normal text-secondary-900 h-[34px] flex items-center justify-center hover:bg-secondary-100 duration-200 ease-in gap-1"
@@ -205,7 +205,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
                   <path d="M18 6 6 18"></path>
                   <path d="m6 6 12 12"></path>
                 </svg>
-                Remove
+                Удалить
               </button>
             </div>
           </div>
@@ -255,7 +255,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
                     >
                       <path d="M128,26A102,102,0,1,0,230,128,102.1153,102.1153,0,0,0,128,26Zm0,192a90,90,0,1,1,90-90A90.10217,90.10217,0,0,1,128,218Zm46.77148-62.99951a54.02665,54.02665,0,0,1-93.543.001,5.99977,5.99977,0,1,1,10.38671-6.00878,42.20387,42.20387,0,0,0,20.03809,17.70556,41.95759,41.95759,0,0,0,46.04492-9.0039,42.18412,42.18412,0,0,0,6.68653-8.70264,5.99978,5.99978,0,1,1,10.38671,6.00879ZM82,108a10,10,0,1,1,10,10A10.01114,10.01114,0,0,1,82,108Zm72,0a10,10,0,1,1,10,10A10.01114,10.01114,0,0,1,154,108Z" />
                     </svg>
-                    Add icon
+                    Добавить иконку
                   </button>
                   <button
                     className={`flex cursor-pointer text-sm font-normal text-secondary-800 items-center gap-2 border border-secondary-200 hover:bg-secondary-100 rounded-md p-2 px-3 h-[36px] duration-200 ease-in ${
@@ -279,7 +279,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
                         fill="#333332"
                       />
                     </svg>
-                    Add cover
+                    Добавить изображение
                   </button>
                   {showEmoji && (
                     <Smile
