@@ -63,11 +63,8 @@ export interface ApiNoteResponse {
 }
 
 export interface CartItemInterface {
-  notes: {
-    smile: string;
-    name: string;
-    _id: string;
-  }[];
+  smile: string;
+  name: string;
   _id: string;
 }
 

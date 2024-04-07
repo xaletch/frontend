@@ -9,6 +9,7 @@ import { Item } from "./Item";
 import { useFetchCreateNotesMutation, useGetNotesQuery } from "../../redux/api";
 import { NoteItem } from "../../interfaces/interfaces";
 import { DocumentsInterface } from "../../interfaces/types";
+import { useNavigate } from "react-router-dom";
 
 interface MenuInterface {
   selectNoteId: string | undefined;
@@ -36,10 +37,22 @@ export const Menu: React.FC<MenuInterface> = ({
 
   const navbarRef = useRef<HTMLDivElement>(null);
 
+  const navigate = useNavigate();
+
   const [createNote] = useFetchCreateNotesMutation();
 
-  const handleCreateNote = () => {
-    createNote("");
+  const handleCreateNote = async () => {
+    try {
+      const response = await createNote("");
+
+      if ("data" in response && response.data) {
+        const noteId = response.data.note._id;
+
+        navigate(`/documents/${noteId}`);
+      }
+    } catch (err: any) {
+      console.log(err);
+    }
   };
 
   const handleOpenCartMenu = () => {

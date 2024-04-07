@@ -79,32 +79,32 @@ export const Cart: React.FC<CartInterface> = ({ setOpenNoteCart }) => {
             placeholder="Поиск по корзине"
           />
           <div className="h-[73%] flex flex-col gap-2 mt-4 overflow-y-scroll scroll-smooth">
-            {cartItems?.map((items: CartItemInterface, index) => (
+            {cartItems?.map((item: CartItemInterface, index) => (
               <div
                 className="px-3 py-5 min-h-[40px] max-h-[40px] flex items-center justify-between rounded-lg bg-white-50 cursor-default relative shadow-sm overflow-hidden cart_menu-item"
                 key={index}
               >
-                {items?.notes.map((item, index) => (
-                  <>
-                    <div className="flex items-center relative z-50">
-                      {item.smile && (
-                        <div className="mr-1 text-sm">{item.smile}</div>
-                      )}
-                      <div>
-                        <span className="text-sm text-secondary-900 font-medium">
-                          {item.name && item.name.length > 20
-                            ? `${item.name.slice(0, 20)}...`
-                            : item.name}
-                        </span>
-                      </div>
+                {/* {items?.notes.map((item, index) =>  */}
+                <>
+                  <div className="flex items-center relative z-50">
+                    {item.smile && (
+                      <div className="mr-1 text-sm">{item.smile}</div>
+                    )}
+                    <div>
+                      <span className="text-sm text-secondary-900 font-medium">
+                        {item.name && item.name.length > 20
+                          ? `${item.name.slice(0, 20)}...`
+                          : item.name}
+                      </span>
                     </div>
-                  </>
-                ))}
+                  </div>
+                </>
+                {/* ))} */}
                 <div className="flex justify-end items-center absolute top-0 left-0 right-0 bottom-0 rounded-lg bg-white-50 z-30 shadow-sm">
                   <div className="mr-3 flex items-center gap-2">
                     <button
                       className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-white-50 hover:shadow-sm duration-200 ease-linear"
-                      onClick={() => handleDeleteNote(items._id)}
+                      onClick={() => handleDeleteNote(item._id)}
                     >
                       <svg
                         width="14"
