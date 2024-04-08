@@ -44,7 +44,7 @@ export const Home: React.FC<UsernameInterface> = ({
       <div className="container mx-auto">
         <div className="flex justify-center flex-col text-center mt-24">
           <div className="flex flex-col items-center gap-3">
-            <h1 className=" text-7xl font-bold leading-[76px] text-secondary-900">
+            <h1 className="lg:text-7xl font-bold lg:leading-[76px] text-secondary-900 md:text-5xl sm:text-5xl">
               Write, plan, share. <br /> With AI at your side.
             </h1>
             <p className="text-base font-normal text-secondary-700">

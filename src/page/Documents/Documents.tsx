@@ -54,7 +54,6 @@ export const Documents: React.FC<UsernameInterface> = ({ username }) => {
   useEffect(() => {
     if (_id && _id !== selectNoteId) {
       selectNote(_id);
-      console.log(selectNote);
     }
   }, [_id, selectNote, selectNoteId]);
 
@@ -172,9 +171,9 @@ export const Documents: React.FC<UsernameInterface> = ({ username }) => {
           isOpenNoteCart || isOpenSearch ? "relative -z-50" : ""
         }`}
       >
-        {note?.length === 0 ? (
-          <CreateNote />
-        ) : (
+        {note?.length === 0 && <CreateNote />}
+
+        {isSelectNoteSuccess && _id && (
           <NoteContent
             imageUrl={selectNoteData?.imageUrl || ""}
             name={selectNoteData?.name || ""}
