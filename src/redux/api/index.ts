@@ -174,6 +174,12 @@ export const noteApi = createApi({
         method: "GET",
       }),
     }),
+    getSearchNotesCart: builder.query({
+      query: (name: string) => ({
+        url: `/api/notes/search/cart/${name}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 export const { useGetCartNotesQuery } = noteApi;
@@ -193,4 +199,5 @@ export const {
   useFetchDeleteNoteMutation,
   useFetchUploadImageMutation,
   useLazyGetSearchNotesQuery,
+  useLazyGetSearchNotesCartQuery,
 } = noteApi;

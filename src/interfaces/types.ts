@@ -68,6 +68,14 @@ export interface CartItemInterface {
   _id: string;
 }
 
+export interface CartItemsInterface {
+  smile: string;
+  name: string;
+  _id: string;
+  handleDeleteNote: any;
+  handleRecoveryNote: any;
+}
+
 export interface UserInterface {
   email: string;
   passwordHash: string;
@@ -118,4 +126,13 @@ export interface SearchInterface {
   smile: string;
   name: string;
   _id: string;
+}
+
+export interface DocumentHeadInterface {
+  smile: string;
+  noteName: string;
+  closeMenu: boolean;
+  resetWidth: any;
+  noteNateRef: any;
+  handleInput: any;
 }

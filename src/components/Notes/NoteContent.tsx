@@ -8,6 +8,7 @@ import {
   usePatchUpdateNoteMutation,
 } from "../../redux/api";
 import { PartialBlock } from "@blocknote/core";
+import { DocumentHead } from "../DocumentHead/DocumentHead";
 
 interface NoteContentInterface {
   imageUrl: string;
@@ -16,6 +17,8 @@ interface NoteContentInterface {
   _id: string;
   blocks: PartialBlock[];
   isSelectNoteSuccess: boolean;
+  resetWidth: any;
+  closeMenu: boolean;
 }
 
 export const NoteContent: React.FC<NoteContentInterface> = ({
@@ -25,6 +28,8 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
   _id,
   blocks,
   isSelectNoteSuccess,
+  closeMenu,
+  resetWidth,
 }) => {
   const [showEmoji, setShowEmoji] = useState<boolean>(false);
   const [selectEmoji, setSelectEmoji] = useState<string>("");
@@ -146,15 +151,15 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
   };
 
   return (
-    <div
-      className="flex-1 h-screen relative z-0"
-      style={
-        {
-          // width: `${menuOpen === true ? `calc(100%)` : `calc(100% - 240px)`}`,
-          // left: `${menuOpen === true ? `0` : `240px`}`,
-        }
-      }
-    >
+    <div className="flex-1 h-screen relative z-0">
+      <DocumentHead
+        smile={smile}
+        noteName={noteName}
+        closeMenu={closeMenu}
+        resetWidth={resetWidth}
+        noteNateRef={noteNateRef}
+        handleInput={handleInput}
+      />
       <div className="">
         {imageUrl && (
           <div className="img relative w-full h-[28vh] group top-0 z-0">
@@ -184,7 +189,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
                     fill="#333332"
                   />
                 </svg>
-                Заменить
+                Изменить
               </button>
               <button
                 className="m-[1px] px-3 rounded-md bg-secondary-50 text-sm font-normal text-secondary-900 h-[34px] flex items-center justify-center hover:bg-secondary-100 duration-200 ease-in gap-1"

@@ -72,7 +72,7 @@ export const Menu: React.FC<MenuInterface> = ({
       <div>
         <div className="p-3 flex justify-between text-center">
           <div className="gap-2 flex items-center">
-            <div className="w-[24px] h-[24px] bg-secondary-200 rounded-md flex justify-center items-center">
+            <div className="w-[24px] h-[24px] bg-secondary-200 rounded-md flex justify-center items-center cursor-default">
               <span className="text-sm uppercase font-medium text-secondary-800">
                 {username && username[0]}
               </span>
