@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/frontend/static/css/main.f7d7e510.css",
-    "main.js": "/frontend/static/js/main.3ff24fb3.js",
+    "main.css": "/frontend/static/css/main.75c3e90e.css",
+    "main.js": "/frontend/static/js/main.d215bc2d.js",
     "static/media/Inter-Bold.woff": "/frontend/static/media/Inter-Bold.1e547cd04bfe2dae1f98.woff",
     "static/media/Inter-SemiBold.woff": "/frontend/static/media/Inter-SemiBold.7f6c3678e245486167d9.woff",
     "static/media/Inter-Medium.woff": "/frontend/static/media/Inter-Medium.44e343ff76a98508d309.woff",
@@ -11,11 +11,11 @@
     "static/media/Inter-Medium.woff2": "/frontend/static/media/Inter-Medium.01f03178adde434fc9fa.woff2",
     "static/media/Inter-Regular.woff2": "/frontend/static/media/Inter-Regular.bd097ceff83f90802a12.woff2",
     "index.html": "/frontend/index.html",
-    "main.f7d7e510.css.map": "/frontend/static/css/main.f7d7e510.css.map",
-    "main.3ff24fb3.js.map": "/frontend/static/js/main.3ff24fb3.js.map"
+    "main.75c3e90e.css.map": "/frontend/static/css/main.75c3e90e.css.map",
+    "main.d215bc2d.js.map": "/frontend/static/js/main.d215bc2d.js.map"
   },
   "entrypoints": [
-    "static/css/main.f7d7e510.css",
-    "static/js/main.3ff24fb3.js"
+    "static/css/main.75c3e90e.css",
+    "static/js/main.d215bc2d.js"
   ]
 }
