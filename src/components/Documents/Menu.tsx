@@ -62,7 +62,7 @@ export const Menu: React.FC<MenuInterface> = ({
 
   return (
     <div
-      className="w-full flex flex-col pb-12 bg-secondary-150"
+      className="w-full h-full flex flex-col justify-between pb-12 bg-secondary-150"
       ref={navbarRef}
     >
       <div
