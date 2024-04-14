@@ -2,20 +2,8 @@ import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
-import {
-  useFetchRegisterMutation,
-  useLazyGetUserInfoQuery,
-} from "../../redux/api";
-
-type RegistrationValue = {
-  username: string;
-  email: string;
-  password: string;
-};
-
-interface UserDataTriggerInterface {
-  userDataTrigger: any;
-}
+import { useFetchRegisterMutation } from "../../redux/api";
+import { RegistrationValue, UserDataTriggerInterface } from "../../app/types";
 
 export const RegisterBlock = ({
   userDataTrigger,

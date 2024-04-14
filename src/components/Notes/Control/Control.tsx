@@ -1,15 +1,8 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 
 import { useNavigate } from "react-router-dom";
 import { useFetchAddNoteCartMutation } from "../../../redux/api";
-type ControlTypes = {
-  name: string;
-  _id: string;
-  username: string;
-  createNote: string;
-  controlCords: { x: number; y: number };
-  setOpenNoteControl: Dispatch<SetStateAction<boolean>>;
-};
+import { ControlTypes } from "../../../app/types";
 
 export const Control: React.FC<ControlTypes> = ({
   name,

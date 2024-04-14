@@ -10,7 +10,7 @@ import { Login } from "../page/Login/Login";
 import { Documents } from "../page/Documents/Documents";
 import { NotFound } from "../page/NotFound/NotFound";
 import { useLazyGetUserInfoQuery } from "../redux/api";
-import { isAuth } from "../interfaces/interfaces";
+import { isAuth } from "./types";
 
 function App() {
   const [username, setUsername] = useState<string>("");

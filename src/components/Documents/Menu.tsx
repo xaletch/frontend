@@ -1,25 +1,9 @@
-import React, { Dispatch, SetStateAction, RefObject } from "react";
+import React from "react";
 
 import { Item } from "./Item";
 import { useFetchCreateNotesMutation } from "../../redux/api";
-import { NoteItem } from "../../interfaces/interfaces";
-import { DocumentsInterface } from "../../interfaces/types";
+import { MenuInterface, NoteItem } from "../../app/types";
 import { useNavigate } from "react-router-dom";
-
-interface MenuInterface {
-  selectNoteId: string | undefined;
-  username: string;
-  isOpenNoteControl: boolean;
-  setOpenNoteControl: Dispatch<SetStateAction<boolean>>;
-  setOpenNoteCart: Dispatch<SetStateAction<boolean>>;
-  setOpenSearch: Dispatch<SetStateAction<boolean>>;
-  setControlCords: Dispatch<SetStateAction<{ x: number; y: number }>>;
-  note: DocumentsInterface[] | undefined;
-  navbarRef: RefObject<HTMLDivElement>;
-  setCloseMenu: Dispatch<SetStateAction<boolean>>;
-  collapse: any;
-  resetWidth: any;
-}
 
 export const Menu: React.FC<MenuInterface> = ({
   selectNoteId,
@@ -33,6 +17,7 @@ export const Menu: React.FC<MenuInterface> = ({
   navbarRef,
   collapse,
   resetWidth,
+  sidebarRef,
 }) => {
   const navigate = useNavigate();
 
@@ -103,14 +88,18 @@ export const Menu: React.FC<MenuInterface> = ({
             onClick={handleOpenSearchMenu}
           >
             <svg
-              className="mr-2 fill-secondary-400"
+              className="mr-2 fill-secondary-450"
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 19 19"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
               fill="none"
             >
-              <path d="M8 16C9.77498 15.9996 11.4988 15.4054 12.897 14.312L17.293 18.708L18.707 17.294L14.311 12.898C15.405 11.4997 15.9996 9.77544 16 8C16 3.589 12.411 0 8 0C3.589 0 0 3.589 0 8C0 12.411 3.589 16 8 16ZM8 2C11.309 2 14 4.691 14 8C14 11.309 11.309 14 8 14C4.691 14 2 11.309 2 8C2 4.691 4.691 2 8 2Z" />
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M3.24609 8.82031C3.24609 8.05469 3.38965 7.33691 3.67676 6.66699C3.96842 5.99251 4.36947 5.40007 4.87988 4.88965C5.3903 4.37467 5.98047 3.97363 6.65039 3.68652C7.32487 3.39941 8.04492 3.25586 8.81055 3.25586C9.58073 3.25586 10.3008 3.39941 10.9707 3.68652C11.6452 3.97363 12.2376 4.37467 12.748 4.88965C13.2585 5.40007 13.6572 5.99251 13.9443 6.66699C14.236 7.33691 14.3818 8.05469 14.3818 8.82031C14.3818 9.42188 14.2884 9.99382 14.1016 10.5361C13.9193 11.0785 13.6663 11.5729 13.3428 12.0195L16.46 15.1504C16.5557 15.2415 16.6263 15.3486 16.6719 15.4717C16.722 15.5947 16.7471 15.7246 16.7471 15.8613C16.7471 16.0527 16.7038 16.2259 16.6172 16.3809C16.5306 16.5358 16.4121 16.6566 16.2617 16.7432C16.1113 16.8343 15.9382 16.8799 15.7422 16.8799C15.6055 16.8799 15.4733 16.8548 15.3457 16.8047C15.2227 16.7591 15.111 16.6862 15.0107 16.5859L11.873 13.4482C11.4355 13.7399 10.957 13.9701 10.4375 14.1387C9.92253 14.3027 9.38021 14.3848 8.81055 14.3848C8.04492 14.3848 7.32487 14.2412 6.65039 13.9541C5.98047 13.667 5.3903 13.2682 4.87988 12.7578C4.36947 12.2474 3.96842 11.6572 3.67676 10.9873C3.38965 10.3128 3.24609 9.59049 3.24609 8.82031ZM4.70215 8.82031C4.70215 9.38997 4.80697 9.92318 5.0166 10.4199C5.23079 10.9167 5.52702 11.3542 5.90527 11.7324C6.28353 12.1061 6.72103 12.4001 7.21777 12.6143C7.71452 12.8285 8.24544 12.9355 8.81055 12.9355C9.38021 12.9355 9.91341 12.8285 10.4102 12.6143C10.9069 12.4001 11.3421 12.1061 11.7158 11.7324C12.0941 11.3542 12.3903 10.9167 12.6045 10.4199C12.8187 9.92318 12.9258 9.38997 12.9258 8.82031C12.9258 8.25521 12.8187 7.72428 12.6045 7.22754C12.3903 6.73079 12.0941 6.29329 11.7158 5.91504C11.3421 5.53678 10.9069 5.24284 10.4102 5.0332C9.91341 4.81901 9.38021 4.71191 8.81055 4.71191C8.24544 4.71191 7.71452 4.81901 7.21777 5.0332C6.72103 5.24284 6.28353 5.53678 5.90527 5.91504C5.52702 6.29329 5.23079 6.73079 5.0166 7.22754C4.80697 7.72428 4.70215 8.25521 4.70215 8.82031Z"
+              />
             </svg>
             <span className="text-secondary-400 text-sm font-medium">
               Поиск
@@ -121,15 +110,14 @@ export const Menu: React.FC<MenuInterface> = ({
             onClick={handleCreateNote}
           >
             <svg
-              className="mr-2 fill-secondary-400"
-              width="16"
-              height="16"
-              viewBox="0 0 18 18"
+              className="mr-2 fill-secondary-450"
+              width="17"
+              height="17"
+              viewBox="0 0 22 22"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path d="M9.8 5H8.2V8.2H5V9.8H8.2V13H9.8V9.8H13V8.2H9.8V5Z" />
-              <path d="M9 0C4.0374 0 0 4.0374 0 9C0 13.9626 4.0374 18 9 18C13.9626 18 18 13.9626 18 9C18 4.0374 13.9626 0 9 0ZM9 16.2C5.0301 16.2 1.8 12.9699 1.8 9C1.8 5.0301 5.0301 1.8 9 1.8C12.9699 1.8 16.2 5.0301 16.2 9C16.2 12.9699 12.9699 16.2 9 16.2Z" />
+              <path d="M11 22C17.0326 22 22 17.0326 22 11C22 4.97795 17.0221 0 10.9895 0C4.9674 0 0 4.97795 0 11C0 17.0326 4.9674 22 11 22ZM5.83221 11.0105C5.83221 10.3461 6.30681 9.87152 6.96069 9.87152H9.88207V6.95014C9.88207 6.30681 10.3461 5.83221 10.9895 5.83221C11.6539 5.83221 12.1285 6.30681 12.1285 6.95014V9.87152H15.0499C15.6932 9.87152 16.1678 10.3461 16.1678 11.0105C16.1678 11.6539 15.6932 12.1179 15.0499 12.1179H12.1285V15.0499C12.1285 15.6932 11.6539 16.1572 10.9895 16.1572C10.3461 16.1572 9.88207 15.6932 9.88207 15.0499V12.1179H6.96069C6.30681 12.1179 5.83221 11.6539 5.83221 11.0105Z" />
             </svg>
             <span className="text-secondary-400 text-sm font-medium">
               Новая страница
@@ -137,8 +125,8 @@ export const Menu: React.FC<MenuInterface> = ({
           </div>
         </div>
       </div>
-      <div className="mt-4 h-full flex flex-col justify-between overflow-hidden">
-        <div className="h-[500px] overflow-auto">
+      <div className="mt-4 flex flex-col justify-between overflow-hidden">
+        <div className="h-[500px] overflow-auto mx-1 overflow-x-hidden pb-1">
           {note &&
             note.map((obj: NoteItem, index: any) => (
               <Item
@@ -148,39 +136,20 @@ export const Menu: React.FC<MenuInterface> = ({
                 setOpenNoteControl={setOpenNoteControl}
                 setControlCords={setControlCords}
                 key={index}
+                l={0}
               />
             ))}
         </div>
         <div className="mt-4">
-          {/* CREATE PAGE */}
-          <div className="p-1 px-3 flex items-center font-medium text-base cursor-pointer hover:bg-secondary-200">
-            <svg
-              className="mr-3 fill-secondary-400"
-              xmlns="http://www.w3.org/2000/svg"
-              width="12"
-              height="12"
-              viewBox="0 0 14 14"
-              fill="none"
-            >
-              <path d="M14 6H8V0H6V6H0V8H6V14H8V8H14V6Z" />
-            </svg>
-            <span
-              className="text-secondary-400 text-sm font-medium"
-              // onClick={handleCreateNote}
-            >
-              Добавить страницу
-            </span>
-          </div>
-
           {/* BASKET */}
           <div
             className="p-1 px-3 flex items-center font-medium text-base cursor-pointer hover:bg-secondary-200"
             onClick={handleOpenCartMenu}
           >
             <svg
-              className="mr-2 fill-secondary-400"
+              className="mr-2 fill-secondary-450"
               width="16"
-              height="20"
+              height="18"
               viewBox="0 0 16 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"

@@ -3,11 +3,7 @@ import { BlockNoteView, useBlockNote } from "@blocknote/react";
 import "@blocknote/core/style.css";
 
 import "./Edirot.css";
-
-interface EditorProps {
-  onChange: (value: string) => void;
-  initialContent?: PartialBlock[] | string;
-}
+import { EditorProps } from "../../../app/types";
 
 export const Editor = ({ onChange, initialContent }: EditorProps) => {
   let transformedInitialContent;

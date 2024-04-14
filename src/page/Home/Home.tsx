@@ -1,16 +1,9 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { useState } from "react";
 import { Header } from "../../components/Header/Header";
 import { Link } from "react-router-dom";
 
 import "./home.css";
-import { isAuth } from "../../interfaces/interfaces";
-
-interface UsernameInterface {
-  username: string;
-  isUserDataSuccess: boolean;
-  setUserDataSuccess: Dispatch<SetStateAction<boolean>>;
-  userDataTrigger: any;
-}
+import { isAuth, UsernameInterface } from "../../app/types";
 
 export const Home: React.FC<UsernameInterface> = ({
   username,

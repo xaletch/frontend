@@ -6,33 +6,17 @@ import { useGetNotesQuery, useLazyGetOneNoteQuery } from "../../redux/api";
 import { Control } from "../../components/Notes/Control/Control";
 import { Cart } from "../../components/Cart/Cart";
 import { Search } from "../../components/Search/Search";
-import { DocumentsInterface } from "../../interfaces/types";
-import { PartialBlock } from "@blocknote/core";
 import { CreateNote } from "../../components/CreateNote/CreateNote";
+import {
+  DocumentsInterface,
+  NoteDataInterface,
+  Username,
+} from "../../app/types";
 
-interface User {
-  username: string;
-}
-
-type NoteData = {
-  _id: string;
-  imageUrl: string;
-  name: string;
-  title: string;
-  smile: string;
-  createNote: string;
-  user: User;
-  blocks: PartialBlock[];
-};
-
-interface UsernameInterface {
-  username: string;
-}
-
-export const Documents: React.FC<UsernameInterface> = ({ username }) => {
+export const Documents: React.FC<Username> = ({ username }) => {
   const { _id } = useParams();
 
-  const [selectNoteData, setSelectNoteData] = useState<NoteData>();
+  const [selectNoteData, setSelectNoteData] = useState<NoteDataInterface>();
   const [selectNoteId, setSelectNoteId] = useState<string>();
   const [controlCords, setControlCords] = useState({ x: 0, y: 0 });
   const [isOpenNoteControl, setOpenNoteControl] = useState<boolean>(false);
@@ -88,17 +72,13 @@ export const Documents: React.FC<UsernameInterface> = ({ username }) => {
 
     let newWidth = event.clientX;
 
-    if (newWidth < 224) newWidth = 224;
+    if (newWidth < 240) newWidth = 240;
     if (newWidth > 480) newWidth = 480;
 
     if (sidebarRef.current && navbarRef.current) {
       sidebarRef.current.style.width = `${newWidth}px`;
 
       navbarRef.current.style.setProperty("left", `${newWidth}px`);
-      // navbarRef.current.style.setProperty(
-      //   "width",
-      //   `calc(100% - ${newWidth}px)`
-      // );
     }
   };
 
@@ -113,7 +93,7 @@ export const Documents: React.FC<UsernameInterface> = ({ username }) => {
     if (sidebarRef.current && navbarRef.current) {
       setCloseMenu(false);
 
-      sidebarRef.current.style.width = "224px";
+      sidebarRef.current.style.width = "240px";
       navbarRef.current.style.setProperty("left", "240px");
     }
   };
@@ -130,9 +110,9 @@ export const Documents: React.FC<UsernameInterface> = ({ username }) => {
   };
 
   return (
-    <div className="relative flex">
+    <div className="relative flex overflow-hidden">
       <div
-        className={`bg-secondary-150 h-screen w-56 relative duration-300 ease-out ${
+        className={`bg-secondary-150 h-screen w-60 relative duration-300 ease-out ${
           closeMenu ? "" : ""
         }`}
         onMouseDown={handleMouseDown}
@@ -152,6 +132,7 @@ export const Documents: React.FC<UsernameInterface> = ({ username }) => {
           setCloseMenu={setCloseMenu}
           collapse={collapse}
           resetWidth={resetWidth}
+          sidebarRef={sidebarRef}
         />
       </div>
       {isOpenNoteControl && (
@@ -167,7 +148,7 @@ export const Documents: React.FC<UsernameInterface> = ({ username }) => {
       {isOpenNoteCart && <Cart setOpenNoteCart={setOpenNoteCart} />}
       {isOpenSearch && <Search setOpenSearch={setOpenSearch} note={note} />}
       <div
-        className={`flex-1 ${
+        className={`flex-1 overflow-y-scroll ${
           isOpenNoteCart || isOpenSearch ? "relative -z-50" : ""
         }`}
       >

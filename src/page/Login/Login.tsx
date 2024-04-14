@@ -1,9 +1,6 @@
 import React from "react";
 import { LoginBlock } from "../../components/Login/LoginBlock";
-
-interface UserDataTriggerInterface {
-  userDataTrigger: any;
-}
+import { UserDataTriggerInterface } from "../../app/types";
 
 export const Login: React.FC<UserDataTriggerInterface> = ({
   userDataTrigger,

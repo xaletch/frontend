@@ -1,18 +1,7 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useLazyGetSearchNotesQuery } from "../../redux/api";
-import { DocumentsInterface, SearchInterface } from "../../interfaces/types";
-
-interface SearchProps {
-  setOpenSearch: Dispatch<SetStateAction<boolean>>;
-  note: DocumentsInterface[] | undefined;
-}
+import { SearchInterface, SearchProps } from "../../app/types";
 
 export const Search: React.FC<SearchProps> = ({ setOpenSearch, note }) => {
   const [value, setValue] = useState<string>("");

@@ -2,15 +2,7 @@ import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useFetchLoginMutation } from "../../redux/api";
-
-type LoginValue = {
-  email: string;
-  password: string;
-};
-
-interface UserDataTriggerInterface {
-  userDataTrigger: any;
-}
+import { LoginValue, UserDataTriggerInterface } from "../../app/types";
 
 export const LoginBlock = ({ userDataTrigger }: UserDataTriggerInterface) => {
   const [redirect, setRedirect] = useState<boolean>(false);
@@ -128,7 +120,7 @@ export const LoginBlock = ({ userDataTrigger }: UserDataTriggerInterface) => {
       </form>
       <div className="pt-2 text-center text-secondary-900 text-sm font-normal">
         <p>
-          У вас еще нет учетной записи?{" "}
+          У вас еще нет учетной записи?
           <Link to={"/register"} className="underline decoration-solid">
             Зарегистрироваться
           </Link>

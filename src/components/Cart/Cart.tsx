@@ -1,22 +1,12 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   useFetchDeleteNoteMutation,
   useFetchRecoveryNoteMutation,
   useGetCartNotesQuery,
   useLazyGetSearchNotesCartQuery,
 } from "../../redux/api";
-import { CartItemsInterface } from "../../interfaces/types";
 import { Item } from "./Item";
-
-interface CartInterface {
-  setOpenNoteCart: Dispatch<SetStateAction<boolean>>;
-}
+import { CartInterface, CartItemsInterface } from "../../app/types";
 
 export const Cart: React.FC<CartInterface> = ({ setOpenNoteCart }) => {
   const [cartItems, setCartItems] = useState([]);

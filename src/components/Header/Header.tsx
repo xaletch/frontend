@@ -1,13 +1,6 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { isAuth } from "../../interfaces/interfaces";
-
-interface HeaderInterface {
-  isMenu: boolean;
-  setMenu: Dispatch<SetStateAction<boolean>>;
-  username: string;
-  isUserDataSuccess: boolean;
-}
+import { HeaderInterface, isAuth } from "../../app/types";
 
 export const Header: React.FC<HeaderInterface> = ({
   isMenu,

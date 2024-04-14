@@ -1,5 +1,5 @@
 import React from "react";
-import { DocumentHeadInterface } from "../../interfaces/types";
+import { DocumentHeadInterface } from "../../app/types";
 
 export const DocumentHead: React.FC<DocumentHeadInterface> = ({
   smile,

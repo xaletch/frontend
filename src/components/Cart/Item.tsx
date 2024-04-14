@@ -1,5 +1,5 @@
 import React from "react";
-import { CartItemInterface, CartItemsInterface } from "../../interfaces/types";
+import { CartItemsInterface } from "../../app/types";
 
 export const Item: React.FC<CartItemsInterface> = ({
   name,
@@ -10,7 +10,6 @@ export const Item: React.FC<CartItemsInterface> = ({
 }) => {
   return (
     <div className="px-3 py-5 min-h-[40px] max-h-[40px] flex items-center justify-between rounded-lg bg-white-50 cursor-default relative shadow-sm overflow-hidden cart_menu-item">
-      {/* {items?.notes.map((item, index) =>  */}
       <>
         <div className="flex items-center relative z-50">
           {smile && <div className="mr-1 text-sm">{smile}</div>}
@@ -21,7 +20,6 @@ export const Item: React.FC<CartItemsInterface> = ({
           </div>
         </div>
       </>
-      {/* ))} */}
       <div className="flex justify-end items-center absolute top-0 left-0 right-0 bottom-0 rounded-lg bg-white-50 z-30 shadow-sm">
         <div className="mr-3 flex items-center gap-2">
           <button

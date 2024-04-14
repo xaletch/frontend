@@ -7,19 +7,8 @@ import {
   useFetchUploadImageMutation,
   usePatchUpdateNoteMutation,
 } from "../../redux/api";
-import { PartialBlock } from "@blocknote/core";
 import { DocumentHead } from "../DocumentHead/DocumentHead";
-
-interface NoteContentInterface {
-  imageUrl: string;
-  name: string;
-  smile: string;
-  _id: string;
-  blocks: PartialBlock[];
-  isSelectNoteSuccess: boolean;
-  resetWidth: any;
-  closeMenu: boolean;
-}
+import { NoteContentInterface } from "../../app/types";
 
 export const NoteContent: React.FC<NoteContentInterface> = ({
   imageUrl,
@@ -120,7 +109,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
     clearTimeout(typingTimer.current);
     typingTimer.current = setTimeout(() => {
       newNoteName({ id: _id, data: { name: newName } });
-    }, 300);
+    }, 600);
   };
 
   useEffect(() => {
@@ -172,29 +161,26 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
             />
             <div className="button-img absolute z-10 bottom-3 right-6 flex gap-2">
               <button
-                className="m-[1px] px-3 rounded-md bg-secondary-50 text-sm font-normal text-secondary-900 h-[34px] flex items-center justify-center hover:bg-secondary-100 duration-200 ease-in gap-1"
+                className="m-[1px] flex cursor-pointer text-xs font-normal text-secondary-500 items-center gap-2  bg-secondary-50 rounded-md p-2 px-3 h-[28px] duration-200 ease-in"
                 onClick={handleOpenFile}
               >
                 <svg
+                  width="14"
+                  height="14"
                   xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 22 22"
-                  fill="none"
+                  viewBox="0 0 14 14"
+                  fill="rgba(55, 53, 47, 0.35)"
                 >
                   <path
-                    d="M19.5081 3.21109H5.50815C4.40515 3.21109 3.50815 4.10809 3.50815 5.21109V19.2111C3.50815 20.3141 4.40515 21.2111 5.50815 21.2111H19.5081C20.6111 21.2111 21.5081 20.3141 21.5081 19.2111V5.21109C21.5081 4.10809 20.6111 3.21109 19.5081 3.21109ZM5.50815 19.2111V5.21109H19.5081L19.5101 19.2111H5.50815Z"
-                    fill="#333332"
-                  />
-                  <path
-                    d="M10.5081 14.2111L9.50815 13.2111L6.50815 17.2111H18.5081L13.5081 10.2111L10.5081 14.2111Z"
-                    fill="#333332"
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M2 0a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm0 12h10L8.5 5.5l-2 4-2-1.5L2 12z"
                   />
                 </svg>
                 Изменить
               </button>
               <button
-                className="m-[1px] px-3 rounded-md bg-secondary-50 text-sm font-normal text-secondary-900 h-[34px] flex items-center justify-center hover:bg-secondary-100 duration-200 ease-in gap-1"
+                className="m-[1px] flex cursor-pointer text-xs font-normal text-secondary-500 items-center bg-secondary-50 rounded-md p-2 px-3 h-[28px] duration-200 ease-in"
                 onClick={handleRemoveImg}
               >
                 <svg
@@ -202,12 +188,12 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
                   width="24"
                   height="24"
                   viewBox="0 0 24 24"
-                  fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   className="h-4 w-4 mr-2"
+                  fill="rgba(55, 53, 47, 0.35)"
                 >
                   <path d="M18 6 6 18"></path>
                   <path d="m6 6 12 12"></path>
@@ -248,41 +234,43 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
             <div className="note-hover">
               <div className="note-setting py-4 flex gap-2 opacity-1 manage-note_btn relative">
                 <button
-                  className={`flex cursor-pointer text-sm font-normal text-secondary-800 items-center gap-2 border border-secondary-200 hover:bg-secondary-100 rounded-md p-2 px-3 h-[36px] duration-200 ease-in ${
+                  className={`flex cursor-pointer text-sm font-normal text-secondary-550 items-center gap-2 hover:bg-secondary-100 rounded-md p-2 px-3 h-[36px] duration-200 ease-in ${
                     smile ? "hidden" : ""
                   }`}
                   onClick={() => setShowEmoji(true)}
                 >
                   <svg
-                    width="20"
-                    height="20"
+                    width="14"
+                    height="14"
                     xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 256 256"
+                    viewBox="0 0 14 14"
+                    fill="rgba(55, 53, 47, 0.35)"
                   >
-                    <path d="M128,26A102,102,0,1,0,230,128,102.1153,102.1153,0,0,0,128,26Zm0,192a90,90,0,1,1,90-90A90.10217,90.10217,0,0,1,128,218Zm46.77148-62.99951a54.02665,54.02665,0,0,1-93.543.001,5.99977,5.99977,0,1,1,10.38671-6.00878,42.20387,42.20387,0,0,0,20.03809,17.70556,41.95759,41.95759,0,0,0,46.04492-9.0039,42.18412,42.18412,0,0,0,6.68653-8.70264,5.99978,5.99978,0,1,1,10.38671,6.00879ZM82,108a10,10,0,1,1,10,10A10.01114,10.01114,0,0,1,82,108Zm72,0a10,10,0,1,1,10,10A10.01114,10.01114,0,0,1,154,108Z" />
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M7 0c3.861 0 7 3.139 7 7s-3.139 7-7 7-7-3.139-7-7 3.139-7 7-7zM3.561 5.295a1.027 1.027 0 1 0 2.054 0 1.027 1.027 0 0 0-2.054 0zm5.557 1.027a1.027 1.027 0 1 1 0-2.054 1.027 1.027 0 0 1 0 2.054zm1.211 2.816a.77.77 0 0 0-.124-1.087.786.786 0 0 0-1.098.107c-.273.407-1.16.958-2.254.958-1.093 0-1.981-.55-2.244-.945a.788.788 0 0 0-1.107-.135.786.786 0 0 0-.126 1.101c.55.734 1.81 1.542 3.477 1.542 1.668 0 2.848-.755 3.476-1.541z"
+                    />
                   </svg>
                   Добавить иконку
                 </button>
                 <button
-                  className={`flex cursor-pointer text-sm font-normal text-secondary-800 items-center gap-2 border border-secondary-200 hover:bg-secondary-100 rounded-md p-2 px-3 h-[36px] duration-200 ease-in ${
+                  className={`flex cursor-pointer text-sm font-normal text-secondary-550 items-center gap-2 hover:bg-secondary-100 rounded-md p-2 px-3 h-[36px] duration-200 ease-in ${
                     imageUrl ? "hidden" : ""
                   }`}
                   onClick={handleOpenFile}
                 >
                   <svg
+                    width="14"
+                    height="14"
                     xmlns="http://www.w3.org/2000/svg"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 22 22"
-                    fill="none"
+                    viewBox="0 0 14 14"
+                    fill="rgba(55, 53, 47, 0.35)"
                   >
                     <path
-                      d="M19.5081 3.21109H5.50815C4.40515 3.21109 3.50815 4.10809 3.50815 5.21109V19.2111C3.50815 20.3141 4.40515 21.2111 5.50815 21.2111H19.5081C20.6111 21.2111 21.5081 20.3141 21.5081 19.2111V5.21109C21.5081 4.10809 20.6111 3.21109 19.5081 3.21109ZM5.50815 19.2111V5.21109H19.5081L19.5101 19.2111H5.50815Z"
-                      fill="#333332"
-                    />
-                    <path
-                      d="M10.5081 14.2111L9.50815 13.2111L6.50815 17.2111H18.5081L13.5081 10.2111L10.5081 14.2111Z"
-                      fill="#333332"
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M2 0a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm0 12h10L8.5 5.5l-2 4-2-1.5L2 12z"
                     />
                   </svg>
                   Добавить изображение
@@ -290,7 +278,6 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
                 {showEmoji && (
                   <Smile
                     setShowEmoji={setShowEmoji}
-                    selectEmoji={selectEmoji}
                     setSelectEmoji={setSelectEmoji}
                   />
                 )}

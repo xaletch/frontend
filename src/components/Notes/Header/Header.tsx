@@ -1,10 +1,5 @@
 import React from "react";
-
-type HeaderTypes = {
-  menuOpen: boolean;
-  name: string | undefined;
-  smile: string | undefined;
-};
+import { HeaderTypes } from "../../../app/types";
 
 export const Header: React.FC<HeaderTypes> = ({ menuOpen, name, smile }) => {
   return (

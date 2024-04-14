@@ -85,6 +85,13 @@ export const noteApi = createApi({
       }),
       invalidatesTags: [{ type: "CreateNote", id: "LIST" }],
     }),
+    fetchCreateSubNote: builder.mutation({
+      query: (id: string) => ({
+        url: `/api/notes/subnote/${id}`,
+        method: "POST",
+      }),
+      invalidatesTags: [{ type: "CreateNote", id: "LIST" }],
+    }),
     // ПОЛУЧЕНИЕ ЗАМЕТКИ ПО ID
     getOneNote: builder.query({
       query: (id: string) => ({
@@ -190,6 +197,7 @@ export const {
   useLazyGetUserInfoQuery,
   useGetNotesQuery,
   useFetchCreateNotesMutation,
+  useFetchCreateSubNoteMutation,
   // useGetOneNoteQuery,
   useLazyGetOneNoteQuery,
   // useGetOneNoteMutation,

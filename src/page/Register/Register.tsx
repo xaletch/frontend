@@ -1,9 +1,6 @@
 import React from "react";
 import { RegisterBlock } from "../../components/Register/RegisterBlock";
-
-interface UserDataTriggerInterface {
-  userDataTrigger: any;
-}
+import { UserDataTriggerInterface } from "../../app/types";
 
 export const Register: React.FC<UserDataTriggerInterface> = ({
   userDataTrigger,
