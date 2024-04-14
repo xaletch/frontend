@@ -1,6 +1,11 @@
 import React from "react";
+import { BgImageInterface } from "../../app/types";
 
-export const BgImage = () => {
+export const BgImage: React.FC<BgImageInterface> = ({
+  imageUrl,
+  handleOpenFile,
+  handleRemoveImg,
+}) => {
   return (
     <div className="img relative w-full h-[28vh] group top-0 z-0">
       <img

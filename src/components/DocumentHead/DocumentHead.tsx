@@ -35,7 +35,7 @@ export const DocumentHead: React.FC<DocumentHeadInterface> = ({
           <div className="flex items-center gap-1">
             {smile && <span className="cursor-default">{smile}</span>}
             <p
-              className="text-sm text-secondary-900 hover:bg-secondary-150 px-2 py-1 rounded-md border-none outline-none"
+              className="text-sm text-secondary-900 hover:bg-secondary-100 px-2 py-1 rounded-md border-none outline-none"
               ref={noteNateRef}
               contentEditable={true}
               onInput={handleInput}

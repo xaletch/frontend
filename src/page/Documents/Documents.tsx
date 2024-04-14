@@ -112,7 +112,7 @@ export const Documents: React.FC<Username> = ({ username }) => {
   return (
     <div className="relative flex overflow-hidden">
       <div
-        className={`bg-secondary-150 h-screen w-60 relative duration-300 ease-out ${
+        className={`bg-secondary-100 h-screen w-60 relative duration-300 ease-out ${
           closeMenu ? "" : ""
         }`}
         onMouseDown={handleMouseDown}

@@ -69,7 +69,7 @@ export interface NoteItem {
   subnotes: SubNotesInterface[];
 }
 
-export interface UsernameInterface {
+export interface HomeInterface {
   username: string;
   isUserDataSuccess: boolean;
   setUserDataSuccess: Dispatch<SetStateAction<boolean>>;
@@ -208,7 +208,7 @@ export interface DocumentHeadInterface {
   noteName: string;
   closeMenu: boolean;
   resetWidth: any;
-  noteNateRef: any;
+  noteNateRef: React.MutableRefObject<HTMLHeadingElement | null>;
   handleInput: any;
 }
 
@@ -291,4 +291,56 @@ export type NoteDataInterface = {
 
 export interface Username {
   username: string;
+}
+
+export interface BgImageInterface {
+  imageUrl: string;
+  handleOpenFile: () => void;
+  handleRemoveImg: () => Promise<void>;
+}
+
+export interface SmileInterface {
+  smile: string;
+  handleRemoveSmile: () => void;
+}
+
+export interface ControlButtonInterface {
+  smile: string;
+  setShowEmoji: Dispatch<SetStateAction<boolean>>;
+  handleOpenFile: () => void;
+  imageUrl: string;
+}
+
+export interface NoteNameInterface {
+  handleInput: (e: React.ChangeEvent<HTMLHeadingElement>) => void;
+  noteNateRef: React.MutableRefObject<HTMLHeadingElement | null>;
+  noteName: string;
+}
+
+export interface MenuHeadInterface {
+  username: string;
+  collapse: any;
+}
+
+export interface ButtonProps {
+  text: string;
+  svg: React.ReactNode;
+  handleClick: () => void;
+}
+
+export interface SearchItemsInterface {
+  searchData: SearchInterface[];
+  setOpenSearch: Dispatch<SetStateAction<boolean>>;
+  note: DocumentsInterface[] | undefined;
+  searchDataLoading: boolean;
+  value: string;
+}
+
+export interface LogoutMenuInterface {
+  username: string;
+  handleLogout: () => void;
+}
+
+export interface HomeWelcomeInterface {
+  isUserDataSuccess: boolean;
 }
