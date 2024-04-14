@@ -90,6 +90,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
         id: _id,
         data: { smile: selectEmoji },
       });
+      setSelectEmoji("");
     }
   }, [selectEmoji]);
 
