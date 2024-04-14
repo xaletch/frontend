@@ -7,6 +7,7 @@ import {
   MutationDefinition,
 } from "@reduxjs/toolkit/query";
 import { Dispatch, SetStateAction } from "react";
+import { SubNotesInterface } from "./interfaces";
 
 export interface Block {
   id: string;
@@ -90,6 +91,7 @@ export interface DocumentsInterface {
   name: string;
   smile: string;
   user: UserInterface[];
+  subnotes: SubNotesInterface[];
   __v: number;
   _id: string;
 }
@@ -116,6 +118,7 @@ export interface DocInterface {
   _id: string;
   name: string;
   smile: string;
+  subnotes: SubNotesInterface[];
   selectNoteId: string | undefined;
   isOpenNoteControl: boolean;
   setOpenNoteControl: Dispatch<SetStateAction<boolean>>;

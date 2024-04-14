@@ -41,8 +41,16 @@ export interface DataNotes {
   __v: number;
 }
 
+export interface SubNotesInterface {
+  _id: string;
+  name: string;
+  smile: string;
+  subnotes: SubNotesInterface[];
+}
+
 export interface NoteItem {
   _id: string;
   name: string;
   smile: string;
+  subnotes: SubNotesInterface[];
 }
