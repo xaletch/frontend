@@ -10,7 +10,7 @@ export const BgImage: React.FC<BgImageInterface> = ({
     <div className="img relative w-full h-[28vh] group top-0 z-0">
       <img
         className="absolute h-full w-full inset-0 object-cover"
-        src={`http://localhost:8000/${imageUrl}`}
+        src={`http://localhost:4000/${imageUrl}`}
         alt={""}
       />
       <div className="button-img absolute z-10 bottom-3 right-6 flex gap-2">
