@@ -21,7 +21,7 @@ export const noteApi = createApi({
     "DeleteSearch",
   ],
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://45.12.236.171:3000",
+    baseUrl: "http://localhost:4000",
     prepareHeaders: (headers, { getState }) => {
       const token = getCookieValue("access_token");
       if (token) {

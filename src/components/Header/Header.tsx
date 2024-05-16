@@ -32,14 +32,14 @@ export const Header: React.FC<HeaderInterface> = ({
                 <li>
                   <Link to="/login">
                     <div className="px-3 p-1 text-secondary-900 text-sm font-normal hover:bg-secondary-100 rounded duration-200 ease-in">
-                      Log in
+                      Авторизоваться
                     </div>
                   </Link>
                 </li>
                 <li>
                   <Link to="/register">
                     <div className="px-3 p-1 text-secondary-50 text-sm font-normal bg-secondary-900 rounded hover:bg-secondary-800 duration-200 ease-in">
-                      Get started
+                      Начать
                     </div>
                   </Link>
                 </li>
