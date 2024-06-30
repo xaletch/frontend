@@ -20,7 +20,7 @@ export const CreateNote = () => {
     <div className="h-screen w-full">
       <div className="h-full flex items-center justify-center">
         <button
-          className="px-2 p-1 h-[34px] text-secondary-50 font-medium text-sm flex gap-1 items-center bg-secondary-900 rounded hover:bg-secondary-800 duration-300"
+          className="px-2 p-1 h-[34px] text-secondary-50 font-medium text-sm flex gap-1 items-center bg-secondary-900 rounded hover:opacity-90 duration-300"
           onClick={handleCreateNote}
         >
           <span className="flex">

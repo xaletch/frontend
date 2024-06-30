@@ -21,9 +21,9 @@ export const noteApi = createApi({
     "DeleteSearch",
   ],
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:4000",
+    baseUrl: "http://localhost:8000",
     prepareHeaders: (headers, { getState }) => {
-      const token = getCookieValue("access_token");
+      const token = getCookieValue("token");
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
@@ -193,8 +193,8 @@ export const { useGetCartNotesQuery } = noteApi;
 export const {
   useFetchRegisterMutation,
   useFetchLoginMutation,
-  useGetUserInfoQuery,
   useLazyGetUserInfoQuery,
+  useGetOneNoteQuery,
   useGetNotesQuery,
   useFetchCreateNotesMutation,
   useFetchCreateSubNoteMutation,

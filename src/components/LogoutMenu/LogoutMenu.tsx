@@ -39,7 +39,7 @@ export const LogoutMenu: React.FC<LogoutMenuInterface> = ({
                 ></path>
               </svg>
             </div>
-            <span>Sign out</span>
+            <span>Выйти</span>
           </button>
         </div>
       </div>

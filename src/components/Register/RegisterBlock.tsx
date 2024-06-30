@@ -117,7 +117,7 @@ export const RegisterBlock = ({
           </p>
         )}
         <button
-          className="p-2 px-4 rounded-xl w-full border-none text-base font-normal outline-none bg-secondary-900 text-secondary-50 hover:bg-secondary-800 duration-200 ease-in"
+          className="p-2 px-4 rounded-xl w-full border-none text-base font-normal outline-none bg-secondary-900 text-secondary-50 hover:opacity-90 duration-200 ease-in"
           type="submit"
         >
           Зарегистрироваться

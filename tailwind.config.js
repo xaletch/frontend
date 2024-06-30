@@ -49,7 +49,11 @@ export default {
         50: "#FFF",
       },
     },
-    extend: {},
+    extend: {
+      height: {
+        custom: "calc(100vh - 76px)",
+      },
+    },
   },
   plugins: [],
 };

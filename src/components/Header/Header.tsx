@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { HeaderInterface, isAuth } from "../../app/types";
+import { HeaderInterface } from "../../app/types";
+import { isAuth } from "../../utils/isAuth";
 
 export const Header: React.FC<HeaderInterface> = ({
   isMenu,
@@ -38,7 +39,7 @@ export const Header: React.FC<HeaderInterface> = ({
                 </li>
                 <li>
                   <Link to="/register">
-                    <div className="px-3 p-1 text-secondary-50 text-sm font-normal bg-secondary-900 rounded hover:bg-secondary-800 duration-200 ease-in">
+                    <div className="px-3 p-1 text-secondary-50 text-sm font-normal bg-secondary-900 rounded hover:opacity-90 duration-200 ease-in">
                       Начать
                     </div>
                   </Link>

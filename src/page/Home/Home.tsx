@@ -4,7 +4,7 @@ import { Header } from "../../components/Header/Header";
 import "./home.css";
 import { HomeInterface } from "../../app/types";
 import { LogoutMenu } from "../../components/LogoutMenu/LogoutMenu";
-import { HomeWelcome } from "../../components/Home/HomeWelcome";
+import { Welcome } from "../../components/Welcome/Welcome";
 
 export const Home: React.FC<HomeInterface> = ({
   username,
@@ -23,6 +23,7 @@ export const Home: React.FC<HomeInterface> = ({
       "access_token=; expires=Thu, 14 March 2024 00:00:00 UTC; path=/;";
 
     setMenu(false);
+
     setUserDataSuccess(false);
 
     userDataTrigger();
@@ -37,7 +38,7 @@ export const Home: React.FC<HomeInterface> = ({
         isUserDataSuccess={isUserDataSuccess}
       />
 
-      <HomeWelcome isUserDataSuccess={isUserDataSuccess} />
+      <Welcome isUserDataSuccess={isUserDataSuccess} />
 
       {isMenu && <LogoutMenu username={username} handleLogout={handleLogout} />}
     </div>

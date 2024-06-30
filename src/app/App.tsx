@@ -10,7 +10,7 @@ import { Login } from "../page/Login/Login";
 import { Documents } from "../page/Documents/Documents";
 import { NotFound } from "../page/NotFound/NotFound";
 import { useLazyGetUserInfoQuery } from "../redux/api";
-import { isAuth } from "./types";
+import { isAuth } from "../utils/isAuth";
 
 function App() {
   const [username, setUsername] = useState<string>("");
@@ -31,7 +31,7 @@ function App() {
     if (isAuth) {
       userDataTrigger("");
     }
-  }, [isAuth]);
+  }, [userDataTrigger]);
 
   return (
     <div className="App font-body">

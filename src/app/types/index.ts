@@ -9,10 +9,6 @@ import {
 } from "@reduxjs/toolkit/query";
 import { Dispatch, RefObject, SetStateAction } from "react";
 
-export const isAuth = document.cookie
-  ?.split("; ")
-  .find((row) => row?.startsWith("access_token="));
-
 export interface MenuInterface {
   selectNoteId: string | undefined;
   username: string;
