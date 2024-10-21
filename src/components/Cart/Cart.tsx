@@ -23,7 +23,6 @@ export const Cart: React.FC<CartInterface> = ({ setOpenNoteCart }) => {
       data,
       isLoading: searchDataLoading,
       isSuccess: searchDataSuccess,
-      isError: searchDataError,
     },
   ] = useLazyGetSearchNotesCartQuery();
 

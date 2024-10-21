@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
@@ -9,10 +9,10 @@ export const EditImage = () => {
 
   const editRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState<number>(50);
-  const [region, setRegion] = useState<{ top: number; height: number }>({
-    top: 0,
-    height: 0,
-  });
+  // const [region, setRegion] = useState<{ top: number; height: number }>({
+  //   top: 0,
+  //   height: 0,
+  // });
 
   const handleMouseDown = (e: { clientY: any }) => {
     const y = e.clientY;

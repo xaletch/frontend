@@ -19,7 +19,6 @@ export const Menu: React.FC<MenuInterface> = ({
   navbarRef,
   collapse,
   resetWidth,
-  sidebarRef,
 }) => {
   const navigate = useNavigate();
 

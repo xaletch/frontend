@@ -21,7 +21,8 @@ export const noteApi = createApi({
     "DeleteSearch",
   ],
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8888/api/v1/",
+    // baseUrl: "http://localhost:8888/api/v1/",
+    baseUrl: "https://kotion.great-habits.ru/api/v1",
     prepareHeaders: (headers, { getState }) => {
       const token = getCookieValue("access_token");
       if (token) {

@@ -1,4 +1,3 @@
-import React from "react";
 import { useFetchCreateNotesMutation } from "../../redux/api";
 import { useNavigate } from "react-router-dom";
 

@@ -1,4 +1,3 @@
-import React from "react";
 import { useGoBack } from "../../hooks/useGoBack";
 import { Link } from "react-router-dom";
 

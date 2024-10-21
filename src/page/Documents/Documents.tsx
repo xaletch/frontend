@@ -9,7 +9,6 @@ import { Search } from "../../components/Search/Search";
 import { CreateNote } from "../../components/CreateNote/CreateNote";
 import {
   DocumentsInterface,
-  NoteDataInterface,
   Username,
 } from "../../app/types";
 import { useDispatch, useSelector } from "react-redux";

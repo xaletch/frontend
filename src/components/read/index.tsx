@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { Editor } from '../Notes/Editor/Editor';
 import { NoteName } from '../NoteName/NoteName';
 import { SelectSmile } from '../SelectSmile/SelectSmile';

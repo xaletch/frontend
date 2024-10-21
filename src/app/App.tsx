@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import "./styles/index.css";
 
-import { Route, Router, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import { Home } from "../page/Home/Home";
 import { Register } from "../page/Register/Register";
@@ -18,7 +18,7 @@ function App() {
   const [isUserDataSuccess, setUserDataSuccess] = useState<boolean>(false);
   const [
     userDataTrigger,
-    { data: userData, isSuccess: isUserData, isLoading: isLoadingUserData },
+    { data: userData, isSuccess: isUserData },
   ] = useLazyGetUserInfoQuery();
 
   useEffect(() => {
