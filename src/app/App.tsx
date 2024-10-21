@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import "./styles/index.css";
 
-import { Route, Routes } from "react-router-dom";
+import { Route, Router, Routes } from "react-router-dom";
 
 import { Home } from "../page/Home/Home";
 import { Register } from "../page/Register/Register";
@@ -11,6 +11,7 @@ import { Documents } from "../page/Documents/Documents";
 import { NotFound } from "../page/NotFound/NotFound";
 import { useLazyGetUserInfoQuery } from "../redux/api";
 import { isAuth } from "../utils/isAuth";
+import { ReadDocument } from "../page/read";
 
 function App() {
   const [username, setUsername] = useState<string>("");
@@ -63,6 +64,10 @@ function App() {
         <Route
           path="/documents"
           element={<Documents username={username} />}
+        ></Route>
+        <Route
+          path="document/read/:id"
+          element={<ReadDocument />}
         ></Route>
       </Routes>
     </div>

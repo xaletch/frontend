@@ -5,6 +5,7 @@ import "./home.css";
 import { HomeInterface } from "../../app/types";
 import { LogoutMenu } from "../../components/LogoutMenu/LogoutMenu";
 import { Welcome } from "../../components/Welcome/Welcome";
+import { isAuth } from "../../utils/isAuth";
 
 export const Home: React.FC<HomeInterface> = ({
   username,

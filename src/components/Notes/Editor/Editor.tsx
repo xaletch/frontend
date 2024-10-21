@@ -1,11 +1,11 @@
-import { BlockNoteEditor, PartialBlock } from "@blocknote/core";
+import { BlockNoteEditor } from "@blocknote/core";
 import { BlockNoteView, useBlockNote } from "@blocknote/react";
 import "@blocknote/core/style.css";
 
 import "./Edirot.css";
 import { EditorProps } from "../../../app/types";
 
-export const Editor = ({ onChange, initialContent }: EditorProps) => {
+export const Editor = ({ onChange, initialContent, isEditable }: EditorProps) => {
   let transformedInitialContent;
   if (initialContent && typeof initialContent === "string") {
     transformedInitialContent = JSON.parse(initialContent);
@@ -15,6 +15,7 @@ export const Editor = ({ onChange, initialContent }: EditorProps) => {
     onEditorContentChange: (editor) => {
       onChange(JSON.stringify(editor.topLevelBlocks, null, 2));
     },
+    editable: isEditable,
   });
 
   return (

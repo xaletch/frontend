@@ -23,10 +23,10 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
   isSelectNoteSuccess,
   closeMenu,
   resetWidth,
+  isPublic
 }) => {
   const [showEmoji, setShowEmoji] = useState<boolean>(false);
   const [selectEmoji, setSelectEmoji] = useState<string>("");
-  const [image, setImage] = useState<string>("");
   const [noteName, setNoteName] = useState<string>("");
 
   const fileRef = useRef<any>(null);
@@ -61,7 +61,6 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
 
   useEffect(() => {
     if (uploadImageSuccess) {
-      setImage(uploadImageResponse?.url);
       updateNoteContent({
         id: _id,
         data: { imageUrl: uploadImageResponse?.url },
@@ -148,13 +147,16 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
   return (
     <div className="flex-1 h-screen relative z-0">
       <DocumentHead
+        id={_id}
         smile={smile}
         noteName={noteName}
         closeMenu={closeMenu}
         resetWidth={resetWidth}
         noteNateRef={noteNateHeadRef}
         handleInput={handleInput}
+        isPublic={isPublic}
       />
+
       <div className="">
         {imageUrl && (
           <BgImage
@@ -200,7 +202,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
 
             <div>
               <div className="mt-2 ">
-                <Editor key={_id} onChange={onChange} initialContent={blocks} />
+                <Editor key={_id} onChange={onChange} initialContent={blocks} isEditable={true} />
               </div>
             </div>
           </div>

@@ -200,12 +200,15 @@ export interface SearchInterface {
 }
 
 export interface DocumentHeadInterface {
+  id: string;
   smile: string;
   noteName: string;
   closeMenu: boolean;
   resetWidth: any;
-  noteNateRef: React.MutableRefObject<HTMLHeadingElement | null>;
+  noteNateRef?: React.MutableRefObject<HTMLHeadingElement | null>;
   handleInput: any;
+  isRead?: boolean;
+  isPublic: boolean;
 }
 
 export interface SearchProps {
@@ -235,6 +238,7 @@ export type ControlTypes = {
 export interface EditorProps {
   onChange: (value: string) => void;
   initialContent?: PartialBlock[] | string;
+  isEditable: boolean;
 }
 
 export type HeaderTypes = {
@@ -252,6 +256,7 @@ export interface NoteContentInterface {
   isSelectNoteSuccess: boolean;
   resetWidth: any;
   closeMenu: boolean;
+  isPublic: boolean;
 }
 
 export type LoginValue = {
@@ -283,6 +288,7 @@ export type NoteDataInterface = {
   createNote: string;
   user: User;
   blocks: PartialBlock[];
+  isPublic: boolean;
 };
 
 export interface Username {
@@ -291,13 +297,15 @@ export interface Username {
 
 export interface BgImageInterface {
   imageUrl: string;
-  handleOpenFile: () => void;
-  handleRemoveImg: () => Promise<void>;
+  handleOpenFile?: () => void;
+  handleRemoveImg?: () => Promise<void>;
+  isRead?: boolean;
 }
 
 export interface SmileInterface {
   smile: string;
   handleRemoveSmile: () => void;
+  isRead?: boolean;
 }
 
 export interface ControlButtonInterface {
@@ -309,8 +317,9 @@ export interface ControlButtonInterface {
 
 export interface NoteNameInterface {
   handleInput: (e: React.ChangeEvent<HTMLHeadingElement>) => void;
-  noteNateRef: React.MutableRefObject<HTMLHeadingElement | null>;
+  noteNateRef?: React.MutableRefObject<HTMLHeadingElement | null>;
   noteName: string;
+  readOnly?: boolean;
 }
 
 export interface MenuHeadInterface {

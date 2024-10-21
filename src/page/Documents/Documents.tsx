@@ -12,11 +12,18 @@ import {
   NoteDataInterface,
   Username,
 } from "../../app/types";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { setSelectNoteData } from "../../redux/slice/noteData.slice";
 
 export const Documents: React.FC<Username> = ({ username }) => {
   const { _id } = useParams();
 
-  const [selectNoteData, setSelectNoteData] = useState<NoteDataInterface>();
+  const dispatch = useDispatch();
+
+  const { selectNoteData } = useSelector((state: RootState) => state.noteDataSlice)
+
+  // const [selectNoteData, setSelectNoteData] = useState<NoteDataInterface>();
   const [selectNoteId, setSelectNoteId] = useState<string>();
   const [controlCords, setControlCords] = useState({ x: 0, y: 0 });
   const [isOpenNoteControl, setOpenNoteControl] = useState<boolean>(false);
@@ -43,7 +50,7 @@ export const Documents: React.FC<Username> = ({ username }) => {
 
   useEffect(() => {
     if (isSelectNoteSuccess) {
-      setSelectNoteData(noteData);
+      dispatch(setSelectNoteData(noteData));
       setSelectNoteId(noteData._id);
     }
   }, [isSelectNoteSuccess, noteData]);
@@ -164,6 +171,7 @@ export const Documents: React.FC<Username> = ({ username }) => {
             isSelectNoteSuccess={isSelectNoteSuccess}
             closeMenu={closeMenu}
             resetWidth={resetWidth}
+            isPublic={selectNoteData?.isPublic || false}
           />
         )}
       </div>

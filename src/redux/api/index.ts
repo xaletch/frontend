@@ -21,9 +21,9 @@ export const noteApi = createApi({
     "DeleteSearch",
   ],
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8000",
+    baseUrl: "http://localhost:8888/api/v1/",
     prepareHeaders: (headers, { getState }) => {
-      const token = getCookieValue("token");
+      const token = getCookieValue("access_token");
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
@@ -34,7 +34,7 @@ export const noteApi = createApi({
     // РЕГИСТРАЦИЯ
     fetchRegister: builder.mutation({
       query: (body) => ({
-        url: "/api/user/register",
+        url: "user/register",
         method: "POST",
         body,
       }),
@@ -43,7 +43,7 @@ export const noteApi = createApi({
     // АВТОРИЗАЦИЯ
     fetchLogin: builder.mutation({
       query: (body) => ({
-        url: "/api/user/login",
+        url: "user/login",
         method: "POST",
         body,
       }),
@@ -52,7 +52,7 @@ export const noteApi = createApi({
     // ИНФОРМАЦИЯ О ПОЛЬЗОВАТЕЛЕ
     getUserInfo: builder.query({
       query: () => ({
-        url: "/api/user/account",
+        url: "user/account",
         method: "GET",
       }),
       providesTags: (result) =>
@@ -63,7 +63,7 @@ export const noteApi = createApi({
     // ПОЛУЧЕНИЕ ВСЕХ ЗАМЕТОК
     getNotes: builder.query({
       query: () => ({
-        url: "/api/notes",
+        url: "notes",
         method: "GET",
       }),
       providesTags: (result) =>
@@ -80,14 +80,14 @@ export const noteApi = createApi({
     // СОЗДАНИЕ ЗАМЕТКИ
     fetchCreateNotes: builder.mutation({
       query: () => ({
-        url: "/api/notes/save",
+        url: "notes/save",
         method: "POST",
       }),
       invalidatesTags: [{ type: "CreateNote", id: "LIST" }],
     }),
     fetchCreateSubNote: builder.mutation({
       query: (id: string) => ({
-        url: `/api/notes/subnote/${id}`,
+        url: `notes/subnote/${id}`,
         method: "POST",
       }),
       invalidatesTags: [{ type: "CreateNote", id: "LIST" }],
@@ -95,7 +95,7 @@ export const noteApi = createApi({
     // ПОЛУЧЕНИЕ ЗАМЕТКИ ПО ID
     getOneNote: builder.query({
       query: (id: string) => ({
-        url: `/api/notes/oneNote/${id}`,
+        url: `notes/oneNote/${id}`,
         method: "GET",
       }),
       providesTags: (result) =>
@@ -109,7 +109,7 @@ export const noteApi = createApi({
     // ИЗМЕНЕНИЕ ИМЕНИ ЗАМЕТКИ ПО ID
     patchUpdateNote: builder.mutation({
       query: (args: { id: string; data: any }) => ({
-        url: `/api/notes/update/${args.id}`,
+        url: `notes/update/${args.id}`,
         method: "PATCH",
         body: args.data,
       }),
@@ -121,7 +121,7 @@ export const noteApi = createApi({
     // ДОБАВЛЕНИЕ ЗАМЕТКИ В КОРЗИНУ
     fetchAddNoteCart: builder.mutation({
       query: (id: string) => ({
-        url: `/api/notes/add-to-cart/${id}`,
+        url: `notes/add-to-cart/${id}`,
         method: "POST",
       }),
       invalidatesTags: [{ type: "CreateNote", id: "LIST" }],
@@ -129,7 +129,7 @@ export const noteApi = createApi({
     // ПОЛУЧЕНИЕ ЗАМЕТОК В КОРЗИНЕ
     GetCartNotes: builder.query({
       query: () => ({
-        url: "/api/notes/cart/note",
+        url: "notes/cart/note",
         method: "GET",
       }),
       providesTags: (result) =>
@@ -146,7 +146,7 @@ export const noteApi = createApi({
     // УДАЛЕНИЕ ЗАМЕТКИ БЕЗ ВОЗМОЖНОСТИ НА ВОССТАНОВЛЕНИЕ
     fetchDeleteNote: builder.mutation({
       query: (id: string) => ({
-        url: `/api/notes/delete/${id}`,
+        url: `notes/delete/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "CartNote", id: "LIST" }],
@@ -154,7 +154,7 @@ export const noteApi = createApi({
     // ВОССТАНОВЛЕНИЕ ЗАМЕТКИ ИЗ КОРЗИНЫ
     fetchRecoveryNote: builder.mutation({
       query: (id: string) => ({
-        url: `/api/notes/recovery/${id}`,
+        url: `notes/recovery/${id}`,
         method: "POST",
       }),
       invalidatesTags: [
@@ -165,7 +165,7 @@ export const noteApi = createApi({
     // ЗАГРУЗКА КАРТИНОК
     fetchUploadImage: builder.mutation({
       query: (imageUrl: any) => ({
-        url: "/api/uploads",
+        url: "uploads",
         method: "POST",
         body: imageUrl,
       }),
@@ -177,16 +177,31 @@ export const noteApi = createApi({
     // ПОИСК ЗАМЕТОК ПО ИМЕНИ
     getSearchNotes: builder.query({
       query: (name: string) => ({
-        url: `/api/notes/search/${name}`,
+        url: `notes/search/${name}`,
         method: "GET",
       }),
     }),
     getSearchNotesCart: builder.query({
       query: (name: string) => ({
-        url: `/api/notes/search/cart/${name}`,
+        url: `notes/search/cart/${name}`,
         method: "GET",
       }),
     }),
+
+    createPublic: builder.mutation({
+      query: (id:  string) => ({
+        url: `notes/public/${id}`,
+        method: "POST",
+        body: { isPublic: true },
+      }),
+      invalidatesTags: [{ type: 'UpdateNote', id: 'CONTENT' }],
+    }),
+    getPublic: builder.query({
+      query: (id: string) => ({
+        url: `notes/public/${id}`,
+        method: "GET",
+      }),
+    })
   }),
 });
 export const { useGetCartNotesQuery } = noteApi;
@@ -208,4 +223,7 @@ export const {
   useFetchUploadImageMutation,
   useLazyGetSearchNotesQuery,
   useLazyGetSearchNotesCartQuery,
+
+  useCreatePublicMutation,
+  useLazyGetPublicQuery,
 } = noteApi;

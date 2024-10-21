@@ -4,9 +4,14 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 
 import { noteApi } from "./api";
 
+import editImageSlice from "./slice/editImage.slice";
+import selectNoteDataSlice from "./slice/noteData.slice";
+
 export const store = configureStore({
   reducer: {
     [noteApi.reducerPath]: noteApi.reducer,
+    editImage: editImageSlice,
+    noteDataSlice: selectNoteDataSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(noteApi.middleware),

@@ -4,6 +4,7 @@ import { SmileInterface } from "../../app/types";
 export const SelectSmile: React.FC<SmileInterface> = ({
   smile,
   handleRemoveSmile,
+  isRead
 }) => {
   return (
     <div
@@ -11,8 +12,8 @@ export const SelectSmile: React.FC<SmileInterface> = ({
         smile === "" ? "hidden" : ""
       }`}
     >
-      <button>{smile}</button>
-      {smile && (
+      <button className={`${isRead ? "cursor-default" : ""}`}>{smile}</button>
+      {smile && !isRead && (
         <button
           className="p-3 border border-secondary-200 rounded-full hover:border-secondary-300 duration-200 ease-in"
           onClick={handleRemoveSmile}
