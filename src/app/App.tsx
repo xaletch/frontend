@@ -30,7 +30,8 @@ function App() {
 
   useEffect(() => {
     if (isAuth) {
-      userDataTrigger("");
+      userDataTrigger(null);
+      setUserDataSuccess(true);
     }
   }, [userDataTrigger]);
 

@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { HeaderInterface } from "../../app/types";
-import { isAuth } from "../../utils/isAuth";
 
 export const Header: React.FC<HeaderInterface> = ({
   isMenu,
@@ -19,7 +18,7 @@ export const Header: React.FC<HeaderInterface> = ({
         <div className="flex justify-between items-center">
           <div className="">Kotion</div>
           <div className="">
-            {isUserDataSuccess || isAuth ? (
+            {isUserDataSuccess ? (
               <div
                 className="w-9 h-9 bg-secondary-100 rounded-md flex justify-center items-center cursor-pointer select-none"
                 onClick={openMenu}

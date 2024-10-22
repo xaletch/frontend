@@ -22,6 +22,8 @@ export const Home: React.FC<HomeInterface> = ({
     document.cookie =
       "access_token=; expires=Thu, 14 March 2024 00:00:00 UTC; path=/;";
 
+    console.log('logout')
+
     setMenu(false);
 
     setUserDataSuccess(false);
