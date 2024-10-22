@@ -22,7 +22,7 @@ export const DocumentHead: React.FC<DocumentHeadInterface> = ({
   }
 
   const copyText = (text: string) => {
-    navigator.clipboard.writeText(`http://localhost:3000/document/read/${text}`).then(() => {
+    navigator.clipboard.writeText(`https://kotion-note.netlify.app/document/read/${text}`).then(() => {
       console.log('Текст скопирован');
     }).catch(err => {
       console.error('Не удалось скопировать текст: ', err);
