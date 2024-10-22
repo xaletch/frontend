@@ -19,13 +19,13 @@ export const BgImage: React.FC<BgImageInterface> = ({
     <div className="img relative w-full h-[300px] group top-0 z-0">
       <img
         className="absolute h-full w-full inset-0 object-cover"
-        src={`http://localhost:8080/${imageUrl}`}
+        src={`https://kotion.great-habits.ru/${imageUrl}`}
         alt={"background"}
       />
       {!isRead && <div className="button-img absolute z-10 bottom-3 right-6 flex gap-2">
         <button
           className="m-[1px] flex cursor-pointer text-xs font-normal text-secondary-500 items-center gap-2  bg-secondary-50 rounded-md p-2 px-3 h-[28px] duration-200 ease-in"
-          onClick={() => handleEditImage(`http://localhost:8080/${imageUrl}`)}
+          onClick={() => handleEditImage(`https://kotion.great-habits.ru/${imageUrl}`)}
         >
           <svg
             width="16"
