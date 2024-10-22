@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from "react";
 import { Editor } from "./Editor/Editor";
 
@@ -12,7 +13,7 @@ import { BgImage } from "../BgImage/BgImage";
 import { SelectSmile } from "../SelectSmile/SelectSmile";
 import { ControlButtons } from "../ControlButtons/ControlButtons";
 import { NoteName } from "../NoteName/NoteName";
-import { Smile } from "./Smile/Smile";
+import{ Smile } from "./Smile/Smile";
 
 export const NoteContent: React.FC<NoteContentInterface> = ({
   imageUrl,
@@ -52,6 +53,7 @@ export const NoteContent: React.FC<NoteContentInterface> = ({
 
   const [updateNoteContent] = usePatchUpdateNoteMutation();
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChange = async (event: any) => {
     const formData = new FormData();
     formData.append("image", event.target.files[0]);

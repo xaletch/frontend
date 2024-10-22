@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
-import styles from "./edit.module.css";
+import styles from "./index.module.css";
 
 export const EditImage = () => {
   const { image } = useSelector((state: RootState) => state.editImage);

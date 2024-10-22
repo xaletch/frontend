@@ -1,11 +1,8 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { PartialBlock } from "@blocknote/core";
-import { MutationTrigger } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import {
-  BaseQueryFn,
-  FetchArgs,
   FetchBaseQueryError,
-  FetchBaseQueryMeta,
-  MutationDefinition,
 } from "@reduxjs/toolkit/query";
 import { Dispatch, RefObject, SetStateAction } from "react";
 
@@ -164,22 +161,16 @@ export interface DocumentsInterface {
 }
 
 export interface MenuProps {
-  selectNote: MutationTrigger<
-    MutationDefinition<
-      string,
-      BaseQueryFn<
-        string | FetchArgs,
-        unknown,
-        FetchBaseQueryError,
-        {},
-        FetchBaseQueryMeta
-      >,
-      "CreateNote" | "CheckAuth",
-      any,
-      "noteApi"
-    >
+  selectNote: (
+    arg: string
+  ) => Promise<
+    {
+      data?: any;
+      error?: FetchBaseQueryError;
+    }
   >;
 }
+
 
 export interface DocInterface {
   _id: string;

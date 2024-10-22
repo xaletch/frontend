@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 function getCookieValue(name: string) {
@@ -23,7 +24,7 @@ export const noteApi = createApi({
   baseQuery: fetchBaseQuery({
     // baseUrl: "http://localhost:8888/api/v1/",
     baseUrl: "https://kotion.great-habits.ru/api/v1",
-    prepareHeaders: (headers, { getState }) => {
+    prepareHeaders: (headers) => {
       const token = getCookieValue("access_token");
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);

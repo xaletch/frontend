@@ -7,7 +7,6 @@ import { ControlTypes } from "../../../app/types";
 export const Control: React.FC<ControlTypes> = ({
   name,
   _id,
-  username,
   createNote,
   controlCords,
   setOpenNoteControl,

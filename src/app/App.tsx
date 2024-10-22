@@ -46,7 +46,7 @@ function App() {
           element={<Login userDataTrigger={userDataTrigger} />}
         ></Route>
         <Route
-          path="/home"
+          path="/"
           element={
             <Home
               username={username}

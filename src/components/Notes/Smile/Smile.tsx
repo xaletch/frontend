@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 
-export const Smile = ({ setSelectEmoji, setShowEmoji }) => {
+export const Smile = ({ setSelectEmoji, setShowEmoji }: { setSelectEmoji: any, setShowEmoji: any }) => {
   return (
     <div
       className="absolute top-14 left-0 z-50"
@@ -10,7 +11,7 @@ export const Smile = ({ setSelectEmoji, setShowEmoji }) => {
       <Picker
         data={data}
         previewPosition="none"
-        onEmojiSelect={(e) => {
+        onEmojiSelect={(e: any) => {
           setSelectEmoji(e.native);
           setShowEmoji(false);
         }}

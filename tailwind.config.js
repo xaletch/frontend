@@ -1,11 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./index.html", // <= add this
+    "./src/**/*.{js,ts,jsx,tsx}", // <= no spaces
+  ],
   theme: {
-    fontFamily: {
-      body: ["Inter", "system-ui", "sans-serif"],
-      inter: ["Inter", "system-ui", "sans-serif"],
-    },
     container: {
       padding: {
         DEFAULT: "1rem",
