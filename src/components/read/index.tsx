@@ -18,8 +18,8 @@ export const ReadContent: FC<NoteContentInterface> = ({ imageUrl, name, smile, b
         {imageUrl && (
           <BgImage imageUrl={imageUrl} isRead={true} />
         )}
-        <div className="md:max-w-3xl lg:max-w-4xl mx-auto pb-12 pt-8">
-          <div className="pl-14">
+        <div className="md:max-w-3xl px-3 md:px-0  lg:max-w-4xl mx-auto pb-12 pt-8">
+          <div className="pl-0 md:pl-14">
             <SelectSmile smile={smile} handleRemoveSmile={() => {}} isRead={true} />
             <div className='note-setting py-4 flex gap-2 opacity-1 manage-note_btn relative'></div>
             <div className="note-hover">
