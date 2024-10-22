@@ -15,14 +15,14 @@ export const Home: React.FC<HomeInterface> = ({
   const [isMenu, setMenu] = useState<boolean>(false);
 
   const closeMenu = () => {
-    isMenu && setMenu(false);
+    if (isMenu) setMenu(false);
   };
 
   const handleLogout = () => {
     document.cookie =
       "access_token=; expires=Thu, 14 March 2024 00:00:00 UTC; path=/;";
 
-    console.log('logout')
+    console.log("logout");
 
     setMenu(false);
 

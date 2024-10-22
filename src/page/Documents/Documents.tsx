@@ -7,10 +7,7 @@ import { Control } from "../../components/Notes/Control/Control";
 import { Cart } from "../../components/Cart/Cart";
 import { Search } from "../../components/Search/Search";
 import { CreateNote } from "../../components/CreateNote/CreateNote";
-import {
-  DocumentsInterface,
-  Username,
-} from "../../app/types";
+import { DocumentsInterface, Username } from "../../app/types";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { setSelectNoteData } from "../../redux/slice/noteData.slice";
@@ -20,7 +17,9 @@ export const Documents: React.FC<Username> = ({ username }) => {
 
   const dispatch = useDispatch();
 
-  const { selectNoteData } = useSelector((state: RootState) => state.noteDataSlice)
+  const { selectNoteData } = useSelector(
+    (state: RootState) => state.noteDataSlice
+  );
 
   // const [selectNoteData, setSelectNoteData] = useState<NoteDataInterface>();
   const [selectNoteId, setSelectNoteId] = useState<string>();

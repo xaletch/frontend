@@ -31,15 +31,15 @@ export const Header: React.FC<HeaderInterface> = ({
               <ul className="flex items-center gap-4">
                 <li>
                   <Link to="/login">
-                    <div className="px-3 p-1 text-secondary-900 text-sm font-normal hover:bg-secondary-100 rounded duration-200 ease-in">
-                      Авторизоваться
+                    <div className="px-3 p-1 text-secondary-900 text-sm font-medium hover:bg-secondary-100 rounded duration-200 ease-in">
+                      Войти
                     </div>
                   </Link>
                 </li>
                 <li>
                   <Link to="/register">
-                    <div className="px-3 p-1 text-secondary-50 text-sm font-normal bg-secondary-900 rounded hover:opacity-90 duration-200 ease-in">
-                      Начать
+                    <div className="px-3 p-1 text-secondary-50 text-sm font-medium bg-secondary-900 rounded hover:opacity-90 duration-200 ease-in">
+                      Попробовать
                     </div>
                   </Link>
                 </li>
