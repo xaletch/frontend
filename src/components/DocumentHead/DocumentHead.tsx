@@ -59,6 +59,7 @@ export const DocumentHead: React.FC<DocumentHeadInterface> = ({
               className={`text-sm text-secondary-900 ${isRead ? 'cursor-default' : 'hover:bg-secondary-10'}0 px-2 py-1 rounded-md border-none outline-none`}
               ref={!isRead ? noteNateRef : null}
               contentEditable={!isRead ? true : false}
+              // eslint-disable-next-line @typescript-eslint/no-unused-expressions
               onInput={() => {!isRead ? handleInput() : console.log('че за костыль 🙃')}}
             >
               {noteName}
