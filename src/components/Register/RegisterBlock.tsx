@@ -54,7 +54,7 @@ export const RegisterBlock = ({
   };
 
   if (redirect) {
-    return <Navigate to="/home" />;
+    return <Navigate to="/" />;
   }
 
   return (

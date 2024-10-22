@@ -56,7 +56,7 @@ export const LoginForm = ({ userDataTrigger }: UserDataTriggerInterface) => {
   };
 
   if (redirect) {
-    return <Navigate to="/home" />;
+    return <Navigate to="/" />;
   }
 
   return (
