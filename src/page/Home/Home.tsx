@@ -15,12 +15,9 @@ export const Home: React.FC<HomeInterface> = ({
   const [isMenu, setMenu] = useState<boolean>(false);
 
   const closeMenu = () => {
-<<<<<<< HEAD
     if (isMenu) setMenu(false);
-=======
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     isMenu && setMenu(false);
->>>>>>> 272834f (home page)
   };
 
   const handleLogout = () => {
