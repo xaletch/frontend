@@ -7,7 +7,7 @@ export const Welcome: React.FC<HomeWelcomeInterface> = ({
   isUserDataSuccess,
 }) => {
   return (
-    <div className="container mx-auto h-custom">
+    <div className="container mx-auto h-custom relative z-10">
       <div className="h-full flex justify-center flex-col text-center">
         <div className="flex flex-col items-center gap-6">
           <h1 className="text-6xl max-lg:text-6xl font-bold text-secondary-900 leading-[1.1] msx-md:text-5xl max-sm:text-4xl">

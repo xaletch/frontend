@@ -13,7 +13,7 @@ export const Header: React.FC<HeaderInterface> = ({
   };
 
   return (
-    <div className="container w-full mx-auto">
+    <div className="container w-full mx-auto relative z-10">
       <div className="py-6">
         <div className="flex justify-between items-center">
           <div className="">Kotion</div>

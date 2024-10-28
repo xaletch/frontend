@@ -95,3 +95,38 @@ body {
     padding-right: 0 !important;
   }
 }
+.bg-home {
+  background-image: url("../../assets/bg.svg");
+}
+.bg-shadow {
+  position: absolute;
+  z-index: 1;
+  top: -15%;
+  right: 0;
+  left: 0;
+  height: 300px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 100%;
+}
+.shadow {
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+  filter: blur(120px);
+  background: #4778ea;
+  position: absolute;
+}
+
+.shadow-1 {
+  top: 40%;
+  right: 14%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.shadow-2 {
+  top: 60%;
+  left: 25%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
